@@ -1,20 +1,26 @@
 package main
 
 import (
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 )
 
+type ShishaDiary struct {
+	Id    int    `json:"id"`
+	Title string `json:"title"`
+}
+
 func main() {
-	//Ginフレームワークのデフォルトの設定を使用してルータを作成
 	router := gin.Default()
-	
-	// ルートハンドラの定義
+	router.Use(cors.Default())
+
 	router.GET("/", func(c *gin.Context) {
-		c.JSON(200, gin.H{
-			"message": "Hello, World!",
-		})
+		testData := []ShishaDiary{
+			{Id: 1, Title: "フルーツ系甘め"},
+			{Id: 2, Title: "森林系"},
+		}
+		c.JSON(200, testData)
 	})
 
-	// サーバー起動
 	router.Run(":8080")
 }
