@@ -1,13 +1,10 @@
 package lib
 
 import (
-	"fmt"
-	"os"
 	"time"
 
-	"gorm.io/gorm"
-
 	"gorm.io/driver/mysql"
+	"gorm.io/gorm"
 )
 
 // SQLHandler ...
@@ -31,17 +28,18 @@ func DBClose() {
 
 // NewSQLHandler ...
 func NewSQLHandler() *SQLHandler {
-	user := os.Getenv("DB_USERNAME")
-	password := os.Getenv("DB_PASSWORD")
-	host := os.Getenv("DB_HOST")
-	port := os.Getenv("DB_PORT")
-	dbName := os.Getenv("DB_DATABASE")
-	fmt.Println(user, password, host, port)
+	// user := os.Getenv("DB_USERNAME")
+	// password := os.Getenv("DB_PASSWORD")
+	// host := os.Getenv("DB_HOST")
+	// port := os.Getenv("DB_PORT")
+	// dbName := os.Getenv("DB_DATABASE")
+	// fmt.Print(user, password, host, port)
 
 	var db *gorm.DB
 	var err error
 
-	dsn := user + ":" + password + "@tcp(" + host + ":" + port + ")/" + dbName + "?parseTime=true&loc=Asia%2FTokyo"
+	dsn := "root:@tcp(db:3306)/shisha-log?charset=utf8mb4&parseTime=True&loc=Local"
+	// dsn := user + ":" + password + "@tcp(" + host + ":" + port + ")/" + dbName + "?parseTime=true&loc=Asia%2FTokyo"
 	db, err = gorm.Open(mysql.Open(dsn), &gorm.Config{})
 	if err != nil {
 		panic(err)
