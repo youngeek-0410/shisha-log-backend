@@ -1,26 +1,29 @@
 package main
 
 import (
-	"github.com/gin-contrib/cors"
+	"shisha-log-backend/diary"
+	"shisha-log-backend/handler"
+	"shisha-log-backend/lib"
+
 	"github.com/gin-gonic/gin"
+	_ "github.com/go-sql-driver/mysql"
 )
 
-type ShishaDiary struct {
-	Id    int    `json:"id"`
-	Title string `json:"title"`
-}
-
 func main() {
-	router := gin.Default()
-	router.Use(cors.Default())
+	diaries := diary.New()
 
-	router.GET("/", func(c *gin.Context) {
-		testData := []ShishaDiary{
-			{Id: 1, Title: "フルーツ系甘め"},
-			{Id: 2, Title: "森林系"},
-		}
-		c.JSON(200, testData)
-	})
+	lib.DBOpen()
+	defer lib.DBClose()
 
-	router.Run(":8080")
+	r := gin.Default()
+
+	// r.Use(cors.New(cors.Config{
+	// 	AllowOrigins: []string{
+	// 		os.Getenv("SHISHA_LOG_CLIENT_URL"),
+	// 	},
+	// }))
+
+	r.GET("/diary", handler.DiariesGet(diaries))
+
+	r.Run(":8080")
 }
