@@ -1,0 +1,435 @@
+openapi: 3.0.3
+info:
+  title: Shisha log v0
+  description: |-
+  termsOfService: http://swagger.io/terms/
+  contact:
+    email: apiteam@swagger.io
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.11
+externalDocs:
+  description: Find out more about Swagger
+  url: http://swagger.io
+servers:
+  - url: http://localhost:3000
+tags:
+  - name: form
+    description: Formページで必要なapi
+  - name: diary
+    description: Diaryページで必要なapi
+paths:
+  /form/{userId}/flavor:
+    get:
+      tags:
+        - form
+      summary: Get Flavor list api
+      description: user_idの持っているフレーバーを取得するapi
+      parameters:
+      - name: userId
+        in: path
+        description: ユーザーID
+        required: true
+        schema:
+          type: string
+          example: 248c8027-b752-db4c-76c1-fb22a05e9591
+          nullable: false
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetFlavorResponse'
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Flavor not found
+  /form/{userId}/bottle:
+    get:
+      tags:
+        - form
+      summary: Get Bottle list api
+      description: user_idの持っているボトルを取得するapi
+      parameters:
+      - name: userId
+        in: path
+        description: ユーザーID
+        required: true
+        schema:
+          type: string
+          example: 248c8027-b752-db4c-76c1-fb22a05e9591
+          nullable: false
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetBottleResponse'
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Bottle not found
+  /form/{userId}/bowl:
+    get:
+      tags:
+        - form
+      summary: Get Bowl list api
+      description: user_idの持っているボウルを取得するapi
+      parameters:
+      - name: userId
+        in: path
+        description: ユーザーID
+        required: true
+        schema:
+          type: string
+          example: 248c8027-b752-db4c-76c1-fb22a05e9591
+          nullable: false
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetBowlResponse'
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Bowl not found
+  /form/{userId}/heat_management:
+    get:
+      tags:
+        - form
+      summary: Get Heat management list api
+      description: user_idの持っているヒートマネジメントを取得するapi
+      parameters:
+      - name: userId
+        in: path
+        description: ユーザーID
+        required: true
+        schema:
+          type: string
+          example: 248c8027-b752-db4c-76c1-fb22a05e9591
+          nullable: false
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetHeatManagementResponse'
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Heat management not found
+  /form/{userId}/charcoal:
+    get:
+      tags:
+        - form
+      summary: Get Flavor list api
+      description: user_idの持っているチャコールを取得するapi
+      parameters:
+      - name: userId
+        in: path
+        description: ユーザーID
+        required: true
+        schema:
+          type: string
+          example: 248c8027-b752-db4c-76c1-fb22a05e9591
+          nullable: false
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetCharcoalResponse'
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Charcoal not found
+  /diary:
+    post:
+      tags:
+        - diary
+      requestBody:
+        description: Formを送信するapi
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PostFormRequest'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+  /diary/{userId}:
+    get:
+      tags:
+        - diary
+      summary: Get diary list api
+      description: user_idの持っているDiaryを取得するapi
+      parameters:
+      - name: userId
+        in: path
+        description: ユーザーID
+        required: true
+        schema:
+          type: string
+          example: 248c8027-b752-db4c-76c1-fb22a05e9591
+          nullable: false
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetDiaryResponse'
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Diary not found
+components:
+  schemas:
+    GetFlavorResponse:
+      type: object
+      properties:
+        user_flavor_list:
+          type: array
+          items:
+            type: object
+            properties:
+              flavor_name:
+                type: string
+                description: フレーバーの名称
+                example: EarlGrey
+              brand_name:
+                type: string
+                description: メーカーの名称
+                example: Afzal
+    GetBottleResponse:
+      type: object
+      properties:
+        user_bottle_list:
+          type: array
+          items:
+            type: object
+            properties:
+              bottle_name:
+                type: string
+                description: ボトルの名称
+                example: Ultimate one pro
+              brand_name:
+                type: string
+                description: メーカーの名称
+                example: Stimulation
+    GetBowlResponse:
+      type: object
+      properties:
+        user_bowl_list:
+          type: array
+          items:
+            type: object
+            properties:
+              bowl_name:
+                type: string
+                description: ボウルの名称
+                example: 80feet ESPANA
+              brand_name:
+                type: string
+                description: メーカーの名称
+                example: Hookah John
+    GetHeatManagementResponse:
+      type: object
+      properties:
+        user_heat_management_list:
+          type: array
+          items:
+            type: object
+            properties:
+              heat_management_name:
+                type: string
+                description: ヒートマネジメントの名称
+                example: Turkish Lid
+              brand_name:
+                type: string
+                description: メーカーの名称
+                example: YIMI Hookah
+    GetCharcoalResponse:
+      type: object
+      properties:
+        user_charcoal_list:
+          type: array
+          items:
+            type: object
+            properties:
+              charcoal_name:
+                type: string
+                description: チャコールの名称
+                example: Coconuts flat cube
+              brand_name:
+                type: string
+                description: メーカーの名称
+                example: KINGCO
+    GetDiaryResponse:
+      type: object
+      properties:
+        user_diary_list:
+          type: array
+          items:
+            type: object
+            properties:
+              flavor_mix_id:
+                type: string
+                description: それぞれのフレーバーが管理されているID
+                example: 631437-2jd8-1is9-3js8-fb22a0fhwi41
+              create_flag:
+                type: boolean
+                description: 作成したことがあるかどうか
+                example: True
+              flavor_name:
+                type: string
+                description: MIXフレーバーの名称
+                example: Peach5,EarlGrey3,Rose2
+              create_date:
+                type: object
+                description: 作成された日付
+                example: 2023-12-01
+              creator_star:
+                type: number
+                description: 製作者の評価値
+                example: 5.0
+              taste_star:
+                type: number
+                description: 吸った味の評価値
+                example: 9.5
+    PostFormRequest:
+      type: object
+      required: 
+        - receiver_name
+      properties:
+        equipments:
+          type: object
+          description: 機材の情報
+          properties:
+            bowl:
+              type: object
+              description: ボウルの情報
+              properties:
+                name:
+                  type: string
+                  description: ボウル名
+                  example: 80feet ESPANA
+                brand_name:
+                  type: string
+                  description: メーカーの名称
+                  example: Hookah John
+            bottle:
+              type: object
+              description: ボトルの情報
+              properties:
+                name:
+                  type: string
+                  description: ボトル名
+                  example: Ultimate one pro
+                brand_name:
+                  type: string
+                  description: メーカーの名称
+                  example: Stimulation
+            heat_management:
+              type: object
+              description: ヒートマネジメントの情報
+              properties:
+                name:
+                  type: string
+                  description: ヒートマネジメントの名称
+                  example: Turkish Lid
+                brand_name:
+                  type: string
+                  description: メーカーの名称
+                  example: YIMI Hookah
+            charcoal:
+              type: object
+              description: チャコールの情報
+              properties:
+                name:
+                  type: string
+                  description: チャコールの名称
+                  example: Coconuts flat cube
+                brand_name:
+                  type: string
+                  description: メーカーの名称
+                  example: KINGCO
+            climate:
+              type: object
+              description: 気温の情報
+              properties:
+                temperature:
+                  type: number
+                  description: 気温
+                  example: 23.4
+                humidity:
+                  type: number
+                  description: 湿度
+                  example: 53
+        user_flavor_list:
+          type: array
+          items:
+            type: object
+            properties:
+              flavor_name:
+                type: string
+                description: フレーバーの名称
+                example: EarlGrey
+              brand_name:
+                type: string
+                description: メーカーの名称
+                example: Afzal
+              amount:
+                type: number
+                description: フレーバーを入れた量（g）
+                example: 3.6
+        image_id:
+          type: string
+          description: 画像のuuid
+          example: 248c8027-b752-db4c-76c1-fb22a05e9591
+        sucking_text:
+          type: string
+          description: 吸い出し時のテキスト
+          example: ""
+        review:
+          type: object
+          description: 評価の情報
+          properties:
+            creator_star:
+              type: number
+              description: 製作者の評価値
+              example: 5.0
+            taste_star:
+              type: number
+              description: 吸った味の評価値
+              example: 9.5
+            creator_good_points:
+              type: string
+              description: 製作者の感想（よかったこと）
+              example: これはよかったなあああああああああああ
+              nullable: true
+            creator_bad_points:
+              type: string
+              description: 製作者の感想（よかったこと）
+              example: ちょっとアールグレイが強く出過ぎてるかな. Afzalのアールグレイ, Al Fakherのローズは結構味が強く出るフレーバーだから, 盛る時にそのままセパレートで入れるよりかは下引きで入れておいて, その上にピーチを入れたほうがピーチティーの感覚に近くなって美味しくなると思う.
+              nullable: true
+            taste_comments:
+              type: string
+              description: 味の感想
+              example: これはいいシーシャだと思います.
+              nullable: true
+        create_date:
+          type: object
+          description: 作成された日付
+          example: 2023-12-01
+        create_flag:
+          type: boolean
+          description: 作成したことがあるかどうか
+          example: True
