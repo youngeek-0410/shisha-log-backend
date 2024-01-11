@@ -24,7 +24,7 @@ type Diary struct {
 	Fravor           []Fravor       `gorm:"many2many:diary_fravors;embedded;embeddedPrefix:fravor_"`
 	Bottle           Bottle         `gorm:"many2many:diary_bottles"`
 	Bowl             Bowl           `gorm:"many2many:diary_bowls"`
-	HeatManegement   HeatManegement `gorm:"many2many:diary_heat_manegements"`
+	HeatManagement   HeatManagement `gorm:"many2many:diary_heat_managements"`
 	Chacoal          Chacoal        `gorm:"many2many:diary_chacoals"`
 	Temperature      *int
 	Humidity         *int
@@ -57,10 +57,10 @@ type Bowl struct {
 	BowlBrand BowlBrand
 }
 
-type HeatManegement struct {
+type HeatManagement struct {
 	Base
 	Name               string
-	HeatManegemntBrand HeatManegementBrand
+	HeatManagemntBrand HeatManagementBrand
 }
 
 type Chacoal struct {
@@ -84,7 +84,7 @@ type BowlBrand struct {
 	Name string
 }
 
-type HeatManegementBrand struct {
+type HeatManagementBrand struct {
 	Base
 	Name string
 }
