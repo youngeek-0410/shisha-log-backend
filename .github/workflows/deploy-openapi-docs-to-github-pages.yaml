@@ -1,6 +1,12 @@
 name: Deploy OpenAPI Document to GitHub Pages
 
 on:
+    push:
+        branches:
+            - develop
+        paths:
+            - docs/openapi.yaml
+            - .github/workflows/deploy-openapi-docs-to-github-pages.yaml
     pull_request:
         branches:
             - develop
@@ -27,14 +33,12 @@ jobs:
                 swagger-cli validate -d docs/openapi.yaml --type yaml
 
             - name: Generate Swagger UI
-              if: github.event.pull_request.merged == true
               uses: Legion2/swagger-ui-action@v1
               with:
                 output: swagger-ui
                 spec-file: docs/openapi.yaml
 
             - name: Deploy to GitHub Pages
-              if: github.event.pull_request.merged == true
               uses: peaceiris/actions-gh-pages@v3
               with:
                 github_token: ${{ secrets.GITHUB_TOKEN }}
