@@ -338,11 +338,11 @@ components:
                 type: object
                 description: 作成された日付
                 example: 2023-12-01
-              creator_star:
+              creator_evaluation:
                 type: number
                 description: 製作者の評価値
                 example: 5.0
-              taste_star:
+              teste_evakuation:
                 type: number
                 description: 吸った味の評価値
                 example: 9.5
@@ -413,11 +413,11 @@ components:
           type: object
           description: 評価の情報
           properties:
-            creator_star:
+            creator_evaluation:
               type: number
               description: 製作者の評価値
               example: 5.0
-            taste_star:
+            taste_evaluation:
               type: number
               description: 吸った味の評価値
               example: 9.5
