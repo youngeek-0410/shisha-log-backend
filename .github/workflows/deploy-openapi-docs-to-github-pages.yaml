@@ -3,7 +3,7 @@ name: Deploy OpenAPI Document to GitHub Pages
 on:
     pull_request:
         branches:
-            - master
+            - develop
         types:
             - opened
             - synchronize
