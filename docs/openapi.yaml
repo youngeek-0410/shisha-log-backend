@@ -200,6 +200,10 @@ components:
           items:
             type: object
             properties:
+              id:
+                type: string
+                description: フレーバーのID
+                example: 631437-2jd8-1is9-3js8-fb22a0fhwi41
               flavor_name:
                 type: string
                 description: フレーバーの名称
@@ -216,6 +220,10 @@ components:
           items:
             type: object
             properties:
+              id:
+                type: string
+                description: ボトルのID
+                example: 631437-2jd8-1is9-3js8-fb22a0fhwi41
               bottle_name:
                 type: string
                 description: ボトルの名称
@@ -232,6 +240,10 @@ components:
           items:
             type: object
             properties:
+              id:
+                type: string
+                description: ボウルのID
+                example: 631437-2jd8-1is9-3js8-fb22a0fhwi41
               bowl_name:
                 type: string
                 description: ボウルの名称
@@ -248,6 +260,10 @@ components:
           items:
             type: object
             properties:
+              id:
+                type: string
+                description: ヒートマネジメントのID
+                example: 631437-2jd8-1is9-3js8-fb22a0fhwi41
               heat_management_name:
                 type: string
                 description: ヒートマネジメントの名称
@@ -264,6 +280,10 @@ components:
           items:
             type: object
             properties:
+              id:
+                type: string
+                description: チャコールのID
+                example: 631437-2jd8-1is9-3js8-fb22a0fhwi41
               charcoal_name:
                 type: string
                 description: チャコールの名称
@@ -280,18 +300,40 @@ components:
           items:
             type: object
             properties:
-              flavor_mix_id:
-                type: string
-                description: それぞれのフレーバーが管理されているID
-                example: 631437-2jd8-1is9-3js8-fb22a0fhwi41
-              create_flag:
+              user_flavor_list:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    flavor_id:
+                      type: string
+                      description: フレーバーのID
+                    flavor_name:
+                      type: string
+                      description: フレーバーの名称
+                    brand_name:
+                      type: string
+                      description: メーカーの名称
+                    amount:
+                      type: number
+                      description: フレーバーを入れた量（g）
+                example:
+                  - flavor_id: 631437-2jd8-1is9-3js8-fb22a0fhwi41
+                    flavor_name: EarlGrey
+                    brand_name: Afzal
+                    amount: 3.6
+                  - flavor_id: test
+                    flavor_name: Rose
+                    brand_name: Al Fakher
+                    amount: 2.4
+                  - flavor_id: test2
+                    flavor_name: Peach
+                    brand_name: Al Fakher
+                    amount: 6
+              is_created:
                 type: boolean
                 description: 作成したことがあるかどうか
                 example: True
-              flavor_name:
-                type: string
-                description: MIXフレーバーの名称
-                example: Peach5,EarlGrey3,Rose2
               create_date:
                 type: object
                 description: 作成された日付
@@ -306,61 +348,29 @@ components:
                 example: 9.5
     PostFormRequest:
       type: object
-      required: 
+      required:
         - receiver_name
       properties:
         equipments:
           type: object
           description: 機材の情報
           properties:
-            bowl:
-              type: object
-              description: ボウルの情報
-              properties:
-                name:
-                  type: string
-                  description: ボウル名
-                  example: 80feet ESPANA
-                brand_name:
-                  type: string
-                  description: メーカーの名称
-                  example: Hookah John
-            bottle:
-              type: object
-              description: ボトルの情報
-              properties:
-                name:
-                  type: string
-                  description: ボトル名
-                  example: Ultimate one pro
-                brand_name:
-                  type: string
-                  description: メーカーの名称
-                  example: Stimulation
-            heat_management:
-              type: object
-              description: ヒートマネジメントの情報
-              properties:
-                name:
-                  type: string
-                  description: ヒートマネジメントの名称
-                  example: Turkish Lid
-                brand_name:
-                  type: string
-                  description: メーカーの名称
-                  example: YIMI Hookah
-            charcoal:
-              type: object
-              description: チャコールの情報
-              properties:
-                name:
-                  type: string
-                  description: チャコールの名称
-                  example: Coconuts flat cube
-                brand_name:
-                  type: string
-                  description: メーカーの名称
-                  example: KINGCO
+            bowl_id:
+              type: string
+              description: ボウルのID
+              example: 987513-2jd8-1is9-3js8-fb22a0fhwi41
+            bottle_id:
+              type: string
+              description: ボトルのID
+              example: 529513-2jd8-1is9-3js8-fb22a0fhwi41
+            heat_management_id:
+              type: string
+              description: ヒートマネジメントのID
+              example: 235097-2jd8-1is9-3js8-fb22a0fhwi41
+            charcoal_id:
+              type: string
+              description: チャコールのID
+              example: 350971-2jd8-1is9-3js8-fb22a0fhwi41
             climate:
               type: object
               description: 気温の情報
@@ -378,18 +388,19 @@ components:
           items:
             type: object
             properties:
-              flavor_name:
+              flavor_id:
                 type: string
-                description: フレーバーの名称
-                example: EarlGrey
-              brand_name:
-                type: string
-                description: メーカーの名称
-                example: Afzal
+                description: フレーバーのID
               amount:
                 type: number
                 description: フレーバーを入れた量（g）
-                example: 3.6
+            example:
+              - flavor_id: 631437-2jd8-1is9-3js8-fb22a0fhwi41
+                amount: 3.6
+              - flavor_id: test
+                amount: 2.4
+              - flavor_id: test2
+                amount: 6
         image_id:
           type: string
           description: 画像のuuid
@@ -429,7 +440,3 @@ components:
           type: object
           description: 作成された日付
           example: 2023-12-01
-        create_flag:
-          type: boolean
-          description: 作成したことがあるかどうか
-          example: True
