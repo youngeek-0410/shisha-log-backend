@@ -21,13 +21,13 @@ type User struct {
 
 type Diary struct {
 	Base
-	Fravor           []Fravor       `gorm:"many2many:diary_fravors;embedded;embeddedPrefix:fravor_"`
-	Bottle           Bottle         `gorm:"many2many:diary_bottles"`
-	Bowl             Bowl           `gorm:"many2many:diary_bowls"`
-	HeatManagement   HeatManagement `gorm:"many2many:diary_heat_managements"`
-	Chacoal          Chacoal        `gorm:"many2many:diary_chacoals"`
-	Temperature      *int
-	Humidity         *int
+	Fravor           []Fravor
+	Bottle           Bottle
+	Bowl             Bowl
+	HeatManagement   HeatManagement
+	Chacoal          Chacoal
+	Temperature      *float64
+	Humidity         *float64
 	CreatorGoodPoint *string
 	CreatorBadPoint  *string
 	CreatorStar      int
