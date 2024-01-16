@@ -7,11 +7,6 @@ import (
 	"shisha-log-backend/model"
 )
 
-// type Diary struct {
-// 	gorm.Model
-// 	Title string `json:"title"`
-// }
-
 type Diaries struct {
 	Items []model.Diary
 }
