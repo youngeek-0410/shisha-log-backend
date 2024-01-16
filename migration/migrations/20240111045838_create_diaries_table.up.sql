@@ -170,49 +170,26 @@ CREATE TABLE `user_charcoal` (
 );
 
 ALTER TABLE `fravor` ADD FOREIGN KEY (`brand_id`) REFERENCES `fravor_brand` (`id`);
-
 ALTER TABLE `bottle` ADD FOREIGN KEY (`brand_id`) REFERENCES `bottle_brand` (`id`);
-
 ALTER TABLE `bowl` ADD FOREIGN KEY (`brand_id`) REFERENCES `bowl_brand` (`id`);
-
 ALTER TABLE `heat_management` ADD FOREIGN KEY (`brand_id`) REFERENCES `heat_management_brand` (`id`);
-
 ALTER TABLE `charcoal` ADD FOREIGN KEY (`brand_id`) REFERENCES `charcoal_brand` (`id`);
-
 ALTER TABLE `user_fravor` ADD FOREIGN KEY (`fravor_id`) REFERENCES `fravor` (`id`);
-
 ALTER TABLE `user_bottle` ADD FOREIGN KEY (`bottle_id`) REFERENCES `bottle` (`id`);
-
 ALTER TABLE `user_bowl` ADD FOREIGN KEY (`bowl_id`) REFERENCES `bowl` (`id`);
-
 ALTER TABLE `user_heat_management` ADD FOREIGN KEY (`heat_management_id`) REFERENCES `heat_management` (`id`);
-
 ALTER TABLE `user_charcoal` ADD FOREIGN KEY (`charcoal_id`) REFERENCES `charcoal` (`id`);
-
 ALTER TABLE `user_fravor` ADD FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
-
 ALTER TABLE `user_bottle` ADD FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
-
 ALTER TABLE `user_bowl` ADD FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
-
 ALTER TABLE `user_heat_management` ADD FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
-
 ALTER TABLE `user_charcoal` ADD FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
-
 ALTER TABLE `diary_list` ADD FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
-
 ALTER TABLE `diary_list` ADD FOREIGN KEY (`diary_id`) REFERENCES `diary` (`id`);
-
 ALTER TABLE `diary` ADD FOREIGN KEY (`diary_equipments_id`) REFERENCES `diary_equipments` (`id`);
-
 ALTER TABLE `diary_fravors` ADD FOREIGN KEY (`user_fravor_id`) REFERENCES `user_fravor` (`fravor_id`);
-
 ALTER TABLE `diary_equipments` ADD FOREIGN KEY (`diary_fravors_id`) REFERENCES `diary_fravors` (`id`);
-
 ALTER TABLE `diary_equipments` ADD FOREIGN KEY (`user_bottle_id`) REFERENCES `user_bottle` (`bottle_id`);
-
 ALTER TABLE `diary_equipments` ADD FOREIGN KEY (`user_bowl_id`) REFERENCES `user_bowl` (`bowl_id`);
-
 ALTER TABLE `diary_equipments` ADD FOREIGN KEY (`user_heat_management_id`) REFERENCES `user_heat_management` (`heat_management_id`);
-
 ALTER TABLE `diary_equipments` ADD FOREIGN KEY (`user_charcoal_id`) REFERENCES `user_charcoal` (`charcoal_id`);
