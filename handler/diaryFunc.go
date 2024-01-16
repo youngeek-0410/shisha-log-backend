@@ -2,7 +2,7 @@ package handler
 
 import (
 	"net/http"
-	"shisha-log-backend/diary"
+	"shisha-log-backend/model/diary"
 
 	"github.com/gin-gonic/gin"
 )

@@ -1,9 +1,9 @@
 package main
 
 import (
-	"shisha-log-backend/diary"
 	"shisha-log-backend/handler"
 	"shisha-log-backend/lib"
+	"shisha-log-backend/model/diary"
 
 	"github.com/gin-gonic/gin"
 	_ "github.com/go-sql-driver/mysql"
