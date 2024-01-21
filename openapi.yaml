@@ -15,16 +15,18 @@ externalDocs:
 servers:
   - url: http://localhost:3000
 tags:
+  - name: user
+    description: user関連のapi
   - name: form
     description: Formページで必要なapi
   - name: diary
     description: Diaryページで必要なapi
 paths:
-  /form/{userId}/equipment:
+  /user/{id}/equipment:
     get:
       tags:
-        - form
-      summary: Get Equipment list api
+        - user
+      summary: Get Equipment list api 
       description: user_idの持っている機材（必要な情報）一覧を取得するapi
       parameters:
       - name: userId
