@@ -15,11 +15,39 @@ externalDocs:
 servers:
   - url: http://localhost:3000
 tags:
+  - name: user
+    description: user関連のapi
   - name: form
     description: Formページで必要なapi
   - name: diary
     description: Diaryページで必要なapi
 paths:
+  /user/{id}/equipment:
+    get:
+      tags:
+        - user
+      summary: Get Equipment list api 
+      description: user_idの持っている機材（必要な情報）一覧を取得するapi
+      parameters:
+      - name: userId
+        in: path
+        description: ユーザーID
+        required: true
+        schema:
+          type: string
+          example: 248c8027-b752-db4c-76c1-fb22a05e9591
+          nullable: false
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetEquipmentResponse'
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Flavor not found
   /form/{userId}/flavor:
     get:
       tags:
@@ -192,6 +220,127 @@ paths:
           description: Diary not found
 components:
   schemas:
+    GetEquipmentResponse:
+      type: object
+      properties:
+        user_flavor_list:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                description: フレーバーのID
+                nullable: false
+              flavor_name:
+                type: string
+                description: フレーバーの名称
+                nullable: false
+              brand_name:
+                type: string
+                description: メーカーの名称
+                nullable: false
+          example:
+            - flavor_id: 631437-2jd8-1is9-3js8-fb22a0fhwi41
+              flavor_name: EarlGrey
+              brand_name: Afzal
+            - flavor_id: test
+              flavor_name: Rose
+              brand_name: Al Fakher
+            - flavor_id: test2
+              flavor_name: Peach
+              brand_name: Al Fakher
+        user_bottle_list:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                description: ボトルのID
+                nullable: false
+              bottle_name:
+                type: string
+                description: ボトルの名称
+                nullable: false
+              brand_name:
+                type: string
+                description: メーカーの名称
+                nullable: false
+          example:
+            - id: test3
+              bowl_name: Ultimate one pro
+              brand_name: Stimulation
+            - id: test4
+              bowl_name: Cloud one mini
+              brand_name: Shisha Backs
+        user_bowl_list:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                description: ボウルのID
+                example: 631437-2jd8-1is9-3js8-fb22a0fhwi41
+                nullable: false
+              bowl_name:
+                type: string
+                description: ボウルの名称
+                example: 80feet ESPANA
+                nullable: false
+              brand_name:
+                type: string
+                description: メーカーの名称
+                example: Hookah John
+                nullable: false
+          example:
+            - id: test5
+              bowl_name: 80feet ESPANA
+              brand_name: Hookah John
+            - id: test6
+              bowl_name: Чаша Moon Killer 2.0
+              brand_name: Moon Hookah
+        user_heat_management_list:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                description: ヒートマネジメントのID
+                example: 631437-2jd8-1is9-3js8-fb22a0fhwi41
+                nullable: false
+              heat_management_name:
+                type: string
+                description: ヒートマネジメントの名称
+                example: Turkish Lid
+                nullable: false
+              brand_name:
+                type: string
+                description: メーカーの名称
+                example: YIMI Hookah
+                nullable: false
+        user_charcoal_list:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                description: チャコールのID
+                example: 631437-2jd8-1is9-3js8-fb22a0fhwi41
+                nullable: false
+              charcoal_name:
+                type: string
+                description: チャコールの名称
+                example: Coconuts flat cube
+                nullable: false
+              brand_name:
+                type: string
+                description: メーカーの名称
+                example: KINGCO
+                nullable: false
     GetFlavorResponse:
       type: object
       properties:
