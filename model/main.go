@@ -46,15 +46,15 @@ type Fravor struct {
 }
 
 type Bottle struct {
-	Base
-	Name        string
-	BottleBrand BottleBrand
+	ID          uuid.UUID `json:"id"`
+	Name        string    `json:"name"`
+	BottleBrand uuid.UUID `json:"brand_id"`
 }
 
 type Bowl struct {
-	Base
-	Name      string
-	BowlBrand BowlBrand
+	ID        uuid.UUID `json:"id"`
+	Name      string    `json:"name"`
+	BowlBrand uuid.UUID `json:"brand_id"`
 }
 
 type HeatManagement struct {

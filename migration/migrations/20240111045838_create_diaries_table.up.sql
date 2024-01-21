@@ -62,7 +62,7 @@ CREATE TABLE `fravor_brand` (
   PRIMARY KEY(id)
 );
 
-CREATE TABLE `bottle` (
+CREATE TABLE `bottles` (
   id BINARY(16) NOT NULL DEFAULT (UUID_TO_BIN(UUID(), 1)),
   brand_id BINARY(16) NOT NULL,
   name VARCHAR(255) NOT NULL,
@@ -77,7 +77,7 @@ CREATE TABLE `bottle_brand`(
   PRIMARY KEY(id)
 );
 
-CREATE TABLE `bowl` (
+CREATE TABLE `bowls` (
   id BINARY(16) NOT NULL DEFAULT (UUID_TO_BIN(UUID(), 1)),
   brand_id BINARY(16) NOT NULL,
   name VARCHAR(255) NOT NULL,
@@ -170,13 +170,13 @@ CREATE TABLE `user_charcoal` (
 );
 
 ALTER TABLE `fravor` ADD FOREIGN KEY (`brand_id`) REFERENCES `fravor_brand` (`id`);
-ALTER TABLE `bottle` ADD FOREIGN KEY (`brand_id`) REFERENCES `bottle_brand` (`id`);
-ALTER TABLE `bowl` ADD FOREIGN KEY (`brand_id`) REFERENCES `bowl_brand` (`id`);
+ALTER TABLE `bottles` ADD FOREIGN KEY (`brand_id`) REFERENCES `bottle_brand` (`id`);
+ALTER TABLE `bowls` ADD FOREIGN KEY (`brand_id`) REFERENCES `bowl_brand` (`id`);
 ALTER TABLE `heat_management` ADD FOREIGN KEY (`brand_id`) REFERENCES `heat_management_brand` (`id`);
 ALTER TABLE `charcoal` ADD FOREIGN KEY (`brand_id`) REFERENCES `charcoal_brand` (`id`);
 ALTER TABLE `user_fravor` ADD FOREIGN KEY (`fravor_id`) REFERENCES `fravor` (`id`);
-ALTER TABLE `user_bottle` ADD FOREIGN KEY (`bottle_id`) REFERENCES `bottle` (`id`);
-ALTER TABLE `user_bowl` ADD FOREIGN KEY (`bowl_id`) REFERENCES `bowl` (`id`);
+ALTER TABLE `user_bottle` ADD FOREIGN KEY (`bottle_id`) REFERENCES `bottles` (`id`);
+ALTER TABLE `user_bowl` ADD FOREIGN KEY (`bowl_id`) REFERENCES `bowls` (`id`);
 ALTER TABLE `user_heat_management` ADD FOREIGN KEY (`heat_management_id`) REFERENCES `heat_management` (`id`);
 ALTER TABLE `user_charcoal` ADD FOREIGN KEY (`charcoal_id`) REFERENCES `charcoal` (`id`);
 ALTER TABLE `user_fravor` ADD FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);

@@ -3,6 +3,8 @@ package main
 import (
 	"shisha-log-backend/handler"
 	"shisha-log-backend/lib"
+	"shisha-log-backend/model/bottle"
+	"shisha-log-backend/model/bowl"
 	"shisha-log-backend/model/diary"
 
 	"github.com/gin-gonic/gin"
@@ -11,6 +13,8 @@ import (
 
 func main() {
 	diaries := diary.New()
+	bottles := bottle.New()
+	bowls := bowl.New()
 
 	lib.DBOpen()
 	defer lib.DBClose()
@@ -24,6 +28,8 @@ func main() {
 	// }))
 
 	r.GET("/diary", handler.DiariesGet(diaries))
+	r.GET("/bottle", handler.BottlesGet(bottles))
+	r.GET("/bowl", handler.BowlsGet(bowls))
 
 	r.Run(":8080")
 }
