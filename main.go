@@ -15,7 +15,9 @@ func main() {
 	diaries := diary.New()
 	bottles := bottle.New()
 	bowls := bowl.New()
+	userEquipments := handler.NewUserEquipments()
 	userBowls := bowl.NewUserBowls()
+	userBottles := bottle.NewUserBottles()
 
 	lib.DBOpen()
 	defer lib.DBClose()
@@ -31,7 +33,9 @@ func main() {
 	r.GET("/diary", handler.DiariesGet(diaries))
 	r.GET("/bottle", handler.BottlesGet(bottles))
 	r.GET("/bowl", handler.BowlsGet(bowls))
-	r.GET("/user/:user_id/equipment", handler.UserBowlsGet(userBowls))
+	r.GET("/user/:user_id/equipment", handler.UserEquipmentsGet(userEquipments))
+	r.GET("/user/:user_id/bowl", handler.UserBowlsGet(userBowls))
+	r.GET("/user/:user_id/bottle", handler.UserBottlesGet(userBottles))
 
 	r.Run(":8080")
 }
