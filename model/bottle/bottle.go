@@ -34,14 +34,6 @@ func NewUserBottles() *UserBottles {
 	return &UserBottles{}
 }
 
-// func (r *Bottles) Add(d model.Bottle) {
-// 	r.Items = append(r.Items, d)
-// 	db := lib.GetDBConn().DB
-// 	if err := db.Create(d).Error; err != nil {
-// 		fmt.Println("err!")
-// 	}
-// }
-
 func (r *Bottles) GetAll() []Bottle {
 	db := lib.GetDBConn().DB
 	var bottles []Bottle
@@ -51,7 +43,7 @@ func (r *Bottles) GetAll() []Bottle {
 	return bottles
 }
 
-func (r *UserBottles) UserBowls(user_id string) []UserBottle {
+func (r *UserBottles) UserBottles(user_id string) []UserBottle {
 	db := lib.GetDBConn().DB
 	var userBottles []UserBottle
 	binaryUUID := lib.ParseUUIDStrToBin(user_id)
@@ -62,3 +54,11 @@ func (r *UserBottles) UserBowls(user_id string) []UserBottle {
 
 	return userBottles
 }
+
+// func (r *Bottles) Add(d model.Bottle) {
+// 	r.Items = append(r.Items, d)
+// 	db := lib.GetDBConn().DB
+// 	if err := db.Create(d).Error; err != nil {
+// 		fmt.Println("err!")
+// 	}
+// }
