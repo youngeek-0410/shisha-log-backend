@@ -17,9 +17,9 @@ type Bottles struct {
 }
 
 type UserBottle struct {
-	BowlID    uuid.UUID `json:"id"`
-	BowlName  string    `gorm:"column:name" json:"bowl_name"`
-	BrandName string    `gorm:"column:name" json:"bowl_brand"`
+	BottleID   uuid.UUID `json:"id"`
+	BottleName string    `gorm:"column:name" json:"bottle_name"`
+	BrandName  string    `gorm:"column:name" json:"bottle_brand"`
 }
 
 type UserBottles struct {
@@ -28,6 +28,10 @@ type UserBottles struct {
 
 func New() *Bottles {
 	return &Bottles{}
+}
+
+func NewUserBottles() *UserBottles {
+	return &UserBottles{}
 }
 
 // func (r *Bottles) Add(d model.Bottle) {
@@ -49,19 +53,12 @@ func (r *Bottles) GetAll() []Bottle {
 
 func (r *UserBottles) UserBowls(user_id string) []UserBottle {
 	db := lib.GetDBConn().DB
-	var userBowls []UserBottle
+	var userBottles []UserBottle
+	binaryUUID := lib.ParseUUIDStrToBin(user_id)
 
-	userID, parseErr := uuid.Parse(user_id)
-	if parseErr != nil {
-		return nil
-	}
-	binaryUUID, err := userID.MarshalBinary()
-	if err != nil {
-		return nil
-	}
-	if err := db.Table("user_bottle").Select("user_bowl.bowl_id, bowl.name, bowl_brand.name").Joins("inner join bowl on user_bowl.bowl_id = bowl.id").Joins("inner join bowl_brand on bowl.brand_id = bowl_brand.id").Where("user_bowl.user_id = ?", binaryUUID).Find(&userBowls).Error; err != nil {
+	if err := db.Table("user_bottle").Select("user_bottle.bottle_id, bottle.name, bottle_brand.name").Joins("inner join bottle on user_bottle.bottle_id = bottle.id").Joins("inner join bottle_brand on bottle.brand_id = bottle_brand.id").Where("user_bottle.user_id = ?", binaryUUID).Find(&userBottles).Error; err != nil {
 		return nil
 	}
 
-	return userBowls
+	return userBottles
 }
