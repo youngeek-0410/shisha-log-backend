@@ -30,13 +30,9 @@ func New() *Bowls {
 	return &Bowls{}
 }
 
-// func (r *Bottles) Add(d model.Bottle) {
-// 	r.Items = append(r.Items, d)
-// 	db := lib.GetDBConn().DB
-// 	if err := db.Create(d).Error; err != nil {
-// 		fmt.Println("err!")
-// 	}
-// }
+func NewUserBowls() *UserBowls {
+	return &UserBowls{}
+}
 
 func (r *Bowls) GetAll() []Bowl {
 	db := lib.GetDBConn().DB
@@ -45,10 +41,6 @@ func (r *Bowls) GetAll() []Bowl {
 		return nil
 	}
 	return bowls
-}
-
-func NewUserBowls() *UserBowls {
-	return &UserBowls{}
 }
 
 func (r *UserBowls) UserBowls(user_id string) []UserBowl {
@@ -62,3 +54,11 @@ func (r *UserBowls) UserBowls(user_id string) []UserBowl {
 
 	return userBowls
 }
+
+// func (r *Bottles) Add(d model.Bottle) {
+// 	r.Items = append(r.Items, d)
+// 	db := lib.GetDBConn().DB
+// 	if err := db.Create(d).Error; err != nil {
+// 		fmt.Println("err!")
+// 	}
+// }
