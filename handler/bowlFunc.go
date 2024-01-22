@@ -13,3 +13,10 @@ func BowlsGet(bowls *bowl.Bowls) gin.HandlerFunc {
 		c.JSON(http.StatusOK, result)
 	}
 }
+
+func UserBowlsGet(userBowls *bowl.UserBowls) gin.HandlerFunc {
+	return func(c *gin.Context) {
+		result := userBowls.UserBowls(c.Param("user_id"))
+		c.JSON(http.StatusOK, result)
+	}
+}
