@@ -16,7 +16,7 @@ func BottlesGet(bottles *bottle.Bottles) gin.HandlerFunc {
 
 func UserBottlesGet(userBottles *bottle.UserBottles) gin.HandlerFunc {
 	return func(c *gin.Context) {
-		result := userBottles.UserBowls(c.Param("user_id"))
+		result := userBottles.UserBottles(c.Param("user_id"))
 		c.JSON(http.StatusOK, result)
 	}
 }
