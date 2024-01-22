@@ -2,11 +2,28 @@ package bottle
 
 import (
 	"shisha-log-backend/lib"
-	"shisha-log-backend/model"
+
+	"github.com/google/uuid"
 )
 
+type Bottle struct {
+	ID          uuid.UUID `json:"id"`
+	Name        string    `json:"name"`
+	BottleBrand uuid.UUID `json:"brand_id"`
+}
+
 type Bottles struct {
-	Items []model.Bottle
+	Items []Bottle
+}
+
+type UserBottle struct {
+	BowlID    uuid.UUID `json:"id"`
+	BowlName  string    `gorm:"column:name" json:"bowl_name"`
+	BrandName string    `gorm:"column:name" json:"bowl_brand"`
+}
+
+type UserBottles struct {
+	Items []UserBottle
 }
 
 func New() *Bottles {
@@ -21,11 +38,30 @@ func New() *Bottles {
 // 	}
 // }
 
-func (r *Bottles) GetAll() []model.Bottle {
+func (r *Bottles) GetAll() []Bottle {
 	db := lib.GetDBConn().DB
-	var bottles []model.Bottle
+	var bottles []Bottle
 	if err := db.Find(&bottles).Error; err != nil {
 		return nil
 	}
 	return bottles
+}
+
+func (r *UserBottles) UserBowls(user_id string) []UserBottle {
+	db := lib.GetDBConn().DB
+	var userBowls []UserBottle
+
+	userID, parseErr := uuid.Parse(user_id)
+	if parseErr != nil {
+		return nil
+	}
+	binaryUUID, err := userID.MarshalBinary()
+	if err != nil {
+		return nil
+	}
+	if err := db.Table("user_bottle").Select("user_bowl.bowl_id, bowl.name, bowl_brand.name").Joins("inner join bowl on user_bowl.bowl_id = bowl.id").Joins("inner join bowl_brand on bowl.brand_id = bowl_brand.id").Where("user_bowl.user_id = ?", binaryUUID).Find(&userBowls).Error; err != nil {
+		return nil
+	}
+
+	return userBowls
 }
