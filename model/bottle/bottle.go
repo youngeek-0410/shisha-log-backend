@@ -19,7 +19,7 @@ type Bottles struct {
 type UserBottle struct {
 	BottleID   uuid.UUID `json:"id"`
 	BottleName string    `gorm:"column:name" json:"bottle_name"`
-	BrandName  string    `gorm:"column:name" json:"bottle_brand"`
+	BrandName  string    `gorm:"column:name" json:"brand_name"`
 }
 
 type UserBottles struct {

@@ -19,7 +19,7 @@ type Charcoals struct {
 type UserCharcoal struct {
 	CharcoalID   uuid.UUID `json:"id"`
 	CharcoalName string    `gorm:"column:name" json:"charcoal_name"`
-	BrandName    string    `gorm:"column:name" json:"charcoal_brand"`
+	BrandName    string    `gorm:"column:name" json:"brand_name"`
 }
 
 type UserCharcoals struct {
