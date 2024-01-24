@@ -15,9 +15,9 @@ CREATE TABLE `diary` (
   PRIMARY KEY(id)
 );
 
-CREATE TABLE `diary_fravors` (
+CREATE TABLE `diary_flavors` (
   id BINARY(16) NOT NULL DEFAULT (UUID_TO_BIN(UUID(), 1)),
-  user_fravor_id BINARY(16) NOT NULL,
+  user_flavor_id BINARY(16) NOT NULL,
   diary_id BINARY(16) NOT NULL,
   amount SMALLINT UNSIGNED NOT NULL,
   created_at DATETIME,
@@ -27,7 +27,7 @@ CREATE TABLE `diary_fravors` (
 
 CREATE TABLE `diary_equipments` (
   id BINARY(16) NOT NULL DEFAULT (UUID_TO_BIN(UUID(), 1)),
-  diary_fravors_id BINARY(16) NOT NULL,
+  diary_flavors_id BINARY(16) NOT NULL,
   user_bottle_id BINARY(16) NOT NULL,
   user_bowl_id BINARY(16) NOT NULL,
   user_heat_management_id BINARY(16) NOT NULL,
@@ -55,7 +55,7 @@ CREATE TABLE `diary_list` (
   PRIMARY KEY(id)
 );
 
-CREATE TABLE `fravor` (
+CREATE TABLE `flavor` (
   id BINARY(16) NOT NULL DEFAULT (UUID_TO_BIN(UUID(), 1)),
   brand_id BINARY(16) NOT NULL,
   name VARCHAR(255) NOT NULL,
@@ -64,7 +64,7 @@ CREATE TABLE `fravor` (
   PRIMARY KEY(id)
 );
 
-CREATE TABLE `fravor_brand` (
+CREATE TABLE `flavor_brand` (
   id BINARY(16) NOT NULL DEFAULT (UUID_TO_BIN(UUID(), 1)),
   name VARCHAR(255) NOT NULL,
   created_at DATETIME,
@@ -138,9 +138,9 @@ CREATE TABLE `user` (
   PRIMARY KEY(id)
 );
 
-CREATE TABLE `user_fravor` (
+CREATE TABLE `user_flavor` (
   id BINARY(16) NOT NULL DEFAULT (UUID_TO_BIN(UUID(), 1)),
-  fravor_id BINARY(16) NOT NULL,
+  flavor_id BINARY(16) NOT NULL,
   user_id BINARY(16) NOT NULL,
   created_at DATETIME,
   PRIMARY KEY(id)
@@ -178,17 +178,17 @@ CREATE TABLE `user_charcoal` (
   PRIMARY KEY(id)
 );
 
-ALTER TABLE `fravor` ADD FOREIGN KEY (`brand_id`) REFERENCES `fravor_brand` (`id`);
+ALTER TABLE `flavor` ADD FOREIGN KEY (`brand_id`) REFERENCES `flavor_brand` (`id`);
 ALTER TABLE `bottle` ADD FOREIGN KEY (`brand_id`) REFERENCES `bottle_brand` (`id`);
 ALTER TABLE `bowl` ADD FOREIGN KEY (`brand_id`) REFERENCES `bowl_brand` (`id`);
 ALTER TABLE `heat_management` ADD FOREIGN KEY (`brand_id`) REFERENCES `heat_management_brand` (`id`);
 ALTER TABLE `charcoal` ADD FOREIGN KEY (`brand_id`) REFERENCES `charcoal_brand` (`id`);
-ALTER TABLE `user_fravor` ADD FOREIGN KEY (`fravor_id`) REFERENCES `fravor` (`id`);
+ALTER TABLE `user_flavor` ADD FOREIGN KEY (`flavor_id`) REFERENCES `flavor` (`id`);
 ALTER TABLE `user_bottle` ADD FOREIGN KEY (`bottle_id`) REFERENCES `bottle` (`id`);
 ALTER TABLE `user_bowl` ADD FOREIGN KEY (`bowl_id`) REFERENCES `bowl` (`id`);
 ALTER TABLE `user_heat_management` ADD FOREIGN KEY (`heat_management_id`) REFERENCES `heat_management` (`id`);
 ALTER TABLE `user_charcoal` ADD FOREIGN KEY (`charcoal_id`) REFERENCES `charcoal` (`id`);
-ALTER TABLE `user_fravor` ADD FOREIGN KEY (`user_id`) REFERENCES `user` (`id`);
+ALTER TABLE `user_flavor` ADD FOREIGN KEY (`user_id`) REFERENCES `user` (`id`);
 ALTER TABLE `user_bottle` ADD FOREIGN KEY (`user_id`) REFERENCES `user` (`id`);
 ALTER TABLE `user_bowl` ADD FOREIGN KEY (`user_id`) REFERENCES `user` (`id`);
 ALTER TABLE `user_heat_management` ADD FOREIGN KEY (`user_id`) REFERENCES `user` (`id`);
@@ -196,8 +196,8 @@ ALTER TABLE `user_charcoal` ADD FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
 ALTER TABLE `diary_list` ADD FOREIGN KEY (`user_id`) REFERENCES `user` (`id`);
 ALTER TABLE `diary_list` ADD FOREIGN KEY (`diary_id`) REFERENCES `diary` (`id`);
 ALTER TABLE `diary` ADD FOREIGN KEY (`diary_equipments_id`) REFERENCES `diary_equipments` (`id`);
-ALTER TABLE `diary_fravors` ADD FOREIGN KEY (`user_fravor_id`) REFERENCES `user_fravor` (`fravor_id`);
-ALTER TABLE `diary_equipments` ADD FOREIGN KEY (`diary_fravors_id`) REFERENCES `diary_fravors` (`id`);
+ALTER TABLE `diary_flavors` ADD FOREIGN KEY (`user_flavor_id`) REFERENCES `user_flavor` (`flavor_id`);
+ALTER TABLE `diary_equipments` ADD FOREIGN KEY (`diary_flavors_id`) REFERENCES `diary_flavors` (`id`);
 ALTER TABLE `diary_equipments` ADD FOREIGN KEY (`user_bottle_id`) REFERENCES `user_bottle` (`bottle_id`);
 ALTER TABLE `diary_equipments` ADD FOREIGN KEY (`user_bowl_id`) REFERENCES `user_bowl` (`bowl_id`);
 ALTER TABLE `diary_equipments` ADD FOREIGN KEY (`user_heat_management_id`) REFERENCES `user_heat_management` (`heat_management_id`);

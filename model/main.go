@@ -23,7 +23,7 @@ type User struct {
 
 type Diary struct {
 	Base
-	Fravor           []Fravor
+	Flavor           []Flavor
 	Bottle           bottle.Bottle
 	Bowl             bowl.Bowl
 	HeatManagement   HeatManagement
@@ -40,10 +40,10 @@ type Diaries struct {
 	Items []Diary
 }
 
-type Fravor struct {
+type Flavor struct {
 	Base
 	Name       string
-	Brand      FravorBrand
+	Brand      FlavorBrand
 	CreateArea string
 }
 
@@ -59,7 +59,7 @@ type Chacoal struct {
 	ChacoalBrand ChacoalBrand
 }
 
-type FravorBrand struct {
+type FlavorBrand struct {
 	Base
 	Name string
 }
