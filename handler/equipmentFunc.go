@@ -5,14 +5,14 @@ import (
 	"shisha-log-backend/model/bottle"
 	"shisha-log-backend/model/bowl"
 	"shisha-log-backend/model/charcoal"
-	"shisha-log-backend/model/fravor"
+	"shisha-log-backend/model/flavor"
 	"shisha-log-backend/model/heatmanagement"
 
 	"github.com/gin-gonic/gin"
 )
 
 type UserEquipments struct {
-	Fravors         []fravor.UserFravor                 `json:"user_fravor_list"`
+	Flavors         []flavor.UserFlavor                 `json:"user_flavor_list"`
 	Bottles         []bottle.UserBottle                 `json:"user_bottle_list"`
 	Bowls           []bowl.UserBowl                     `json:"user_bowl_list"`
 	Charcoals       []charcoal.UserCharcoal             `json:"user_charcoal_list"`
@@ -24,7 +24,7 @@ func NewUserEquipments() *UserEquipments {
 }
 
 func UserEquipmentsGet(UserEquipment *UserEquipments) gin.HandlerFunc {
-	userFravors := fravor.NewUserFravors()
+	userFlavors := flavor.NewUserFlavors()
 	userBottles := bottle.NewUserBottles()
 	userBowls := bowl.NewUserBowls()
 	userCharcoals := charcoal.NewUserCharcoals()
@@ -32,7 +32,7 @@ func UserEquipmentsGet(UserEquipment *UserEquipments) gin.HandlerFunc {
 
 	return func(c *gin.Context) {
 		var result UserEquipments
-		result.Fravors = userFravors.UserFravors(c.Param("user_id"))
+		result.Flavors = userFlavors.UserFlavors(c.Param("user_id"))
 		result.Bottles = userBottles.UserBottles(c.Param("user_id"))
 		result.Bowls = userBowls.UserBowls(c.Param("user_id"))
 		result.Charcoals = userCharcoals.UserCharcoals(c.Param("user_id"))

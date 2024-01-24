@@ -1,4 +1,4 @@
-CREATE TABLE [fravor] (
+CREATE TABLE [flavor] (
   [id] uuid PRIMARY KEY NOT NULL,
   [brand_id] uuid NOT NULL,
   [name] nvarchar(255) NOT NULL,
@@ -7,7 +7,7 @@ CREATE TABLE [fravor] (
 )
 GO
 
-CREATE TABLE [fravor_brand] (
+CREATE TABLE [flavor_brand] (
   [id] uuid PRIMARY KEY NOT NULL,
   [name] nvarchar(255) NOT NULL,
   [created_at] timestamp
@@ -81,9 +81,9 @@ CREATE TABLE [users] (
 )
 GO
 
-CREATE TABLE [user_fravor] (
+CREATE TABLE [user_flavor] (
   [id] uuid PRIMARY KEY NOT NULL,
-  [fravor_id] uuid NOT NULL,
+  [flavor_id] uuid NOT NULL,
   [user_id] uuid NOT NULL,
   [created_at] timestamp
 )
@@ -132,7 +132,7 @@ GO
 
 CREATE TABLE [diary_equipments] (
   [id] uuid PRIMARY KEY NOT NULL,
-  [diary_fravors_id] uuid NOT NULL,
+  [diary_flavors_id] uuid NOT NULL,
   [user_bottle_id] uuid NOT NULL,
   [user_bowl_id] uuid NOT NULL,
   [user_heat_management_id] uuid NOT NULL,
@@ -167,9 +167,9 @@ CREATE TABLE [diaries] (
 )
 GO
 
-CREATE TABLE [diary_fravors] (
+CREATE TABLE [diary_flavors] (
   [id] uuid PRIMARY KEY NOT NULL,
-  [user_fravor_id] uuid NOT NULL,
+  [user_flavor_id] uuid NOT NULL,
   [diary_id] uuid NOT NULL,
   [amount] decimal NOT NULL,
   [created_at] timestamp,
@@ -177,7 +177,7 @@ CREATE TABLE [diary_fravors] (
 )
 GO
 
-ALTER TABLE [fravor] ADD FOREIGN KEY ([brand_id]) REFERENCES [fravor_brand] ([id])
+ALTER TABLE [flavor] ADD FOREIGN KEY ([brand_id]) REFERENCES [flavor_brand] ([id])
 GO
 
 ALTER TABLE [bottle] ADD FOREIGN KEY ([brand_id]) REFERENCES [bottle_brand] ([id])
@@ -192,7 +192,7 @@ GO
 ALTER TABLE [charcoal] ADD FOREIGN KEY ([brand_id]) REFERENCES [charcoal_brand] ([id])
 GO
 
-ALTER TABLE [user_fravor] ADD FOREIGN KEY ([fravor_id]) REFERENCES [fravor] ([id])
+ALTER TABLE [user_flavor] ADD FOREIGN KEY ([flavor_id]) REFERENCES [flavor] ([id])
 GO
 
 ALTER TABLE [user_bottle] ADD FOREIGN KEY ([bottle_id]) REFERENCES [bottle] ([id])
@@ -207,7 +207,7 @@ GO
 ALTER TABLE [user_charcoal] ADD FOREIGN KEY ([charcoal_id]) REFERENCES [charcoal] ([id])
 GO
 
-ALTER TABLE [user_fravor] ADD FOREIGN KEY ([user_id]) REFERENCES [users] ([id])
+ALTER TABLE [user_flavor] ADD FOREIGN KEY ([user_id]) REFERENCES [users] ([id])
 GO
 
 ALTER TABLE [user_bottle] ADD FOREIGN KEY ([user_id]) REFERENCES [users] ([id])
@@ -231,10 +231,10 @@ GO
 ALTER TABLE [diaries] ADD FOREIGN KEY ([diary_equipments_id]) REFERENCES [diary_equipments] ([id])
 GO
 
-ALTER TABLE [diary_fravors] ADD FOREIGN KEY ([user_fravor_id]) REFERENCES [user_fravor] ([fravor_id])
+ALTER TABLE [diary_flavors] ADD FOREIGN KEY ([user_flavor_id]) REFERENCES [user_flavor] ([flavor_id])
 GO
 
-ALTER TABLE [diary_equipments] ADD FOREIGN KEY ([diary_fravors_id]) REFERENCES [diary_fravors] ([id])
+ALTER TABLE [diary_equipments] ADD FOREIGN KEY ([diary_flavors_id]) REFERENCES [diary_flavors] ([id])
 GO
 
 ALTER TABLE [diary_equipments] ADD FOREIGN KEY ([user_bottle_id]) REFERENCES [user_bottle] ([bottle_id])
