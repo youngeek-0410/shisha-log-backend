@@ -5,7 +5,6 @@ import (
 	"shisha-log-backend/lib"
 	"shisha-log-backend/model/bottle"
 	"shisha-log-backend/model/bowl"
-	"shisha-log-backend/model/charcoal"
 	"shisha-log-backend/model/diary"
 
 	"github.com/gin-gonic/gin"
@@ -17,9 +16,6 @@ func main() {
 	bottles := bottle.New()
 	bowls := bowl.New()
 	userEquipments := handler.NewUserEquipments()
-	userBowls := bowl.NewUserBowls()
-	userBottles := bottle.NewUserBottles()
-	userCharcoals := charcoal.NewUserCharcoals()
 
 	lib.DBOpen()
 	defer lib.DBClose()
@@ -36,9 +32,6 @@ func main() {
 	r.GET("/bottle", handler.BottlesGet(bottles))
 	r.GET("/bowl", handler.BowlsGet(bowls))
 	r.GET("/user/:user_id/equipment", handler.UserEquipmentsGet(userEquipments))
-	r.GET("/user/:user_id/bowl", handler.UserBowlsGet(userBowls))
-	r.GET("/user/:user_id/bottle", handler.UserBottlesGet(userBottles))
-	r.GET("/user/:user_id/charcoal", handler.UserCharcoalsGet(userCharcoals))
 
 	r.Run(":8080")
 }
