@@ -9,7 +9,11 @@ import (
 
 func UserCharcoalsGet(userCharcoals *charcoal.UserCharcoals) gin.HandlerFunc {
 	return func(c *gin.Context) {
-		result := userCharcoals.UserCharcoals(c.Param("user_id"))
+		result, err := userCharcoals.UserCharcoals(c.Param("user_id"))
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+			return
+		}
 		c.JSON(http.StatusOK, result)
 	}
 }

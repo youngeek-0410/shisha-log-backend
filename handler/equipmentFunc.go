@@ -32,11 +32,42 @@ func UserEquipmentsGet(UserEquipment *UserEquipments) gin.HandlerFunc {
 
 	return func(c *gin.Context) {
 		var result UserEquipments
-		result.Flavors = userFlavors.UserFlavors(c.Param("user_id"))
-		result.Bottles = userBottles.UserBottles(c.Param("user_id"))
-		result.Bowls = userBowls.UserBowls(c.Param("user_id"))
-		result.Charcoals = userCharcoals.UserCharcoals(c.Param("user_id"))
-		result.HeatManagements = userHeatManagements.UserHeatManagements(c.Param("user_id"))
+
+		flavors, flavorErr := userFlavors.UserFlavors(c.Param("user_id"))
+		if flavorErr != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": flavorErr.Error()})
+			return
+		}
+		result.Flavors = flavors
+
+		bottles, bottleErr := userBottles.UserBottles(c.Param("user_id"))
+		if bottleErr != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": bottleErr.Error()})
+			return
+		}
+		result.Bottles = bottles
+
+		bowls, bowlErr := userBowls.UserBowls(c.Param("user_id"))
+		if bowlErr != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": bowlErr.Error()})
+			return
+		}
+		result.Bowls = bowls
+
+		charcoals, charcoalErr := userCharcoals.UserCharcoals(c.Param("user_id"))
+		if charcoalErr != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": charcoalErr.Error()})
+			return
+		}
+		result.Charcoals = charcoals
+
+		heatManagements, heatManagementErr := userHeatManagements.UserHeatManagements(c.Param("user_id"))
+		if heatManagementErr != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": heatManagementErr.Error()})
+			return
+		}
+		result.HeatManagements = heatManagements
+
 		c.JSON(http.StatusOK, result)
 	}
 }

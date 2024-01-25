@@ -34,25 +34,26 @@ func NewUserBottles() *UserBottles {
 	return &UserBottles{}
 }
 
-func (r *Bottles) GetAll() []Bottle {
-	db := lib.GetDBConn().DB
-	var bottles []Bottle
-	if err := db.Find(&bottles).Error; err != nil {
-		return nil
-	}
-	return bottles
-}
+// func (r *Bottles) GetAll() []Bottle {
+// 	db := lib.GetDBConn().DB
+// 	var bottles []Bottle
+// 	if err := db.Find(&bottles).Error; err != nil {
+// 		return nil
+// 	}
+// 	return bottles
+// }
 
-func (r *UserBottles) UserBottles(user_id string) []UserBottle {
+func (r *UserBottles) UserBottles(user_id string) ([]UserBottle, error) {
 	db := lib.GetDBConn().DB
 	var userBottles []UserBottle
 	binaryUUID := lib.ParseUUIDStrToBin(user_id)
 
+	// userBottlesdb.Table("user_bottle").Select("user_bottle.bottle_id, bottle.name, bottle_brand.name").Joins("inner join bottle on user_bottle.bottle_id = bottle.id").Joins("inner join bottle_brand on bottle.brand_id = bottle_brand.id").Where("user_bottle.user_id = ?", binaryUUID).Find(&userBottles)
 	if err := db.Table("user_bottle").Select("user_bottle.bottle_id, bottle.name, bottle_brand.name").Joins("inner join bottle on user_bottle.bottle_id = bottle.id").Joins("inner join bottle_brand on bottle.brand_id = bottle_brand.id").Where("user_bottle.user_id = ?", binaryUUID).Find(&userBottles).Error; err != nil {
-		return nil
+		return nil, err
 	}
 
-	return userBottles
+	return userBottles, nil
 }
 
 // func (r *Bottles) Add(d model.Bottle) {

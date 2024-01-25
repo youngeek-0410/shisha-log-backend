@@ -9,7 +9,11 @@ import (
 
 func UserHeatManagementsGet(userHeatManagements *heatmanagement.UserHeatManagements) gin.HandlerFunc {
 	return func(c *gin.Context) {
-		result := userHeatManagements.UserHeatManagements(c.Param("user_id"))
+		result, err := userHeatManagements.UserHeatManagements(c.Param("user_id"))
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+			return
+		}
 		c.JSON(http.StatusOK, result)
 	}
 }

@@ -34,14 +34,14 @@ func NewUserHeatManagements() *UserHeatManagements {
 	return &UserHeatManagements{}
 }
 
-func (r *UserHeatManagements) UserHeatManagements(user_id string) []UserHeatManagement {
+func (r *UserHeatManagements) UserHeatManagements(user_id string) ([]UserHeatManagement, error) {
 	db := lib.GetDBConn().DB
 	var userHeatManagements []UserHeatManagement
 	binaryUUID := lib.ParseUUIDStrToBin(user_id)
 
 	if err := db.Table("user_heat_management").Select("user_heat_management.heat_management_id, heat_management.name, heat_management_brand.name").Joins("inner join heat_management on user_heat_management.heat_management_id = heat_management.id").Joins("inner join heat_management_brand on heat_management.brand_id = heat_management_brand.id").Where("user_heat_management.user_id = ?", binaryUUID).Find(&userHeatManagements).Error; err != nil {
-		return nil
+		return nil, err
 	}
 
-	return userHeatManagements
+	return userHeatManagements, nil
 }
