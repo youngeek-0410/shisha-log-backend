@@ -2,7 +2,6 @@ package diary
 
 import (
 	"fmt"
-
 	"shisha-log-backend/lib"
 	"shisha-log-backend/model"
 )
