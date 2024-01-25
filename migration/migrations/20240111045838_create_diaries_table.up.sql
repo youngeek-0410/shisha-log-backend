@@ -1,4 +1,4 @@
-CREATE TABLE `diary` (
+CREATE TABLE `diaries` (
   id BINARY(16) NOT NULL DEFAULT (UUID_TO_BIN(UUID(), 1)),
   diary_equipments_id BINARY(16) NOT NULL,
   image_id BINARY(16),
@@ -38,7 +38,7 @@ CREATE TABLE `diary_equipments` (
   PRIMARY KEY(id)
 );
 
-CREATE TABLE `diary_image` (
+CREATE TABLE `diary_images` (
   id BINARY(16) NOT NULL DEFAULT (UUID_TO_BIN(UUID(), 1)),
   path VARCHAR(255),
   created_at DATETIME,
@@ -46,7 +46,7 @@ CREATE TABLE `diary_image` (
   PRIMARY KEY(id)
 );
 
-CREATE TABLE `diary_list` (
+CREATE TABLE `user_diaries` (
   id BINARY(16) NOT NULL DEFAULT (UUID_TO_BIN(UUID(), 1)),
   user_id BINARY(16) NOT NULL,
   diary_id BINARY(16) NOT NULL,
@@ -55,7 +55,7 @@ CREATE TABLE `diary_list` (
   PRIMARY KEY(id)
 );
 
-CREATE TABLE `flavor` (
+CREATE TABLE `flavors` (
   id BINARY(16) NOT NULL DEFAULT (UUID_TO_BIN(UUID(), 1)),
   brand_id BINARY(16) NOT NULL,
   name VARCHAR(255) NOT NULL,
@@ -64,29 +64,14 @@ CREATE TABLE `flavor` (
   PRIMARY KEY(id)
 );
 
-CREATE TABLE `flavor_brand` (
+CREATE TABLE `flavor_brands` (
   id BINARY(16) NOT NULL DEFAULT (UUID_TO_BIN(UUID(), 1)),
   name VARCHAR(255) NOT NULL,
   created_at DATETIME,
   PRIMARY KEY(id)
 );
 
-CREATE TABLE `bottle` (
-  id BINARY(16) NOT NULL DEFAULT (UUID_TO_BIN(UUID(), 1)),
-  brand_id BINARY(16) NOT NULL,
-  name VARCHAR(255) NOT NULL,
-  created_at DATETIME,
-  PRIMARY KEY(id)
-);
-
-CREATE TABLE `bottle_brand`(
-  id BINARY(16) NOT NULL DEFAULT (UUID_TO_BIN(UUID(), 1)),
-  name VARCHAR(255) NOT NULL,
-  created_at DATETIME,
-  PRIMARY KEY(id)
-);
-
-CREATE TABLE `bowl` (
+CREATE TABLE `bottles` (
   id BINARY(16) NOT NULL DEFAULT (UUID_TO_BIN(UUID(), 1)),
   brand_id BINARY(16) NOT NULL,
   name VARCHAR(255) NOT NULL,
@@ -94,29 +79,14 @@ CREATE TABLE `bowl` (
   PRIMARY KEY(id)
 );
 
-CREATE TABLE `bowl_brand` (
+CREATE TABLE `bottle_brands`(
   id BINARY(16) NOT NULL DEFAULT (UUID_TO_BIN(UUID(), 1)),
   name VARCHAR(255) NOT NULL,
   created_at DATETIME,
   PRIMARY KEY(id)
 );
 
-CREATE TABLE `heat_management` (
-  id BINARY(16) NOT NULL DEFAULT (UUID_TO_BIN(UUID(), 1)),
-  brand_id BINARY(16) NOT NULL,
-  name VARCHAR(255) NOT NULL,
-  created_at DATETIME,
-  PRIMARY KEY(id)
-);
-
-CREATE TABLE `heat_management_brand` (
-  id BINARY(16) NOT NULL DEFAULT (UUID_TO_BIN(UUID(), 1)),
-  name VARCHAR(255) NOT NULL,
-  created_at DATETIME,
-  PRIMARY KEY(id)
-);
-
-CREATE TABLE `charcoal` (
+CREATE TABLE `bowls` (
   id BINARY(16) NOT NULL DEFAULT (UUID_TO_BIN(UUID(), 1)),
   brand_id BINARY(16) NOT NULL,
   name VARCHAR(255) NOT NULL,
@@ -124,21 +94,51 @@ CREATE TABLE `charcoal` (
   PRIMARY KEY(id)
 );
 
-CREATE TABLE `charcoal_brand` (
+CREATE TABLE `bowl_brands` (
   id BINARY(16) NOT NULL DEFAULT (UUID_TO_BIN(UUID(), 1)),
   name VARCHAR(255) NOT NULL,
   created_at DATETIME,
   PRIMARY KEY(id)
 );
 
-CREATE TABLE `user` (
+CREATE TABLE `heat_managements` (
+  id BINARY(16) NOT NULL DEFAULT (UUID_TO_BIN(UUID(), 1)),
+  brand_id BINARY(16) NOT NULL,
+  name VARCHAR(255) NOT NULL,
+  created_at DATETIME,
+  PRIMARY KEY(id)
+);
+
+CREATE TABLE `heat_management_brands` (
   id BINARY(16) NOT NULL DEFAULT (UUID_TO_BIN(UUID(), 1)),
   name VARCHAR(255) NOT NULL,
   created_at DATETIME,
   PRIMARY KEY(id)
 );
 
-CREATE TABLE `user_flavor` (
+CREATE TABLE `charcoals` (
+  id BINARY(16) NOT NULL DEFAULT (UUID_TO_BIN(UUID(), 1)),
+  brand_id BINARY(16) NOT NULL,
+  name VARCHAR(255) NOT NULL,
+  created_at DATETIME,
+  PRIMARY KEY(id)
+);
+
+CREATE TABLE `charcoal_brands` (
+  id BINARY(16) NOT NULL DEFAULT (UUID_TO_BIN(UUID(), 1)),
+  name VARCHAR(255) NOT NULL,
+  created_at DATETIME,
+  PRIMARY KEY(id)
+);
+
+CREATE TABLE `users` (
+  id BINARY(16) NOT NULL DEFAULT (UUID_TO_BIN(UUID(), 1)),
+  name VARCHAR(255) NOT NULL,
+  created_at DATETIME,
+  PRIMARY KEY(id)
+);
+
+CREATE TABLE `user_flavors` (
   id BINARY(16) NOT NULL DEFAULT (UUID_TO_BIN(UUID(), 1)),
   flavor_id BINARY(16) NOT NULL,
   user_id BINARY(16) NOT NULL,
@@ -146,7 +146,7 @@ CREATE TABLE `user_flavor` (
   PRIMARY KEY(id)
 );
 
-CREATE TABLE `user_bottle` (
+CREATE TABLE `user_bottles` (
   id BINARY(16) NOT NULL DEFAULT (UUID_TO_BIN(UUID(), 1)),
   bottle_id BINARY(16) NOT NULL,
   user_id BINARY(16) NOT NULL,
@@ -154,7 +154,7 @@ CREATE TABLE `user_bottle` (
   PRIMARY KEY(id)
 );
 
-CREATE TABLE `user_bowl` (
+CREATE TABLE `user_bowls` (
   id BINARY(16) NOT NULL DEFAULT (UUID_TO_BIN(UUID(), 1)),
   bowl_id BINARY(16) NOT NULL,
   user_id BINARY(16) NOT NULL,
@@ -162,7 +162,7 @@ CREATE TABLE `user_bowl` (
   PRIMARY KEY(id)
 );
 
-CREATE TABLE `user_heat_management` (
+CREATE TABLE `user_heat_managements` (
   id BINARY(16) NOT NULL DEFAULT (UUID_TO_BIN(UUID(), 1)),
   heat_management_id BINARY(16) NOT NULL,
   user_id BINARY(16) NOT NULL,
@@ -170,7 +170,7 @@ CREATE TABLE `user_heat_management` (
   PRIMARY KEY(id)
 );
 
-CREATE TABLE `user_charcoal` (
+CREATE TABLE `user_charcoals` (
   id BINARY(16) NOT NULL DEFAULT (UUID_TO_BIN(UUID(), 1)),
   charcoal_id BINARY(16) NOT NULL,
   user_id BINARY(16) NOT NULL,
@@ -178,29 +178,30 @@ CREATE TABLE `user_charcoal` (
   PRIMARY KEY(id)
 );
 
-ALTER TABLE `flavor` ADD FOREIGN KEY (`brand_id`) REFERENCES `flavor_brand` (`id`);
-ALTER TABLE `bottle` ADD FOREIGN KEY (`brand_id`) REFERENCES `bottle_brand` (`id`);
-ALTER TABLE `bowl` ADD FOREIGN KEY (`brand_id`) REFERENCES `bowl_brand` (`id`);
-ALTER TABLE `heat_management` ADD FOREIGN KEY (`brand_id`) REFERENCES `heat_management_brand` (`id`);
-ALTER TABLE `charcoal` ADD FOREIGN KEY (`brand_id`) REFERENCES `charcoal_brand` (`id`);
-ALTER TABLE `user_flavor` ADD FOREIGN KEY (`flavor_id`) REFERENCES `flavor` (`id`);
-ALTER TABLE `user_bottle` ADD FOREIGN KEY (`bottle_id`) REFERENCES `bottle` (`id`);
-ALTER TABLE `user_bowl` ADD FOREIGN KEY (`bowl_id`) REFERENCES `bowl` (`id`);
-ALTER TABLE `user_heat_management` ADD FOREIGN KEY (`heat_management_id`) REFERENCES `heat_management` (`id`);
-ALTER TABLE `user_charcoal` ADD FOREIGN KEY (`charcoal_id`) REFERENCES `charcoal` (`id`);
-ALTER TABLE `user_flavor` ADD FOREIGN KEY (`user_id`) REFERENCES `user` (`id`);
-ALTER TABLE `user_bottle` ADD FOREIGN KEY (`user_id`) REFERENCES `user` (`id`);
-ALTER TABLE `user_bowl` ADD FOREIGN KEY (`user_id`) REFERENCES `user` (`id`);
-ALTER TABLE `user_heat_management` ADD FOREIGN KEY (`user_id`) REFERENCES `user` (`id`);
-ALTER TABLE `user_charcoal` ADD FOREIGN KEY (`user_id`) REFERENCES `user` (`id`);
-ALTER TABLE `diary_list` ADD FOREIGN KEY (`user_id`) REFERENCES `user` (`id`);
-ALTER TABLE `diary_list` ADD FOREIGN KEY (`diary_id`) REFERENCES `diary` (`id`);
-ALTER TABLE `diary` ADD FOREIGN KEY (`diary_equipments_id`) REFERENCES `diary_equipments` (`id`);
-ALTER TABLE `diary` ADD FOREIGN KEY (`image_id`) REFERENCES `diary_image` (`id`);
-ALTER TABLE `diary_flavors` ADD FOREIGN KEY (`user_flavor_id`) REFERENCES `user_flavor` (`flavor_id`);
+ALTER TABLE `flavors` ADD FOREIGN KEY (`brand_id`) REFERENCES `flavor_brands` (`id`);
+ALTER TABLE `bottles` ADD FOREIGN KEY (`brand_id`) REFERENCES `bottle_brands` (`id`);
+ALTER TABLE `bowls` ADD FOREIGN KEY (`brand_id`) REFERENCES `bowl_brands` (`id`);
+ALTER TABLE `heat_managements` ADD FOREIGN KEY (`brand_id`) REFERENCES `heat_management_brands` (`id`);
+ALTER TABLE `charcoals` ADD FOREIGN KEY (`brand_id`) REFERENCES `charcoal_brands` (`id`);
+ALTER TABLE `user_flavors` ADD FOREIGN KEY (`flavor_id`) REFERENCES `flavors` (`id`);
+ALTER TABLE `user_bottles` ADD FOREIGN KEY (`bottle_id`) REFERENCES `bottles` (`id`);
+ALTER TABLE `user_bowls` ADD FOREIGN KEY (`bowl_id`) REFERENCES `bowls` (`id`);
+ALTER TABLE `user_heat_managements` ADD FOREIGN KEY (`heat_management_id`) REFERENCES `heat_managements` (`id`);
+ALTER TABLE `user_charcoals` ADD FOREIGN KEY (`charcoal_id`) REFERENCES `charcoals` (`id`);
+ALTER TABLE `user_flavors` ADD FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
+ALTER TABLE `user_bottles` ADD FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
+ALTER TABLE `user_bowls` ADD FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
+ALTER TABLE `user_heat_managements` ADD FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
+ALTER TABLE `user_charcoals` ADD FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
+ALTER TABLE `user_diaries` ADD FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
+ALTER TABLE `user_diaries` ADD FOREIGN KEY (`diary_id`) REFERENCES `diaries` (`id`);
+ALTER TABLE `diaries` ADD FOREIGN KEY (`diary_equipments_id`) REFERENCES `diary_equipments` (`id`);
+ALTER TABLE `diaries` ADD FOREIGN KEY (`image_id`) REFERENCES `diary_images` (`id`);
+ALTER TABLE `diary_flavors` ADD FOREIGN KEY (`user_flavor_id`) REFERENCES `user_flavors` (`flavor_id`);
+-- ALTER TABLE `diary_flavors` ADD FOREIGN KEY (`diary_id`) REFERENCES `diaries` (`id`);
 ALTER TABLE `diary_equipments` ADD FOREIGN KEY (`diary_flavors_id`) REFERENCES `diary_flavors` (`id`);
-ALTER TABLE `diary_equipments` ADD FOREIGN KEY (`user_bottle_id`) REFERENCES `user_bottle` (`bottle_id`);
-ALTER TABLE `diary_equipments` ADD FOREIGN KEY (`user_bowl_id`) REFERENCES `user_bowl` (`bowl_id`);
-ALTER TABLE `diary_equipments` ADD FOREIGN KEY (`user_heat_management_id`) REFERENCES `user_heat_management` (`heat_management_id`);
-ALTER TABLE `diary_equipments` ADD FOREIGN KEY (`user_charcoal_id`) REFERENCES `user_charcoal` (`charcoal_id`);
-ALTER TABLE `diary_equipments` ADD FOREIGN KEY (`diary_image_id`) REFERENCES `diary_image` (`id`);
+ALTER TABLE `diary_equipments` ADD FOREIGN KEY (`user_bottle_id`) REFERENCES `user_bottles` (`bottle_id`);
+ALTER TABLE `diary_equipments` ADD FOREIGN KEY (`user_bowl_id`) REFERENCES `user_bowls` (`bowl_id`);
+ALTER TABLE `diary_equipments` ADD FOREIGN KEY (`user_heat_management_id`) REFERENCES `user_heat_managements` (`heat_management_id`);
+ALTER TABLE `diary_equipments` ADD FOREIGN KEY (`user_charcoal_id`) REFERENCES `user_charcoals` (`charcoal_id`);
+ALTER TABLE `diary_equipments` ADD FOREIGN KEY (`diary_image_id`) REFERENCES `diary_images` (`id`);
