@@ -17,7 +17,7 @@ type Flavors struct {
 }
 
 type UserFlavor struct {
-	FlavorID   uuid.UUID `json:"flavor_id"`
+	FlavorID   uuid.UUID `json:"id"`
 	FlavorName string    `gorm:"column:name" json:"flavor_name"`
 	BrandName  string    `gorm:"column:name" json:"brand_name"`
 }

@@ -196,6 +196,7 @@ ALTER TABLE `user_charcoal` ADD FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
 ALTER TABLE `diary_list` ADD FOREIGN KEY (`user_id`) REFERENCES `user` (`id`);
 ALTER TABLE `diary_list` ADD FOREIGN KEY (`diary_id`) REFERENCES `diary` (`id`);
 ALTER TABLE `diary` ADD FOREIGN KEY (`diary_equipments_id`) REFERENCES `diary_equipments` (`id`);
+ALTER TABLE `diary` ADD FOREIGN KEY (`image_id`) REFERENCES `diary_image` (`id`);
 ALTER TABLE `diary_flavors` ADD FOREIGN KEY (`user_flavor_id`) REFERENCES `user_flavor` (`flavor_id`);
 ALTER TABLE `diary_equipments` ADD FOREIGN KEY (`diary_flavors_id`) REFERENCES `diary_flavors` (`id`);
 ALTER TABLE `diary_equipments` ADD FOREIGN KEY (`user_bottle_id`) REFERENCES `user_bottle` (`bottle_id`);
