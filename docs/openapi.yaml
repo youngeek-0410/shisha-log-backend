@@ -241,13 +241,13 @@ components:
                 description: メーカーの名称
                 nullable: false
           example:
-            - flavor_id: 631437-2jd8-1is9-3js8-fb22a0fhwi41
+            - id: 631437-2jd8-1is9-3js8-fb22a0fhwi41
               flavor_name: EarlGrey
               brand_name: Afzal
-            - flavor_id: test
+            - id: test
               flavor_name: Rose
               brand_name: Al Fakher
-            - flavor_id: test2
+            - id: test2
               flavor_name: Peach
               brand_name: Al Fakher
         user_bottle_list:
@@ -469,7 +469,7 @@ components:
                 items:
                   type: object
                   properties:
-                    flavor_id:
+                    id:
                       type: string
                       description: フレーバーのID
                       nullable: false
@@ -486,15 +486,15 @@ components:
                       description: フレーバーを入れた量（g）
                       nullable: false
                 example:
-                  - flavor_id: 631437-2jd8-1is9-3js8-fb22a0fhwi41
+                  - id: 631437-2jd8-1is9-3js8-fb22a0fhwi41
                     flavor_name: EarlGrey
                     brand_name: Afzal
                     amount: 3.6
-                  - flavor_id: test
+                  - id: test
                     flavor_name: Rose
                     brand_name: Al Fakher
                     amount: 2.4
-                  - flavor_id: test2
+                  - id: test2
                     flavor_name: Peach
                     brand_name: Al Fakher
                     amount: 6
@@ -569,7 +569,7 @@ components:
           items:
             type: object
             properties:
-              flavor_id:
+              id:
                 type: string
                 description: フレーバーのID
                 nullable: false
@@ -578,11 +578,11 @@ components:
                 description: フレーバーを入れた量（g）
                 nullable: false
             example:
-              - flavor_id: 631437-2jd8-1is9-3js8-fb22a0fhwi41
+              - id: 631437-2jd8-1is9-3js8-fb22a0fhwi41
                 amount: 3.6
-              - flavor_id: test
+              - id: test
                 amount: 2.4
-              - flavor_id: test2
+              - id: test2
                 amount: 6
         image_id:
           type: string
