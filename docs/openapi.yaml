@@ -464,7 +464,7 @@ components:
           items:
             type: object
             properties:
-              user_flavor_list:
+              diary_flavor_list:
                 type: array
                 items:
                   type: object
@@ -513,7 +513,7 @@ components:
                 description: 製作者の評価値
                 example: 5.0
                 nullable: false
-              teste_evakuation:
+              taste_evaluation:
                 type: number
                 description: 吸った味の評価値
                 example: 9.5
@@ -523,6 +523,11 @@ components:
       required:
         - receiver_name
       properties:
+        id:
+          type: string
+          description: 作ったシーシャのID
+          example: wegrh424h-b752-rw4c-76af-s23i3gby3gl1
+          nullable: false
         user_id:
           type: string
           description: ユーザーID
@@ -564,7 +569,7 @@ components:
                   type: number
                   description: 湿度
                   example: 53
-        user_flavor_list:
+        diary_flavor_list:
           type: array
           items:
             type: object
