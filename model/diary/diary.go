@@ -7,12 +7,12 @@ import (
 	"shisha-log-backend/model/bottle"
 	"shisha-log-backend/model/bowl"
 	"shisha-log-backend/model/charcoal"
-	"shisha-log-backend/model/fravor"
+	"shisha-log-backend/model/flavor"
 	"shisha-log-backend/model/heatmanagement"
 )
 
 type Diary struct {
-	Fravor           fravor.Fravors
+	Fravor           flavor.Flavors
 	Bottle           bottle.Bottle
 	Bowl             bowl.Bowl
 	HeatManagement   heatmanagement.HeatManagement
