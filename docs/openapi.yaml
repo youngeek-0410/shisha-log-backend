@@ -498,11 +498,6 @@ components:
                     flavor_name: Peach
                     brand_name: Al Fakher
                     amount: 6
-              is_created:
-                type: boolean
-                description: 作成したことがあるかどうか
-                example: True
-                nullable: false
               create_date:
                 type: object
                 description: 作成された日付
