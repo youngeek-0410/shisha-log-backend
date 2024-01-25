@@ -26,10 +26,10 @@ paths:
     get:
       tags:
         - user
-      summary: Get Equipment list api 
+      summary: Get Equipment list api
       description: user_idの持っている機材（必要な情報）一覧を取得するapi
       parameters:
-      - name: userId
+      - name: user_id
         in: path
         description: ユーザーID
         required: true
@@ -48,14 +48,14 @@ paths:
           description: Invalid ID supplied
         '404':
           description: Flavor not found
-  /form/{userId}/flavor:
+  /form/{user_id}/flavor:
     get:
       tags:
         - form
       summary: Get Flavor list api
       description: user_idの持っているフレーバーを取得するapi
       parameters:
-      - name: userId
+      - name: user_id
         in: path
         description: ユーザーID
         required: true
@@ -74,14 +74,14 @@ paths:
           description: Invalid ID supplied
         '404':
           description: Flavor not found
-  /form/{userId}/bottle:
+  /form/{user_id}/bottle:
     get:
       tags:
         - form
       summary: Get Bottle list api
       description: user_idの持っているボトルを取得するapi
       parameters:
-      - name: userId
+      - name: user_id
         in: path
         description: ユーザーID
         required: true
@@ -100,14 +100,14 @@ paths:
           description: Invalid ID supplied
         '404':
           description: Bottle not found
-  /form/{userId}/bowl:
+  /form/{user_id}/bowl:
     get:
       tags:
         - form
       summary: Get Bowl list api
       description: user_idの持っているボウルを取得するapi
       parameters:
-      - name: userId
+      - name: user_id
         in: path
         description: ユーザーID
         required: true
@@ -126,14 +126,14 @@ paths:
           description: Invalid ID supplied
         '404':
           description: Bowl not found
-  /form/{userId}/heat_management:
+  /form/{user_id}/heat_management:
     get:
       tags:
         - form
       summary: Get Heat management list api
       description: user_idの持っているヒートマネジメントを取得するapi
       parameters:
-      - name: userId
+      - name: user_id
         in: path
         description: ユーザーID
         required: true
@@ -152,14 +152,14 @@ paths:
           description: Invalid ID supplied
         '404':
           description: Heat management not found
-  /form/{userId}/charcoal:
+  /form/{user_id}/charcoal:
     get:
       tags:
         - form
       summary: Get Flavor list api
       description: user_idの持っているチャコールを取得するapi
       parameters:
-      - name: userId
+      - name: user_id
         in: path
         description: ユーザーID
         required: true
@@ -192,14 +192,14 @@ paths:
       responses:
         '200':
           description: Successful operation
-  /diary/{userId}:
+  /diary/{user_id}:
     get:
       tags:
         - diary
       summary: Get diary list api
       description: user_idの持っているDiaryを取得するapi
       parameters:
-      - name: userId
+      - name: user_id
         in: path
         description: ユーザーID
         required: true
