@@ -16,7 +16,11 @@ func BowlsGet(bowls *bowl.Bowls) gin.HandlerFunc {
 
 func UserBowlsGet(userBowls *bowl.UserBowls) gin.HandlerFunc {
 	return func(c *gin.Context) {
-		result := userBowls.UserBowls(c.Param("user_id"))
+		result, err := userBowls.UserBowls(c.Param("user_id"))
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+			return
+		}
 		c.JSON(http.StatusOK, result)
 	}
 }

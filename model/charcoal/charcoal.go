@@ -34,14 +34,14 @@ func NewUserCharcoals() *UserCharcoals {
 	return &UserCharcoals{}
 }
 
-func (r *UserCharcoals) UserCharcoals(user_id string) []UserCharcoal {
+func (r *UserCharcoals) UserCharcoals(user_id string) ([]UserCharcoal, error) {
 	db := lib.GetDBConn().DB
 	var userCharcoals []UserCharcoal
 	binaryUUID := lib.ParseUUIDStrToBin(user_id)
 
 	if err := db.Table("user_charcoal").Select("user_charcoal.charcoal_id, charcoal.name, charcoal_brand.name").Joins("inner join charcoal on user_charcoal.charcoal_id = charcoal.id").Joins("inner join charcoal_brand on charcoal.brand_id = charcoal_brand.id").Where("user_charcoal.user_id = ?", binaryUUID).Find(&userCharcoals).Error; err != nil {
-		return nil
+		return nil, err
 	}
 
-	return userCharcoals
+	return userCharcoals, nil
 }

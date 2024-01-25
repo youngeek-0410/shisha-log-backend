@@ -43,16 +43,16 @@ func (r *Bowls) GetAll() []Bowl {
 	return bowls
 }
 
-func (r *UserBowls) UserBowls(user_id string) []UserBowl {
+func (r *UserBowls) UserBowls(user_id string) ([]UserBowl, error) {
 	db := lib.GetDBConn().DB
 	var userBowls []UserBowl
 	binaryUUID := lib.ParseUUIDStrToBin(user_id)
 
 	if err := db.Table("user_bowl").Select("user_bowl.bowl_id, bowl.name, bowl_brand.name").Joins("inner join bowl on user_bowl.bowl_id = bowl.id").Joins("inner join bowl_brand on bowl.brand_id = bowl_brand.id").Where("user_bowl.user_id = ?", binaryUUID).Find(&userBowls).Error; err != nil {
-		return nil
+		return nil, err
 	}
 
-	return userBowls
+	return userBowls, nil
 }
 
 // func (r *Bottles) Add(d model.Bottle) {
