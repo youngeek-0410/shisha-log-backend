@@ -457,15 +457,15 @@ components:
     GetDiaryResponse:
       type: object
       properties:
+        id:
+          type: string
+          example: wegrh424h-b752-rw4c-76af-s23i3gby3gl1
+          nullable: false
         user_diary_list:
           type: array
           items:
             type: object
             properties:
-              id:
-                type: string
-                example: wegrh424h-b752-rw4c-76af-s23i3gby3gl1
-                nullable: false
               diary_flavor_list:
                 type: array
                 items:
