@@ -1,7 +1,6 @@
 CREATE TABLE `diaries` (
   id BINARY(16) NOT NULL DEFAULT (UUID_TO_BIN(UUID(), 1)),
   diary_equipments_id BINARY(16) NOT NULL,
-  image_id BINARY(16),
   sucking_text VARCHAR(255),
   creator_evaluation FLOAT NOT NULL,
   taste_evaluation FLOAT NOT NULL,
@@ -195,7 +194,6 @@ ALTER TABLE `user_charcoals` ADD FOREIGN KEY (`user_id`) REFERENCES `users` (`id
 ALTER TABLE `user_diaries` ADD FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
 ALTER TABLE `user_diaries` ADD FOREIGN KEY (`diary_id`) REFERENCES `diaries` (`id`);
 ALTER TABLE `diaries` ADD FOREIGN KEY (`diary_equipments_id`) REFERENCES `diary_equipments` (`id`);
-ALTER TABLE `diaries` ADD FOREIGN KEY (`image_id`) REFERENCES `diary_images` (`id`);
 ALTER TABLE `diary_flavors` ADD FOREIGN KEY (`user_flavor_id`) REFERENCES `user_flavors` (`flavor_id`);
 ALTER TABLE `diary_flavors` ADD FOREIGN KEY (`diary_id`) REFERENCES `diaries` (`id`);
 ALTER TABLE `diary_equipments` ADD FOREIGN KEY (`user_bottle_id`) REFERENCES `user_bottles` (`bottle_id`);
