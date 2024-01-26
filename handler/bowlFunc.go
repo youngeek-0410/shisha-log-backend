@@ -7,12 +7,12 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func BowlsGet(bowls *bowl.Bowls) gin.HandlerFunc {
-	return func(c *gin.Context) {
-		result := bowls.GetAll()
-		c.JSON(http.StatusOK, result)
-	}
-}
+// func BowlsGet(bowls *bowl.Bowls) gin.HandlerFunc {
+// 	return func(c *gin.Context) {
+// 		result := bowls.GetAll()
+// 		c.JSON(http.StatusOK, result)
+// 	}
+// }
 
 func UserBowlsGet(userBowls *bowl.UserBowls) gin.HandlerFunc {
 	return func(c *gin.Context) {

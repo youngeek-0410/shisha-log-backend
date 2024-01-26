@@ -48,7 +48,7 @@ func (r *UserBottles) UserBottles(user_id string) ([]UserBottle, error) {
 	var userBottles []UserBottle
 	binaryUUID := lib.ParseUUIDStrToBin(user_id)
 
-	if err := db.Table("user_bottle").Select("user_bottle.bottle_id, bottle.name, bottle_brand.name").Joins("inner join bottle on user_bottle.bottle_id = bottle.id").Joins("inner join bottle_brand on bottle.brand_id = bottle_brand.id").Where("user_bottle.user_id = ?", binaryUUID).Find(&userBottles).Error; err != nil {
+	if err := db.Table("user_bottles").Select("user_bottles.bottle_id, bottles.name, bottle_brands.name").Joins("inner join bottles on user_bottles.bottle_id = bottles.id").Joins("inner join bottle_brands on bottles.brand_id = bottle_brands.id").Where("user_bottles.user_id = ?", binaryUUID).Find(&userBottles).Error; err != nil {
 		return nil, err
 	}
 

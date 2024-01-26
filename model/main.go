@@ -1,8 +1,6 @@
 package model
 
 import (
-	"shisha-log-backend/model/bottle"
-	"shisha-log-backend/model/bowl"
 	"time"
 
 	"github.com/google/uuid"
@@ -13,31 +11,6 @@ type Base struct {
 	CreatedAt time.Time
 	UpdatedAt time.Time
 	DeletedAt *time.Time `sql:"index"`
-}
-
-type User struct {
-	Base
-	Name    string
-	Diaries *Diaries
-}
-
-type Diary struct {
-	Base
-	Flavor           []Flavor
-	Bottle           bottle.Bottle
-	Bowl             bowl.Bowl
-	HeatManagement   HeatManagement
-	Chacoal          Chacoal
-	Temperature      *float64
-	Humidity         *float64
-	CreatorGoodPoint *string
-	CreatorBadPoint  *string
-	CreatorStar      int
-	TasteStar        int
-}
-
-type Diaries struct {
-	Items []Diary
 }
 
 type Flavor struct {

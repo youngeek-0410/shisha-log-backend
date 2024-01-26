@@ -10,7 +10,7 @@ import (
 )
 
 func main() {
-	diaries := diary.New()
+	userDiaries := diary.NewUserDiary()
 	userEquipments := handler.NewUserEquipments()
 
 	lib.DBOpen()
@@ -24,7 +24,7 @@ func main() {
 	// 	},
 	// }))
 
-	r.GET("/diary", handler.DiariesGet(diaries))
+	r.GET("/diary/:user_id", handler.GetUserDiaries(userDiaries))
 	r.GET("/user/:user_id/equipment", handler.UserEquipmentsGet(userEquipments))
 
 	r.Run(":8080")

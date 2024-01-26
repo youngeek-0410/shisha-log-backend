@@ -6,15 +6,15 @@ import (
 	"github.com/google/uuid"
 )
 
-type Bowl struct {
-	ID        uuid.UUID `json:"id"`
-	Name      string    `json:"name"`
-	BowlBrand uuid.UUID `json:"brand_id"`
-}
+// type Bowl struct {
+// 	ID        uuid.UUID `json:"id"`
+// 	Name      string    `json:"name"`
+// 	BowlBrand uuid.UUID `json:"brand_id"`
+// }
 
-type Bowls struct {
-	Items []Bowl
-}
+// type Bowls struct {
+// 	Items []Bowl
+// }
 
 type UserBowl struct {
 	BowlID    uuid.UUID `json:"id"`
@@ -26,29 +26,29 @@ type UserBowls struct {
 	Items []UserBowl
 }
 
-func New() *Bowls {
-	return &Bowls{}
-}
+// func New() *Bowls {
+// 	return &Bowls{}
+// }
 
 func NewUserBowls() *UserBowls {
 	return &UserBowls{}
 }
 
-func (r *Bowls) GetAll() []Bowl {
-	db := lib.GetDBConn().DB
-	var bowls []Bowl
-	if err := db.Find(&bowls).Error; err != nil {
-		return nil
-	}
-	return bowls
-}
+// func (r *Bowls) GetAll() []Bowl {
+// 	db := lib.GetDBConn().DB
+// 	var bowls []Bowl
+// 	if err := db.Find(&bowls).Error; err != nil {
+// 		return nil
+// 	}
+// 	return bowls
+// }
 
 func (r *UserBowls) UserBowls(user_id string) ([]UserBowl, error) {
 	db := lib.GetDBConn().DB
 	var userBowls []UserBowl
 	binaryUUID := lib.ParseUUIDStrToBin(user_id)
 
-	if err := db.Table("user_bowl").Select("user_bowl.bowl_id, bowl.name, bowl_brand.name").Joins("inner join bowl on user_bowl.bowl_id = bowl.id").Joins("inner join bowl_brand on bowl.brand_id = bowl_brand.id").Where("user_bowl.user_id = ?", binaryUUID).Find(&userBowls).Error; err != nil {
+	if err := db.Table("user_bowls").Select("user_bowls.bowl_id, bowls.name, bowl_brands.name").Joins("inner join bowls on user_bowls.bowl_id = bowls.id").Joins("inner join bowl_brands on bowls.brand_id = bowl_brands.id").Where("user_bowls.user_id = ?", binaryUUID).Find(&userBowls).Error; err != nil {
 		return nil, err
 	}
 
