@@ -7,7 +7,6 @@ CREATE TABLE `diaries` (
   creator_good_points VARCHAR(255),
   creator_bad_points VARCHAR(255),
   taste_comments VARCHAR(255),
-  is_created BOOLEAN NOT NULL,
   create_date DATE NOT NULL,
   created_at DATETIME,
   updated_at DATETIME,
