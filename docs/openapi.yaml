@@ -457,6 +457,10 @@ components:
     GetDiaryResponse:
       type: object
       properties:
+        id:
+          type: string
+          example: wegrh424h-b752-rw4c-76af-s23i3gby3gl1
+          nullable: false
         user_diary_list:
           type: array
           items:
@@ -516,11 +520,6 @@ components:
       required:
         - receiver_name
       properties:
-        id:
-          type: string
-          description: 作ったシーシャのID
-          example: wegrh424h-b752-rw4c-76af-s23i3gby3gl1
-          nullable: false
         user_id:
           type: string
           description: ユーザーID
