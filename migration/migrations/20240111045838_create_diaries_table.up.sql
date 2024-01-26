@@ -27,7 +27,6 @@ CREATE TABLE `diary_flavors` (
 
 CREATE TABLE `diary_equipments` (
   id BINARY(16) NOT NULL DEFAULT (UUID_TO_BIN(UUID(), 1)),
-  diary_flavors_id BINARY(16) NOT NULL,
   user_bottle_id BINARY(16) NOT NULL,
   user_bowl_id BINARY(16) NOT NULL,
   user_heat_management_id BINARY(16) NOT NULL,
@@ -198,8 +197,7 @@ ALTER TABLE `user_diaries` ADD FOREIGN KEY (`diary_id`) REFERENCES `diaries` (`i
 ALTER TABLE `diaries` ADD FOREIGN KEY (`diary_equipments_id`) REFERENCES `diary_equipments` (`id`);
 ALTER TABLE `diaries` ADD FOREIGN KEY (`image_id`) REFERENCES `diary_images` (`id`);
 ALTER TABLE `diary_flavors` ADD FOREIGN KEY (`user_flavor_id`) REFERENCES `user_flavors` (`flavor_id`);
--- ALTER TABLE `diary_flavors` ADD FOREIGN KEY (`diary_id`) REFERENCES `diaries` (`id`);
-ALTER TABLE `diary_equipments` ADD FOREIGN KEY (`diary_flavors_id`) REFERENCES `diary_flavors` (`id`);
+ALTER TABLE `diary_flavors` ADD FOREIGN KEY (`diary_id`) REFERENCES `diaries` (`id`);
 ALTER TABLE `diary_equipments` ADD FOREIGN KEY (`user_bottle_id`) REFERENCES `user_bottles` (`bottle_id`);
 ALTER TABLE `diary_equipments` ADD FOREIGN KEY (`user_bowl_id`) REFERENCES `user_bowls` (`bowl_id`);
 ALTER TABLE `diary_equipments` ADD FOREIGN KEY (`user_heat_management_id`) REFERENCES `user_heat_managements` (`heat_management_id`);
