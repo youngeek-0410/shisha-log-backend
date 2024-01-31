@@ -39,7 +39,7 @@ func (r *UserFlavors) UserFlavors(user_id string) ([]UserFlavor, error) {
 	var userFlavors []UserFlavor
 	binaryUUID := lib.ParseUUIDStrToBin(user_id)
 
-	if err := db.Table("user_flavor").Select("user_flavor.flavor_id, flavor.name, flavor_brand.name").Joins("inner join flavor on user_flavor.flavor_id = flavor.id").Joins("inner join flavor_brand on flavor.brand_id = flavor_brand.id").Where("user_flavor.user_id = ?", binaryUUID).Find(&userFlavors).Error; err != nil {
+	if err := db.Table("user_flavors").Select("user_flavors.flavor_id, flavors.name, flavor_brands.name").Joins("inner join flavors on user_flavors.flavor_id = flavors.id").Joins("inner join flavor_brands on flavors.brand_id = flavor_brands.id").Where("user_flavors.user_id = ?", binaryUUID).Find(&userFlavors).Error; err != nil {
 		return nil, err
 	}
 

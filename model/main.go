@@ -1,8 +1,6 @@
 package model
 
 import (
-	"shisha-log-backend/model/bottle"
-	"shisha-log-backend/model/bowl"
 	"time"
 
 	"github.com/google/uuid"
@@ -23,9 +21,9 @@ type User struct {
 
 type Diary struct {
 	Base
-	Flavor           []Flavor
-	Bottle           bottle.Bottle
-	Bowl             bowl.Bowl
+	Flavor []Flavor
+	// Bottle bottle.Bottle
+	// Bowl             bowl.Bowl
 	HeatManagement   HeatManagement
 	Chacoal          Chacoal
 	Temperature      *float64
