@@ -27,10 +27,10 @@ type UserFlavors struct {
 }
 
 type DiaryFlavor struct {
-	ID         uuid.UUID
-	FlavorName string
-	BrandName  string
-	Amount     float64
+	ID         uuid.UUID `json:"id"`
+	FlavorName string    `gorm:"column:name" json:"flavor_name"`
+	BrandName  string    `gorm:"column:name" json:"brand_name"`
+	Amount     float64   `json:"amount"`
 }
 
 type DiaryFlavors struct {
