@@ -26,12 +26,27 @@ type UserFlavors struct {
 	Items []UserFlavor
 }
 
+type DiaryFlavor struct {
+	ID         uuid.UUID
+	FlavorName string
+	BrandName  string
+	Amount     float64
+}
+
+type DiaryFlavors struct {
+	Items []DiaryFlavor
+}
+
 func New() *Flavors {
 	return &Flavors{}
 }
 
 func NewUserFlavors() *UserFlavors {
 	return &UserFlavors{}
+}
+
+func NewDiaryFlavors() *DiaryFlavors {
+	return &DiaryFlavors{}
 }
 
 func (r *UserFlavors) UserFlavors(user_id string) ([]UserFlavor, error) {
@@ -44,4 +59,16 @@ func (r *UserFlavors) UserFlavors(user_id string) ([]UserFlavor, error) {
 	}
 
 	return userFlavors, nil
+}
+
+func (r *DiaryFlavors) DiaryFlavors(diary_id string) ([]DiaryFlavor, error) {
+	db := lib.GetDBConn().DB
+	var diaryFlavors []DiaryFlavor
+	diaryUUID := lib.ParseUUIDStrToBin(diary_id)
+
+	if err := db.Table("diary_flavors").Select("flavors.id, flavors.name, flavor_brands.name, diary_flavors.amount").Joins("inner join flavors on diary_flavors.user_flavor_id = flavors.id").Joins("inner join flavor_brands on flavors.brand_id = flavor_brands.id").Where("diary_id = ?", diaryUUID).Find(&diaryFlavors).Error; err != nil {
+		return nil, err
+	}
+
+	return diaryFlavors, nil
 }
