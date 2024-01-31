@@ -7,25 +7,6 @@ import (
 	"github.com/google/uuid"
 )
 
-// type Diary struct {
-// 	ID              uuid.UUID
-// 	DiaryEquipments uuid.UUID
-// SuckingText       string
-// CreatorEvaluation float64
-// TasteEvaluation   float64
-// CreatorGoodPoints string
-// CreatorBadPoints  string
-// TasteComments     string
-// CreateDate        time.Time
-// CreatedAt         time.Time
-// UpdatedAt         time.Time
-// }
-
-// type DiaryEquipments struct {
-// 	ID           uuid.UUID
-// 	DiaryFlavors []DiaryFlavor
-// }
-
 type FlavorBrand struct {
 	ID        uuid.UUID
 	Name      string
@@ -40,32 +21,50 @@ type Flavor struct {
 	// CreatedAt  time.Time
 }
 
-type UserFlavor struct {
-	ID     uuid.UUID
-	Flavor Flavor `gorm:"type:uuid" gorm:"foreignKey:ID" json:"flavor_id"`
-}
+// type DiaryFlavor struct {
+// 	ID         uuid.UUID `gorm:"type:uuid" json:"id"`
+// 	FlavorName string
+// 	BrandName  string
+// 	Amount     float64 `json:"amount"`
+// }
 
-type DiaryFlavor struct {
-	ID         uuid.UUID `gorm:"type:uuid" json:"id"`
-	FlavorName string
-	BrandName  string
-	Amount     float64 `json:"amount"`
-}
+// type DiaryFlavor struct {
+// 	ID           uuid.UUID `gorm:"type:uuid" json:"id"`
+// 	UserFlavorID uuid.UUID
+// 	DiaryID      uuid.UUID
+// 	Amount       float64
+// }
+
+// type UserDiary struct {
+// 	ID                uuid.UUID     `json:"id"`
+// 	DiaryFlavorList   []DiaryFlavor `gorm:"foreignKey:ID" json:"user_flavor_list"`
+// 	CreateDate        time.Time     `json:"create_date"`
+// 	CreatorEvaluation float64       `json:"creator_evaluation"`
+// 	TasteEvaluation   float64       `json:"taste_evaluation"`
+// }
 
 type UserDiary struct {
-	ID                uuid.UUID     `json:"id"`
-	DiaryFlavorList   []DiaryFlavor `gorm:"foreignKey:ID" json:"user_flavor_list"`
-	CreateDate        time.Time     `json:"create_date"`
-	CreatorEvaluation float64       `json:"creator_evaluation"`
-	TasteEvaluation   float64       `json:"taste_evaluation"`
+	ID      uuid.UUID `json:"id"`
+	UserID  uuid.UUID
+	DiaryID uuid.UUID
+	// Diaries []Diary `gorm:"foreignKey:ID;references:DiaryID"`
+	SuckingText string
+}
+
+type Diary struct {
+	ID                uuid.UUID
+	DiaryEquipmentsID uuid.UUID
+	SuckingText       string
+	CreatorEvaluation float64
+	TasteEvaluation   float64
+	CreatorGoodPoints string
+	CreatorBadPoints  string
+	TasteComments     string
+	CreateDate        time.Time
 }
 
 type UserDiaries struct {
 	Items []UserDiary `json:"user_diary_list"`
-}
-
-type Result struct {
-	UserDiaryList []UserDiary
 }
 
 func NewUserDiary() *UserDiaries {
@@ -106,32 +105,34 @@ func (r *UserDiaries) UserDiaries(userID string) ([]UserDiary, error) {
 	var userDiaries []UserDiary
 	// err := db.Where("user_id = ?", userID).Preload("DiaryFlavors.Flavor.FlavorBrand").Find(&diaries).Error
 	// err := db.Preload("DiaryFlavor.Flavor.FlavorBrand").Where("user_id = ?", binaryUUID).Find(&userDiaries).Error
-	err := db.Preload("DiaryFlavorList.UserFlavorID.FlavorID.BrandID").Where("user_id = ?", binaryUUID).Find(&userDiaries).Error
-	// err := db.Table("diary_list").Joins("inner join diary on diary_list.diary_id = diary.id").Joins("inner join diary_flavors on diary.id = diary_flavors.diary_id").Joins("inner join user_flavor on diary_flavors.user_flavor_id = user_flavors.flavor_id").Joins("inner join flavor on user_flavor.flavor_id = flavor.id").Joins("inner join flavor_brand on flavor.brand_id = flavor_brand.id").Find(&userDiaries).Error
+	// err := db.Preload("DiaryFlavorList.UserFlavorID.FlavorID.BrandID").Where("user_id = ?", binaryUUID).Find(&userDiaries).Error
+	// err := db.Table("user_diaries").Joins("inner join diaries on user_diaries.diary_id = diary.id").Joins("inner join diary_flavors on diary.id = diary_flavors.diary_id").Joins("inner join user_flavor on diary_flavors.user_flavor_id = user_flavors.flavor_id").Joins("inner join flavor on user_flavor.flavor_id = flavor.id").Joins("inner join flavor_brand on flavor.brand_id = flavor_brand.id").Where("user_id = ?", binaryUUID).Find(&userDiaries).Error
+	// err := db.Table("user_diaries").Joins("inner join diaries on user_diaries.diary_id = diary.id").Where("user_id = ?", binaryUUID).Find(&userDiaries).Error
+	err := db.Table("user_diaries").Select("user_diaries.ID, diaries.sucking_text").Joins("inner join diaries on user_diaries.diary_id = diaries.id").Where("user_id = ?", binaryUUID).Find(&userDiaries).Error
 	if err != nil {
 		return nil, err
 	}
 
 	// 各日記に対して、フレーバー情報を取得
-	for _, diary := range userDiaries {
-		var diaryFlavors []DiaryFlavor
-		for _, df := range diary.DiaryFlavorList {
-			diaryFlavors = append(diaryFlavors, DiaryFlavor{
-				ID:         df.ID,
-				FlavorName: df.FlavorName,
-				BrandName:  df.BrandName,
-				Amount:     float64(df.Amount),
-			})
-		}
+	// for _, diary := range userDiaries {
+	// 	var diaryFlavors []DiaryFlavor
+	// 	for _, df := range diary.DiaryFlavorList {
+	// 		diaryFlavors = append(diaryFlavors, DiaryFlavor{
+	// 			ID: df.ID,
+	// FlavorName: df.FlavorName,
+	// BrandName:  df.BrandName,
+	// 			Amount: float64(df.Amount),
+	// 		})
+	// 	}
 
-		userDiaries = append(userDiaries, UserDiary{
-			ID:                diary.ID,
-			DiaryFlavorList:   diaryFlavors,
-			CreateDate:        diary.CreateDate,
-			CreatorEvaluation: diary.CreatorEvaluation,
-			TasteEvaluation:   diary.TasteEvaluation,
-		})
-	}
+	// 	userDiaries = append(userDiaries, UserDiary{
+	// 		ID:                diary.ID,
+	// 		DiaryFlavorList:   diaryFlavors,
+	// 		CreateDate:        diary.CreateDate,
+	// 		CreatorEvaluation: diary.CreatorEvaluation,
+	// 		TasteEvaluation:   diary.TasteEvaluation,
+	// 	})
+	// }
 
 	return userDiaries, nil
 }
