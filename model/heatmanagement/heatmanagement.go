@@ -26,10 +26,6 @@ type UserHeatManagements struct {
 	Items []UserHeatManagement
 }
 
-// func New() *HeatManagements {
-// 	return &HeatManagements{}
-// }
-
 func NewUserHeatManagements() *UserHeatManagements {
 	return &UserHeatManagements{}
 }

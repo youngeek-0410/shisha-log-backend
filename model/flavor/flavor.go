@@ -6,16 +6,6 @@ import (
 	"github.com/google/uuid"
 )
 
-type Flavor struct {
-	ID          uuid.UUID `json:"id"`
-	Name        string    `json:"name"`
-	FlavorBrand uuid.UUID `json:"brand_id"`
-}
-
-type Flavors struct {
-	Items []Flavor
-}
-
 type UserFlavor struct {
 	FlavorID   uuid.UUID `json:"id"`
 	FlavorName string    `gorm:"column:name" json:"flavor_name"`
@@ -35,10 +25,6 @@ type DiaryFlavor struct {
 
 type DiaryFlavors struct {
 	Items []DiaryFlavor
-}
-
-func New() *Flavors {
-	return &Flavors{}
 }
 
 func NewUserFlavors() *UserFlavors {

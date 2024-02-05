@@ -6,16 +6,6 @@ import (
 	"github.com/google/uuid"
 )
 
-type Bottle struct {
-	ID          uuid.UUID `json:"id"`
-	Name        string    `json:"name"`
-	BottleBrand uuid.UUID `json:"brand_id"`
-}
-
-type Bottles struct {
-	Items []Bottle
-}
-
 type UserBottle struct {
 	BottleID   uuid.UUID `json:"id"`
 	BottleName string    `gorm:"column:name" json:"bottle_name"`
@@ -26,22 +16,9 @@ type UserBottles struct {
 	Items []UserBottle
 }
 
-func New() *Bottles {
-	return &Bottles{}
-}
-
 func NewUserBottles() *UserBottles {
 	return &UserBottles{}
 }
-
-// func (r *Bottles) GetAll() []Bottle {
-// 	db := lib.GetDBConn().DB
-// 	var bottles []Bottle
-// 	if err := db.Find(&bottles).Error; err != nil {
-// 		return nil
-// 	}
-// 	return bottles
-// }
 
 func (r *UserBottles) UserBottles(user_id string) ([]UserBottle, error) {
 	db := lib.GetDBConn().DB

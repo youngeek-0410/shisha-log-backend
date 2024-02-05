@@ -13,3 +13,13 @@ func ParseUUIDStrToBin(strUUID string) []byte {
 	}
 	return binaryUUID
 }
+
+func ParseUUIDBinToStr(binaryUUID []byte) string {
+	UUID, parseErr := uuid.ParseBytes(binaryUUID)
+	if parseErr != nil {
+		return parseErr.Error()
+	}
+	strUUID := UUID.String()
+
+	return strUUID
+}

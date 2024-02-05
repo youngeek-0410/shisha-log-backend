@@ -6,16 +6,6 @@ import (
 	"github.com/google/uuid"
 )
 
-// type Charcoal struct {
-// 	ID            uuid.UUID `json:"id"`
-// 	Name          string    `json:"name"`
-// 	CharcoalBrand uuid.UUID `json:"brand_id"`
-// }
-
-// type Charcoals struct {
-// 	Items []Charcoal
-// }
-
 type UserCharcoal struct {
 	CharcoalID   uuid.UUID `json:"id"`
 	CharcoalName string    `gorm:"column:name" json:"charcoal_name"`
@@ -25,10 +15,6 @@ type UserCharcoal struct {
 type UserCharcoals struct {
 	Items []UserCharcoal
 }
-
-// func New() *Charcoals {
-// 	return &Charcoals{}
-// }
 
 func NewUserCharcoals() *UserCharcoals {
 	return &UserCharcoals{}
