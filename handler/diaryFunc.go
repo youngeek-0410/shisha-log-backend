@@ -7,18 +7,6 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// func UserDiariesGet(userDiaries *diary.UserDiaries) gin.HandlerFunc {
-// 	return func(c *gin.Context) {
-// 		result, err := userDiaries.UserDiaries(c.Param("user_id"))
-// 		if err != nil {
-// 			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
-// 			return
-// 		}
-
-//			c.JSON(http.StatusOK, result)
-//		}
-//	}
-
 func GetUserDiaries(userDiaries *diary.UserDiaries) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		result, err := userDiaries.UserDiaries(c.Param("user_id"))
