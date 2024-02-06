@@ -6,16 +6,6 @@ import (
 	"github.com/google/uuid"
 )
 
-type HeatManagement struct {
-	ID                  uuid.UUID `json:"id"`
-	Name                string    `json:"name"`
-	HeatManagementBrand uuid.UUID `json:"brand_id"`
-}
-
-type HeatManagements struct {
-	Items []HeatManagement
-}
-
 type UserHeatManagement struct {
 	HeatManagementID   uuid.UUID `json:"id"`
 	HeatManagementName string    `gorm:"column:name" json:"heat_management_name"`
