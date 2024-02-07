@@ -27,7 +27,7 @@ type DiaryRequest struct {
 	ImageID         string          `json:"image_id"`
 	SuckingText     string          `json:"sucking_text"`
 	Review          DiaryReview     `json:"review"`
-	CreateDate      time.Time       `json:"create_date"`
+	CreateDate      string          `json:"create_date"`
 }
 
 type DiaryEquipments struct {
