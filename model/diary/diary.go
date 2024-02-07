@@ -58,8 +58,8 @@ type DiaryReview struct {
 }
 
 type Diary struct {
-	ID                uuid.UUID  `gorm:"column:id"`
-	DiaryEquipmentsID uuid.UUID  `gorm:"column:diary_equipments_id"`
+	ID                []byte     `gorm:"column:id"`
+	DiaryEquipmentsID []byte     `gorm:"column:diary_equipments_id"`
 	SuckingText       *string    `gorm:"column:sucking_text"`
 	Temperature       *float64   `gorm:"column:temperature"`
 	Humidity          *float64   `gorm:"column:humidity"`

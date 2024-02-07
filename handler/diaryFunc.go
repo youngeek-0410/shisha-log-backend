@@ -28,21 +28,28 @@ func CreateDiary(c *gin.Context) {
 		return
 	}
 
-	diaryID := uuid.New()
-	diaryEquipmentsID := uuid.New()
+	diaryID, err := uuid.New().MarshalBinary()
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+	}
+	diaryEquipmentsID, err := uuid.New().MarshalBinary()
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+	}
 
+	// テストのために一時的にdiary_equipments_idの外部キー制約外してるから戻す
 	item := diary.Diary{
 		ID:                diaryID,
 		DiaryEquipmentsID: diaryEquipmentsID,
-		// SuckingText:       &req.SuckingText,
-		// Temperature:       &req.Equipments.Climate.Temperature,
-		// Humidity:          &req.Equipments.Climate.Humidity,
+		SuckingText:       &req.SuckingText,
+		Temperature:       &req.Equipments.Climate.Temperature,
+		Humidity:          &req.Equipments.Climate.Humidity,
 		CreatorEvaluation: req.Review.CreatorEvaluation,
 		TasteEvaluation:   req.Review.TasteEvaluation,
-		// CreatorGoodPoints: &req.Review.CreatorGoodPoints,
-		// CreatorBadPoints:  &req.Review.CreatorBadPoints,
-		// TasteComments:     &req.Review.TasteComments,
-		CreateDate: stringToTime(req.CreateDate),
+		CreatorGoodPoints: &req.Review.CreatorGoodPoints,
+		CreatorBadPoints:  &req.Review.CreatorBadPoints,
+		TasteComments:     &req.Review.TasteComments,
+		CreateDate:        stringToTime(req.CreateDate),
 	}
 
 	fmt.Println(item)
@@ -50,23 +57,3 @@ func CreateDiary(c *gin.Context) {
 
 	c.JSON(http.StatusOK, gin.H{"message": "Successful operation"})
 }
-
-// type DiaryPostRequest struct {
-// 	Id    int    `json:"id"`
-// 	Title string `json:"title"`
-// }
-
-// func DiaryPost(post *diary.Diaries) gin.HandlerFunc {
-// 	return func(c *gin.Context) {
-// 		requestBody := DiaryPostRequest{}
-// 		c.Bind(&requestBody)
-
-// 		item := diary.Diary{
-// 			Id:    requestBody.Id,
-// 			Title: requestBody.Title,
-// 		}
-// 		post.Add(item)
-
-// 		c.Status(http.StatusNoContent)
-// 	}
-// }
