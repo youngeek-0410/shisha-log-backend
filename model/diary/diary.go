@@ -1,6 +1,7 @@
 package diary
 
 import (
+	"fmt"
 	"shisha-log-backend/lib"
 	"shisha-log-backend/model/flavor"
 	"time"
@@ -56,6 +57,26 @@ type DiaryReview struct {
 	TasteComments     string  `json:"taste_comments"`
 }
 
+type Diary struct {
+	ID                uuid.UUID  `gorm:"column:id"`
+	DiaryEquipmentsID uuid.UUID  `gorm:"column:diary_equipments_id"`
+	SuckingText       *string    `gorm:"column:sucking_text"`
+	Temperature       *float64   `gorm:"column:temperature"`
+	Humidity          *float64   `gorm:"column:humidity"`
+	CreatorEvaluation float64    `gorm:"column:creator_evaluation"`
+	TasteEvaluation   float64    `gorm:"column:taste_evaluation"`
+	CreatorGoodPoints *string    `gorm:"column:creator_good_points"`
+	CreatorBadPoints  *string    `gorm:"column:creator_bad_points"`
+	TasteComments     *string    `gorm:"column:taste_comments"`
+	CreateDate        time.Time  `gorm:"column:create_date"`
+	CreatedAt         *time.Time `gorm:"column:created_at"`
+	UpdatedAt         *time.Time `gorm:"column:updated_at"`
+}
+
+type Diaries struct {
+	Items []Diary
+}
+
 func NewUserDiaries() *UserDiaries {
 	return &UserDiaries{}
 }
@@ -84,10 +105,10 @@ func (r *UserDiaries) UserDiaries(user_id string) ([]UserDiary, error) {
 	return userDiaries, nil
 }
 
-// func (r *Diaries) Add(d Diary) {
-// 	r.Items = append(r.Items, d)
-// 	db := lib.GetDBConn().DB
-// 	if err := db.Create(d).Error; err != nil {
-// 		fmt.Println("err!")
-// 	}
-// }
+func (r *Diaries) Add(d Diary) {
+	r.Items = append(r.Items, d)
+	db := lib.GetDBConn().DB
+	if err := db.Create(&d).Error; err != nil {
+		fmt.Println("err!")
+	}
+}
