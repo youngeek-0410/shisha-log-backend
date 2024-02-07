@@ -12,8 +12,8 @@ type UserDiary struct {
 	ID                uuid.UUID            `gorm:"column:id" json:"id"`
 	DiaryFlavors      []flavor.DiaryFlavor `gorm:"foreignKey:ID" json:"diary_flavor_list"`
 	CreateDate        time.Time            `gorm:"column:create_date" json:"create_date"`
-	CreatorEvaluation string               `gorm:"column:creator_evaluation" json:"creator_evaluation"`
-	TasteEvaluation   string               `gorm:"column:taste_evaluation" json:"taste_evaluation"`
+	CreatorEvaluation float64              `gorm:"column:creator_evaluation" json:"creator_evaluation"`
+	TasteEvaluation   float64              `gorm:"column:taste_evaluation" json:"taste_evaluation"`
 }
 
 type UserDiaries struct {
