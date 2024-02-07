@@ -501,7 +501,7 @@ components:
                     brand_name: Al Fakher
                     amount: 6
               create_date:
-                type: object
+                type: string
                 description: 作成された日付
                 example: 2023-12-01
                 nullable: false
@@ -562,25 +562,23 @@ components:
                   description: 湿度
                   example: 53
         diary_flavor_list:
-          type: array
-          items:
-            type: object
-            properties:
-              id:
-                type: string
-                description: フレーバーのID
-                nullable: false
-              amount:
-                type: number
-                description: フレーバーを入れた量（g）
-                nullable: false
-            example:
-              - id: 631437-2jd8-1is9-3js8-fb22a0fhwi41
-                amount: 3.6
-              - id: test
-                amount: 2.4
-              - id: test2
-                amount: 6
+          type: object
+          properties:
+            id:
+              type: string
+              description: フレーバーのID
+              nullable: false
+            amount:
+              type: number
+              description: フレーバーを入れた量（g）
+              nullable: false
+          example:
+            - id: 631437-2jd8-1is9-3js8-fb22a0fhwi41
+              amount: 3.6
+            - id: test
+              amount: 2.4
+            - id: test2
+              amount: 6
         image_id:
           type: string
           description: 画像のuuid
@@ -619,7 +617,7 @@ components:
               example: これはいいシーシャだと思います.
               nullable: true
         create_date:
-          type: object
+          type: string
           description: 作成された日付
           example: 2023-12-01
           nullable: false
