@@ -18,6 +18,18 @@ func GetUserDiaries(userDiaries *diary.UserDiaries) gin.HandlerFunc {
 	}
 }
 
+func CreateDiary(c *gin.Context) {
+	var req diary.DiaryRequest
+	if err := c.ShouldBindJSON(&req); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	// db :=
+
+	c.JSON(http.StatusOK, gin.H{"message": "Successful operation"})
+}
+
 // type DiaryPostRequest struct {
 // 	Id    int    `json:"id"`
 // 	Title string `json:"title"`

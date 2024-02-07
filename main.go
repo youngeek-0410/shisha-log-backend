@@ -26,6 +26,7 @@ func main() {
 
 	r.GET("/diary/:user_id", handler.GetUserDiaries(userDiaries))
 	r.GET("/user/:user_id/equipment", handler.UserEquipmentsGet(userEquipments))
+	r.POST("/diary", handler.CreateDiary)
 
 	r.Run(":8080")
 }

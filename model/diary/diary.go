@@ -20,6 +20,42 @@ type UserDiaries struct {
 	Items []UserDiary `json:"user_diary_list"`
 }
 
+type DiaryRequest struct {
+	UserID          string          `json:"user_id"`
+	Equipments      DiaryEquipments `json:"equipments"`
+	DiaryFlavorList []FlavorAmount  `json:"diary_flavor_list"`
+	ImageID         string          `json:"image_id"`
+	SuckingText     string          `json:"sucking_text"`
+	Review          DiaryReview     `json:"review"`
+	CreateDate      time.Time       `json:"create_date"`
+}
+
+type DiaryEquipments struct {
+	BowlID           string  `json:"bowl_id"`
+	BottleID         string  `json:"bottle_id"`
+	HeatManagementID string  `json:"heat_management_id"`
+	CharcoalID       string  `json:"charcoal_id"`
+	Climate          Climate `json:"climate"`
+}
+
+type Climate struct {
+	Temperature float64 `json:"temperature"`
+	Humidity    float64 `json:"humidity"`
+}
+
+type FlavorAmount struct {
+	ID     string  `json:"id"`
+	Amount float64 `json:"amount"`
+}
+
+type DiaryReview struct {
+	CreatorEvaluation float64 `json:"creator_evaluation"`
+	TasteEvaluation   float64 `json:"taste_evaluation"`
+	CreatorGoodPoints string  `json:"creator_good_points"`
+	CreatorBadPoints  string  `json:"creator_bad_points"`
+	TasteComments     string  `json:"taste_comments"`
+}
+
 func NewUserDiaries() *UserDiaries {
 	return &UserDiaries{}
 }
@@ -47,3 +83,11 @@ func (r *UserDiaries) UserDiaries(user_id string) ([]UserDiary, error) {
 
 	return userDiaries, nil
 }
+
+// func (r *Diaries) Add(d Diary) {
+// 	r.Items = append(r.Items, d)
+// 	db := lib.GetDBConn().DB
+// 	if err := db.Create(d).Error; err != nil {
+// 		fmt.Println("err!")
+// 	}
+// }
