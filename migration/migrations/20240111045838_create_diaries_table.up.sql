@@ -2,6 +2,8 @@ CREATE TABLE `diaries` (
   id BINARY(16) NOT NULL DEFAULT (UUID_TO_BIN(UUID(), 1)),
   diary_equipments_id BINARY(16) NOT NULL,
   sucking_text VARCHAR(255),
+  temperature FLOAT,
+  humidity FLOAT,
   creator_evaluation FLOAT NOT NULL,
   taste_evaluation FLOAT NOT NULL,
   creator_good_points VARCHAR(255),
