@@ -20,7 +20,7 @@ tags:
   - name: diary
     description: Diary関連のapi
 paths:
-  /user/{id}/equipment:
+  /user/{user_id}/equipment:
     get:
       tags:
         - user
@@ -46,7 +46,7 @@ paths:
           description: Invalid ID supplied
         '404':
           description: Flavor not found
-  /user/{id}/flavor:
+  /user/{user_id}/flavor:
     get:
       tags:
         - user
@@ -72,7 +72,7 @@ paths:
           description: Invalid ID supplied
         '404':
           description: Flavor not found
-  /user/{id}/bottle:
+  /user/{user_id}/bottle:
     get:
       tags:
         - user
@@ -98,7 +98,7 @@ paths:
           description: Invalid ID supplied
         '404':
           description: Bottle not found
-  /user/{id}/bowl:
+  /user/{user_id}/bowl:
     get:
       tags:
         - user
@@ -124,7 +124,7 @@ paths:
           description: Invalid ID supplied
         '404':
           description: Bowl not found
-  /user/{id}/heat_management:
+  /user/{user_id}/heat_management:
     get:
       tags:
         - user
@@ -150,7 +150,7 @@ paths:
           description: Invalid ID supplied
         '404':
           description: Heat management not found
-  /user/{id}/charcoal:
+  /user/{user_id}/charcoal:
     get:
       tags:
         - user
