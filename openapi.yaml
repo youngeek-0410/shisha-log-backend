@@ -503,7 +503,7 @@ components:
               create_date:
                 type: string
                 description: 作成された日付
-                example: 2023-12-01
+                example: "2023-12-01"
                 nullable: false
               creator_evaluation:
                 type: number
@@ -619,5 +619,5 @@ components:
         create_date:
           type: string
           description: 作成された日付
-          example: 2023-12-01
+          example: "2023-12-01"
           nullable: false
