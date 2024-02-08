@@ -2,11 +2,11 @@ package handler
 
 import (
 	"net/http"
-	"shisha-log-backend/model/bottle"
-	"shisha-log-backend/model/bowl"
-	"shisha-log-backend/model/charcoal"
+	"shisha-log-backend/model/equipment/bottle"
+	"shisha-log-backend/model/equipment/bowl"
+	"shisha-log-backend/model/equipment/charcoal"
+	"shisha-log-backend/model/equipment/heatmanagement"
 	"shisha-log-backend/model/flavor"
-	"shisha-log-backend/model/heatmanagement"
 
 	"github.com/gin-gonic/gin"
 )

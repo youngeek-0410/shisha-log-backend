@@ -2,7 +2,7 @@ package handler
 
 import (
 	"net/http"
-	"shisha-log-backend/model/charcoal"
+	"shisha-log-backend/model/equipment/charcoal"
 
 	"github.com/gin-gonic/gin"
 )
