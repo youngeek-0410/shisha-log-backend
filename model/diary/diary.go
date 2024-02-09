@@ -1,7 +1,6 @@
 package diary
 
 import (
-	"fmt"
 	"shisha-log-backend/lib"
 	"shisha-log-backend/model/flavor"
 	"time"
@@ -105,10 +104,11 @@ func (r *UserDiaries) UserDiaries(user_id string) ([]UserDiary, error) {
 	return userDiaries, nil
 }
 
-func (r *Diaries) Add(d Diary) {
+func (r *Diaries) Add(d Diary) error {
 	r.Items = append(r.Items, d)
 	db := lib.GetDBConn().DB
 	if err := db.Create(&d).Error; err != nil {
-		fmt.Println("err!")
+		return err
 	}
+	return nil
 }
