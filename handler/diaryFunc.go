@@ -5,6 +5,7 @@ import (
 	"shisha-log-backend/lib"
 	"shisha-log-backend/model/diary"
 	"shisha-log-backend/model/equipment"
+	"shisha-log-backend/model/flavor"
 
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
@@ -25,6 +26,7 @@ func CreateDiary(c *gin.Context) {
 	var req diary.DiaryRequest
 	var diaries diary.Diaries
 	var diaryEquipments equipment.DiaryEquipments
+	var diaryFlavors flavor.PostDiaryFlavors
 
 	if err := c.ShouldBindJSON(&req); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
@@ -40,6 +42,23 @@ func CreateDiary(c *gin.Context) {
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
+	}
+
+	diaryFlavorItems := []flavor.PostDiaryFlavor{}
+	for _, diaryFlavor := range req.DiaryFlavorList {
+		diaryFlavorID, err := uuid.New().MarshalBinary()
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+			return
+		}
+
+		d := flavor.PostDiaryFlavor{
+			ID:           diaryFlavorID,
+			UserFlavorID: lib.ParseUUIDStrToBin(diaryFlavor.ID),
+			DiaryID:      diaryID,
+			Amount:       diaryFlavor.Amount,
+		}
+		diaryFlavorItems = append(diaryFlavorItems, d)
 	}
 
 	// テストのために一時的にimage_idの外部キー制約外してるから戻す
@@ -66,6 +85,11 @@ func CreateDiary(c *gin.Context) {
 		CreateDate:        stringToTime(req.CreateDate),
 	}
 
+	err = diaryFlavors.Add(diaryFlavorItems)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
 	err = diaryEquipments.Add(diaryEquipmentsItem)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})

@@ -76,7 +76,7 @@ func (r *DiaryFlavors) DiaryFlavors(diary_id string) ([]DiaryFlavor, error) {
 func (r *PostDiaryFlavors) Add(d []PostDiaryFlavor) error {
 	r.Items = append(r.Items, d...)
 	db := lib.GetDBConn().DB
-	if err := db.Create(&d).Error; err != nil {
+	if err := db.Table("diary_flavors").Create(&d).Error; err != nil {
 		return err
 	}
 	return nil
