@@ -2,6 +2,7 @@ package flavor
 
 import (
 	"shisha-log-backend/lib"
+	"time"
 
 	"github.com/google/uuid"
 )
@@ -25,6 +26,19 @@ type DiaryFlavor struct {
 
 type DiaryFlavors struct {
 	Items []DiaryFlavor
+}
+
+type PostDiaryFlavor struct {
+	ID           []byte     `gorm:"column:id"`
+	UserFlavorID []byte     `gorm:"column:user_flavor_id"`
+	DiaryID      []byte     `gorm:"column:diary_id"`
+	Amount       float64    `gorm:"column:amount"`
+	CreatedAt    *time.Time `gorm:"column:created_at"`
+	UpdatedAt    *time.Time `gorm:"column:updated_at"`
+}
+
+type PostDiaryFlavors struct {
+	Items []PostDiaryFlavor
 }
 
 func NewUserFlavors() *UserFlavors {
@@ -57,4 +71,13 @@ func (r *DiaryFlavors) DiaryFlavors(diary_id string) ([]DiaryFlavor, error) {
 	}
 
 	return diaryFlavors, nil
+}
+
+func (r *PostDiaryFlavors) Add(d []PostDiaryFlavor) error {
+	r.Items = append(r.Items, d...)
+	db := lib.GetDBConn().DB
+	if err := db.Create(&d).Error; err != nil {
+		return err
+	}
+	return nil
 }
