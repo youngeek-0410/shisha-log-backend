@@ -1,7 +1,6 @@
 package equipment
 
 import (
-	"fmt"
 	"shisha-log-backend/lib"
 	"time"
 )
@@ -21,10 +20,11 @@ type DiaryEquipments struct {
 	Items []DiaryEquipment
 }
 
-func (r *DiaryEquipments) DiaryEquipmentsAdd(d DiaryEquipment) {
+func (r *DiaryEquipments) Add(d DiaryEquipment) error {
 	r.Items = append(r.Items, d)
 	db := lib.GetDBConn().DB
 	if err := db.Create(&d).Error; err != nil {
-		fmt.Println("err!")
+		return err
 	}
+	return nil
 }
