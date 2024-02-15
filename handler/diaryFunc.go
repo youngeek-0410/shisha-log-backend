@@ -81,7 +81,6 @@ func CreateDiary(c *gin.Context) {
 		return
 	}
 
-	// テストのために一時的にimage_idの外部キー制約外してるから戻す
 	diaryEquipmentsItem := equipment.DiaryEquipment{
 		ID:                   diaryEquipmentsID,
 		UserBowlID:           lib.ParseUUIDStrToBin(req.Equipments.BowlID),
