@@ -1,17 +1,24 @@
 package main
 
 import (
+	"log"
 	"shisha-log-backend/handler"
 	"shisha-log-backend/lib"
 	"shisha-log-backend/model/diary"
 
 	"github.com/gin-gonic/gin"
 	_ "github.com/go-sql-driver/mysql"
+	"github.com/joho/godotenv"
 )
 
 func main() {
 	userDiaries := diary.NewUserDiaries()
 	userEquipments := handler.NewUserEquipments()
+
+	err := godotenv.Load()
+	if err != nil {
+		log.Fatal("Error loading .env file")
+	}
 
 	lib.DBOpen()
 	defer lib.DBClose()

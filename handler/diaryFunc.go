@@ -1,11 +1,15 @@
 package handler
 
 import (
+	"encoding/base64"
 	"net/http"
+	"os"
+	"path/filepath"
 	"shisha-log-backend/lib"
 	"shisha-log-backend/model/diary"
 	"shisha-log-backend/model/equipment"
 	"shisha-log-backend/model/flavor"
+	"shisha-log-backend/model/image"
 	"shisha-log-backend/model/user"
 
 	"github.com/gin-gonic/gin"
@@ -29,6 +33,7 @@ func CreateDiary(c *gin.Context) {
 	var diaryEquipments equipment.DiaryEquipments
 	var diaryFlavors flavor.PostDiaryFlavors
 	var userDiaries user.UserDiaries
+	var diaryImages image.DiaryImages
 
 	if err := c.ShouldBindJSON(&req); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
@@ -51,6 +56,31 @@ func CreateDiary(c *gin.Context) {
 		return
 	}
 
+	imageID := uuid.New()
+	imageBinaryID, err := imageID.MarshalBinary()
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+
+	// ファイルを保存するディレクトリが存在していなければ作成する
+	dir := os.Getenv("IMAGE_STORAGE_PATH") + req.UserID
+	if _, err := os.Stat(dir); os.IsNotExist(err) {
+		os.MkdirAll(dir, 0755)
+	}
+
+	imageFullPath := filepath.Join(dir + "/" + imageID.String() + ".png")
+	imageData, err := base64.StdEncoding.DecodeString(req.Image)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Base64データのデコードに失敗しました"})
+		return
+	}
+
+	if err := os.WriteFile(imageFullPath, imageData, 0666); err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "ファイルの書き込みに失敗しました"})
+		return
+	}
+
 	// テストのために一時的にimage_idの外部キー制約外してるから戻す
 	diaryEquipmentsItem := equipment.DiaryEquipment{
 		ID:                   diaryEquipmentsID,
@@ -58,7 +88,7 @@ func CreateDiary(c *gin.Context) {
 		UserBottleID:         lib.ParseUUIDStrToBin(req.Equipments.BottleID),
 		UserHeatManagementID: lib.ParseUUIDStrToBin(req.Equipments.HeatManagementID),
 		UserCharcoalID:       lib.ParseUUIDStrToBin(req.Equipments.CharcoalID),
-		DiaryImageID:         lib.ParseUUIDStrToBin(req.ImageID),
+		DiaryImageID:         imageBinaryID,
 	}
 
 	diaryItem := diary.Diary{
@@ -98,6 +128,11 @@ func CreateDiary(c *gin.Context) {
 		DiaryID: diaryID,
 	}
 
+	diaryImageItem := image.DiaryImage{
+		ID:   imageBinaryID,
+		Path: imageFullPath,
+	}
+
 	err = diaryEquipments.Add(diaryEquipmentsItem)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
@@ -114,6 +149,11 @@ func CreateDiary(c *gin.Context) {
 		return
 	}
 	err = userDiaries.Add(userDiariesItem)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+	err = diaryImages.Add(diaryImageItem)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return

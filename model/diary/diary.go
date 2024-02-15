@@ -24,7 +24,7 @@ type DiaryRequest struct {
 	UserID          string          `json:"user_id"`
 	Equipments      DiaryEquipments `json:"equipments"`
 	DiaryFlavorList []FlavorAmount  `json:"diary_flavor_list"`
-	ImageID         string          `json:"image_id"`
+	Image           string          `json:"image"`
 	SuckingText     string          `json:"sucking_text"`
 	Review          DiaryReview     `json:"review"`
 	CreateDate      string          `json:"create_date"`
