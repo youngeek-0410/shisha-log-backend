@@ -23,7 +23,9 @@ func GetUserDiaries(userDiaries *diary.UserDiaries) gin.HandlerFunc {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 			return
 		}
-		c.JSON(http.StatusOK, result)
+		c.JSON(http.StatusOK, gin.H{
+			"user_diary_list": result,
+		})
 	}
 }
 
