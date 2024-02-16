@@ -34,6 +34,7 @@ func CreateDiary(c *gin.Context) {
 	var diaryFlavors flavor.PostDiaryFlavors
 	var userDiaries user.UserDiaries
 	var diaryImages image.DiaryImages
+	var imageFullPath string
 
 	if err := c.ShouldBindJSON(&req); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
@@ -63,21 +64,36 @@ func CreateDiary(c *gin.Context) {
 		return
 	}
 
-	// ファイルを保存するディレクトリが存在していなければ作成する
-	dir := os.Getenv("IMAGE_STORAGE_PATH") + req.UserID
-	if _, err := os.Stat(dir); os.IsNotExist(err) {
-		os.MkdirAll(dir, 0755)
+	if req.Image != "" {
+		// ファイルを保存するディレクトリが存在していなければ作成する
+		dir := os.Getenv("IMAGE_STORAGE_PATH") + req.UserID
+		if _, err := os.Stat(dir); os.IsNotExist(err) {
+			os.MkdirAll(dir, 0755)
+		}
+
+		imageFullPath = filepath.Join(dir + "/" + imageID.String() + ".png")
+		imageData, err := base64.StdEncoding.DecodeString(req.Image)
+		if err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": "Base64データのデコードに失敗しました"})
+			return
+		}
+
+		if err := os.WriteFile(imageFullPath, imageData, 0666); err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "ファイルの書き込みに失敗しました"})
+			return
+		}
+	} else {
+		imageFullPath = ""
 	}
 
-	imageFullPath := filepath.Join(dir + "/" + imageID.String() + ".png")
-	imageData, err := base64.StdEncoding.DecodeString(req.Image)
+	diaryImageItem := image.DiaryImage{
+		ID:   imageBinaryID,
+		Path: imageFullPath,
+	}
+
+	err = diaryImages.Add(diaryImageItem)
 	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Base64データのデコードに失敗しました"})
-		return
-	}
-
-	if err := os.WriteFile(imageFullPath, imageData, 0666); err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": "ファイルの書き込みに失敗しました"})
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
 
@@ -127,11 +143,6 @@ func CreateDiary(c *gin.Context) {
 		DiaryID: diaryID,
 	}
 
-	diaryImageItem := image.DiaryImage{
-		ID:   imageBinaryID,
-		Path: imageFullPath,
-	}
-
 	err = diaryEquipments.Add(diaryEquipmentsItem)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
@@ -148,11 +159,6 @@ func CreateDiary(c *gin.Context) {
 		return
 	}
 	err = userDiaries.Add(userDiariesItem)
-	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
-		return
-	}
-	err = diaryImages.Add(diaryImageItem)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
