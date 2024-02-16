@@ -20,7 +20,7 @@ tags:
   - name: diary
     description: Diary関連のapi
 paths:
-  /user/{id}/equipment:
+  /user/{user_id}/equipment:
     get:
       tags:
         - user
@@ -46,7 +46,7 @@ paths:
           description: Invalid ID supplied
         '404':
           description: Flavor not found
-  /user/{id}/flavor:
+  /user/{user_id}/flavor:
     get:
       tags:
         - user
@@ -72,7 +72,7 @@ paths:
           description: Invalid ID supplied
         '404':
           description: Flavor not found
-  /user/{id}/bottle:
+  /user/{user_id}/bottle:
     get:
       tags:
         - user
@@ -98,7 +98,7 @@ paths:
           description: Invalid ID supplied
         '404':
           description: Bottle not found
-  /user/{id}/bowl:
+  /user/{user_id}/bowl:
     get:
       tags:
         - user
@@ -124,7 +124,7 @@ paths:
           description: Invalid ID supplied
         '404':
           description: Bowl not found
-  /user/{id}/heat_management:
+  /user/{user_id}/heat_management:
     get:
       tags:
         - user
@@ -150,7 +150,7 @@ paths:
           description: Invalid ID supplied
         '404':
           description: Heat management not found
-  /user/{id}/charcoal:
+  /user/{user_id}/charcoal:
     get:
       tags:
         - user
@@ -501,9 +501,9 @@ components:
                     brand_name: Al Fakher
                     amount: 6
               create_date:
-                type: object
+                type: string
                 description: 作成された日付
-                example: 2023-12-01
+                example: "2023-12-01"
                 nullable: false
               creator_evaluation:
                 type: number
@@ -562,29 +562,27 @@ components:
                   description: 湿度
                   example: 53
         diary_flavor_list:
-          type: array
-          items:
-            type: object
-            properties:
-              id:
-                type: string
-                description: フレーバーのID
-                nullable: false
-              amount:
-                type: number
-                description: フレーバーを入れた量（g）
-                nullable: false
-            example:
-              - id: 631437-2jd8-1is9-3js8-fb22a0fhwi41
-                amount: 3.6
-              - id: test
-                amount: 2.4
-              - id: test2
-                amount: 6
-        image_id:
+          type: object
+          properties:
+            id:
+              type: string
+              description: フレーバーのID
+              nullable: false
+            amount:
+              type: number
+              description: フレーバーを入れた量（g）
+              nullable: false
+          example:
+            - id: 631437-2jd8-1is9-3js8-fb22a0fhwi41
+              amount: 3.6
+            - id: test
+              amount: 2.4
+            - id: test2
+              amount: 6
+        image:
           type: string
-          description: 画像のuuid
-          example: 248c8027-b752-db4c-76c1-fb22a05e9591
+          description: エンコードした画像のデータ
+          example: ここにbase64でエンコードした画像を送っちゃうわよ〜〜〜〜〜ん
         sucking_text:
           type: string
           description: 吸い出し時のテキスト
@@ -619,7 +617,7 @@ components:
               example: これはいいシーシャだと思います.
               nullable: true
         create_date:
-          type: object
+          type: string
           description: 作成された日付
-          example: 2023-12-01
+          example: "2023-12-01"
           nullable: false
