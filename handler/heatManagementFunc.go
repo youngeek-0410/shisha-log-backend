@@ -2,7 +2,7 @@ package handler
 
 import (
 	"net/http"
-	"shisha-log-backend/model/heatmanagement"
+	"shisha-log-backend/model/equipment/heatmanagement"
 
 	"github.com/gin-gonic/gin"
 )
