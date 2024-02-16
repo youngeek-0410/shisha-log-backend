@@ -1,6 +1,8 @@
 package diary
 
 import (
+	"encoding/json"
+	"fmt"
 	"shisha-log-backend/lib"
 	"shisha-log-backend/model/flavor"
 	"time"
@@ -11,7 +13,7 @@ import (
 type UserDiary struct {
 	ID                uuid.UUID            `gorm:"column:id" json:"id"`
 	DiaryFlavors      []flavor.DiaryFlavor `gorm:"foreignKey:ID" json:"diary_flavor_list"`
-	CreateDate        string               `gorm:"column:create_date" json:"create_date"`
+	CreateDate        time.Time            `gorm:"column:create_date" json:"create_date"`
 	CreatorEvaluation float64              `gorm:"column:creator_evaluation" json:"creator_evaluation"`
 	TasteEvaluation   float64              `gorm:"column:taste_evaluation" json:"taste_evaluation"`
 }
@@ -80,6 +82,17 @@ func NewUserDiaries() *UserDiaries {
 	return &UserDiaries{}
 }
 
+func (ud UserDiary) MarshalJSON() ([]byte, error) {
+	type Alias UserDiary
+	return json.Marshal(&struct {
+		*Alias
+		CreateDate string `json:"create_date"`
+	}{
+		Alias:      (*Alias)(&ud),
+		CreateDate: ud.CreateDate.Format("2006-01-02"),
+	})
+}
+
 func (r *UserDiaries) UserDiaries(user_id string) ([]UserDiary, error) {
 	db := lib.GetDBConn().DB
 	var userDiaries []UserDiary
@@ -93,12 +106,14 @@ func (r *UserDiaries) UserDiaries(user_id string) ([]UserDiary, error) {
 		var diaryFlavors flavor.DiaryFlavors
 		diaryStrUUID := userDiaries[i].ID.String()
 
-		userDiaries[i].CreateDate = userDiaries[i].CreateDate[:10]
+		jsonData, err := json.Marshal(userDiaries[i])
 
 		flavors, err := diaryFlavors.DiaryFlavors(diaryStrUUID)
 		if err != nil {
 			return nil, err
 		}
+
+		fmt.Println(string(jsonData))
 
 		userDiaries[i].DiaryFlavors = flavors
 	}
