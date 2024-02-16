@@ -579,10 +579,10 @@ components:
               amount: 2.4
             - id: test2
               amount: 6
-        image_id:
+        image:
           type: string
-          description: 画像のuuid
-          example: 248c8027-b752-db4c-76c1-fb22a05e9591
+          description: エンコードした画像のデータ
+          example: ここにbase64でエンコードした画像を送っちゃうわよ〜〜〜〜〜ん
         sucking_text:
           type: string
           description: 吸い出し時のテキスト
