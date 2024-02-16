@@ -11,7 +11,7 @@ import (
 type UserDiary struct {
 	ID                uuid.UUID            `gorm:"column:id" json:"id"`
 	DiaryFlavors      []flavor.DiaryFlavor `gorm:"foreignKey:ID" json:"diary_flavor_list"`
-	CreateDate        time.Time            `gorm:"column:create_date" json:"create_date"`
+	CreateDate        string               `gorm:"column:create_date" json:"create_date"`
 	CreatorEvaluation float64              `gorm:"column:creator_evaluation" json:"creator_evaluation"`
 	TasteEvaluation   float64              `gorm:"column:taste_evaluation" json:"taste_evaluation"`
 }
@@ -92,6 +92,8 @@ func (r *UserDiaries) UserDiaries(user_id string) ([]UserDiary, error) {
 	for i := range userDiaries {
 		var diaryFlavors flavor.DiaryFlavors
 		diaryStrUUID := userDiaries[i].ID.String()
+
+		userDiaries[i].CreateDate = userDiaries[i].CreateDate[:10]
 
 		flavors, err := diaryFlavors.DiaryFlavors(diaryStrUUID)
 		if err != nil {
