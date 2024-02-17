@@ -11,8 +11,8 @@ CREATE TABLE `diaries` (
   creator_bad_points VARCHAR(255),
   taste_comments VARCHAR(255),
   create_date DATE NOT NULL,
-  created_at DATETIME,
-  updated_at DATETIME,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY(id)
 );
 
@@ -21,8 +21,8 @@ CREATE TABLE `diary_flavors` (
   user_flavor_id BINARY(16) NOT NULL,
   diary_id BINARY(16) NOT NULL,
   amount FLOAT NOT NULL,
-  created_at DATETIME,
-  updated_at DATETIME,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY(id)
 );
 
@@ -33,16 +33,16 @@ CREATE TABLE `diary_equipments` (
   user_heat_management_id BINARY(16) NOT NULL,
   user_charcoal_id BINARY(16) NOT NULL,
   diary_image_id BINARY(16) NOT NULL,
-  created_at DATETIME,
-  updated_at DATETIME,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY(id)
 );
 
 CREATE TABLE `diary_images` (
   id BINARY(16) NOT NULL DEFAULT (UUID_TO_BIN(UUID(), 1)),
   path VARCHAR(255),
-  created_at DATETIME,
-  updated_at DATETIME,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY(id)
 );
 
@@ -50,8 +50,8 @@ CREATE TABLE `user_diaries` (
   id BINARY(16) NOT NULL DEFAULT (UUID_TO_BIN(UUID(), 1)),
   user_id BINARY(16) NOT NULL,
   diary_id BINARY(16) NOT NULL,
-  created_at DATETIME,
-  updated_at DATETIME,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY(id)
 );
 
@@ -60,14 +60,14 @@ CREATE TABLE `flavors` (
   brand_id BINARY(16) NOT NULL,
   name VARCHAR(255) NOT NULL,
   create_area VARCHAR(255),
-  created_at DATETIME,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY(id)
 );
 
 CREATE TABLE `flavor_brands` (
   id BINARY(16) NOT NULL DEFAULT (UUID_TO_BIN(UUID(), 1)),
   name VARCHAR(255) NOT NULL,
-  created_at DATETIME,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY(id)
 );
 
@@ -75,14 +75,14 @@ CREATE TABLE `bottles` (
   id BINARY(16) NOT NULL DEFAULT (UUID_TO_BIN(UUID(), 1)),
   brand_id BINARY(16) NOT NULL,
   name VARCHAR(255) NOT NULL,
-  created_at DATETIME,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY(id)
 );
 
 CREATE TABLE `bottle_brands`(
   id BINARY(16) NOT NULL DEFAULT (UUID_TO_BIN(UUID(), 1)),
   name VARCHAR(255) NOT NULL,
-  created_at DATETIME,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY(id)
 );
 
@@ -90,14 +90,14 @@ CREATE TABLE `bowls` (
   id BINARY(16) NOT NULL DEFAULT (UUID_TO_BIN(UUID(), 1)),
   brand_id BINARY(16) NOT NULL,
   name VARCHAR(255) NOT NULL,
-  created_at DATETIME,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY(id)
 );
 
 CREATE TABLE `bowl_brands` (
   id BINARY(16) NOT NULL DEFAULT (UUID_TO_BIN(UUID(), 1)),
   name VARCHAR(255) NOT NULL,
-  created_at DATETIME,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY(id)
 );
 
@@ -105,14 +105,14 @@ CREATE TABLE `heat_managements` (
   id BINARY(16) NOT NULL DEFAULT (UUID_TO_BIN(UUID(), 1)),
   brand_id BINARY(16) NOT NULL,
   name VARCHAR(255) NOT NULL,
-  created_at DATETIME,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY(id)
 );
 
 CREATE TABLE `heat_management_brands` (
   id BINARY(16) NOT NULL DEFAULT (UUID_TO_BIN(UUID(), 1)),
   name VARCHAR(255) NOT NULL,
-  created_at DATETIME,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY(id)
 );
 
@@ -120,21 +120,21 @@ CREATE TABLE `charcoals` (
   id BINARY(16) NOT NULL DEFAULT (UUID_TO_BIN(UUID(), 1)),
   brand_id BINARY(16) NOT NULL,
   name VARCHAR(255) NOT NULL,
-  created_at DATETIME,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY(id)
 );
 
 CREATE TABLE `charcoal_brands` (
   id BINARY(16) NOT NULL DEFAULT (UUID_TO_BIN(UUID(), 1)),
   name VARCHAR(255) NOT NULL,
-  created_at DATETIME,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY(id)
 );
 
 CREATE TABLE `users` (
   id BINARY(16) NOT NULL DEFAULT (UUID_TO_BIN(UUID(), 1)),
   name VARCHAR(255) NOT NULL,
-  created_at DATETIME,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY(id)
 );
 
@@ -142,7 +142,7 @@ CREATE TABLE `user_flavors` (
   id BINARY(16) NOT NULL DEFAULT (UUID_TO_BIN(UUID(), 1)),
   flavor_id BINARY(16) NOT NULL,
   user_id BINARY(16) NOT NULL,
-  created_at DATETIME,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY(id)
 );
 
@@ -150,7 +150,7 @@ CREATE TABLE `user_bottles` (
   id BINARY(16) NOT NULL DEFAULT (UUID_TO_BIN(UUID(), 1)),
   bottle_id BINARY(16) NOT NULL,
   user_id BINARY(16) NOT NULL,
-  created_at DATETIME,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY(id)
 );
 
@@ -158,7 +158,7 @@ CREATE TABLE `user_bowls` (
   id BINARY(16) NOT NULL DEFAULT (UUID_TO_BIN(UUID(), 1)),
   bowl_id BINARY(16) NOT NULL,
   user_id BINARY(16) NOT NULL,
-  created_at DATETIME,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY(id)
 );
 
@@ -166,7 +166,7 @@ CREATE TABLE `user_heat_managements` (
   id BINARY(16) NOT NULL DEFAULT (UUID_TO_BIN(UUID(), 1)),
   heat_management_id BINARY(16) NOT NULL,
   user_id BINARY(16) NOT NULL,
-  created_at DATETIME,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY(id)
 );
 
@@ -174,7 +174,7 @@ CREATE TABLE `user_charcoals` (
   id BINARY(16) NOT NULL DEFAULT (UUID_TO_BIN(UUID(), 1)),
   charcoal_id BINARY(16) NOT NULL,
   user_id BINARY(16) NOT NULL,
-  created_at DATETIME,
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY(id)
 );
 
