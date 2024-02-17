@@ -27,6 +27,7 @@ type DiaryRequest struct {
 	Equipments      DiaryEquipments `json:"equipments"`
 	DiaryFlavorList []FlavorAmount  `json:"diary_flavor_list"`
 	Image           string          `json:"image"`
+	ServeText       string          `json:"serve_text"`
 	SuckingText     string          `json:"sucking_text"`
 	Review          DiaryReview     `json:"review"`
 	CreateDate      string          `json:"create_date"`
@@ -61,6 +62,7 @@ type DiaryReview struct {
 type Diary struct {
 	ID                []byte     `gorm:"column:id"`
 	DiaryEquipmentsID []byte     `gorm:"column:diary_equipments_id"`
+	ServeText         *string    `gorm:"column:serve_text"`
 	SuckingText       *string    `gorm:"column:sucking_text"`
 	Temperature       *float64   `gorm:"column:temperature"`
 	Humidity          *float64   `gorm:"column:humidity"`
