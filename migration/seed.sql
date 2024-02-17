@@ -1,10 +1,57 @@
-SET @flavor = "1f850241-1c1f-f205-a797-da0b9f459284";
+SET @flavor_brand_id_1 = UUID ();
+SET @flavor_brand_id_2 = UUID ();
+SET @flavor_brand_id_3 = UUID ();
+
+SET @flavor_id_1 = UUID ();
+SET @flavor_id_2 = UUID ();
+SET @flavor_id_3 = UUID ();
+SET @flavor_id_4 = UUID ();
+SET @flavor_id_5 = UUID ();
+SET @flavor_id_6 = UUID ();
+
+-- flavor_brands
 INSERT INTO
     flavor_brands (id, name)
 VALUES
-    (UUID_TO_BIN (@flavor, 1), 'Al Fakher');
+    (UUID_TO_BIN (@flavor_brand_id_1, 1), 'Al Fakher');
+
+INSERT INTO
+    flavor_brands (id, name)
+VALUES
+    (UUID_TO_BIN (@flavor_brand_id_2, 1), 'Afzal');
+
+INSERT INTO
+    flavor_brands (id, name)
+VALUES
+    (UUID_TO_BIN (@flavor_brand_id_3, 1), 'Dozaj');
+
+-- flavors
+INSERT INTO
+    flavors (id, brand_id, name)
+VALUES
+    (UUID_TO_BIN (@flavor_id_1, 1), UUID_TO_BIN (@flavor_brand_id_1, 1), 'ローズ');
 
 INSERT INTO
     flavors (id, brand_id, name)
 VALUES
-    (UUID_TO_BIN ("db62c51e-7355-7a2b-4f24-1275465eb278", 1), UUID_TO_BIN (@flavor, 1), 'ローズ');
+    (UUID_TO_BIN (@flavor_id_2, 1), UUID_TO_BIN (@flavor_brand_id_1, 1), 'ピーチ');
+
+INSERT INTO
+    flavors (id, brand_id, name)
+VALUES
+    (UUID_TO_BIN (@flavor_id_3, 1), UUID_TO_BIN (@flavor_brand_id_1, 1), 'カルダモン');
+
+INSERT INTO
+    flavors (id, brand_id, name)
+VALUES
+    (UUID_TO_BIN (@flavor_id_4, 1), UUID_TO_BIN (@flavor_brand_id_2, 1), 'アールグレイ');
+
+INSERT INTO
+    flavors (id, brand_id, name)
+VALUES
+    (UUID_TO_BIN (@flavor_id_5, 1), UUID_TO_BIN (@flavor_brand_id_2, 1), 'ジンジャーエール');
+
+INSERT INTO
+    flavors (id, brand_id, name)
+VALUES
+    (UUID_TO_BIN (@flavor_id_6, 1), UUID_TO_BIN (@flavor_brand_id_3, 1), 'ブラックティー');
