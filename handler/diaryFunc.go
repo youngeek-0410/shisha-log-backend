@@ -111,6 +111,7 @@ func CreateDiary(c *gin.Context) {
 	diaryItem := diary.Diary{
 		ID:                diaryID,
 		DiaryEquipmentsID: diaryEquipmentsID,
+		ServeText:         &req.ServeText,
 		SuckingText:       &req.SuckingText,
 		Temperature:       &req.Equipments.Climate.Temperature,
 		Humidity:          &req.Equipments.Climate.Humidity,

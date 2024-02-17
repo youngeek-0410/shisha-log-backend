@@ -1,6 +1,7 @@
 CREATE TABLE `diaries` (
   id BINARY(16) NOT NULL DEFAULT (UUID_TO_BIN(UUID(), 1)),
   diary_equipments_id BINARY(16) NOT NULL,
+  serve_text VARCHAR(255),
   sucking_text VARCHAR(255),
   temperature FLOAT,
   humidity FLOAT,
