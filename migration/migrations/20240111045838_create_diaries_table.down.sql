@@ -1,7 +1,7 @@
 DROP TABLE IF EXISTS user_diaries;
+DROP TABLE IF EXISTS diary_flavors;
 DROP TABLE IF EXISTS diaries;
 DROP TABLE IF EXISTS diary_equipments;
-DROP TABLE IF EXISTS diary_flavors;
 DROP TABLE IF EXISTS diary_images;
 DROP TABLE IF EXISTS user_bottles;
 DROP TABLE IF EXISTS user_bowls;
