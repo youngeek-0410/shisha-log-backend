@@ -29,3 +29,8 @@ error   :  <nil>
 ```
 - `exit`
 - `docker-compose exec -iT db mysql -uroot shisha-log < migration/seed.sql`
+
+※マイグレーションのバージョンを戻すとき
+- `docker-compose exec -it api-server sh`
+- `cd migration/`
+- `go run main.go down`
