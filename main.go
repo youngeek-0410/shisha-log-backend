@@ -31,6 +31,7 @@ func main() {
 		AllowOrigins: []string{
 			os.Getenv("SHISHA_LOG_CLIENT_URL"),
 		},
+		AllowMethods: []string{"GET", "POST"},
 	}))
 
 	r.GET("/diary/:user_id", handler.GetUserDiaries(userDiaries))
