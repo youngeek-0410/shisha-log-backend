@@ -2,6 +2,7 @@ package main
 
 import (
 	"log"
+	"os"
 	"shisha-log-backend/handler"
 	"shisha-log-backend/lib"
 	"shisha-log-backend/model/diary"
@@ -28,8 +29,7 @@ func main() {
 
 	r.Use(cors.New(cors.Config{
 		AllowOrigins: []string{
-			// os.Getenv("SHISHA_LOG_CLIENT_URL"),
-			"*",
+			os.Getenv("SHISHA_LOG_CLIENT_URL"),
 		},
 	}))
 
