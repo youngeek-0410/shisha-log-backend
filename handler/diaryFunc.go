@@ -11,6 +11,7 @@ import (
 	"shisha-log-backend/model/flavor"
 	"shisha-log-backend/model/image"
 	"shisha-log-backend/model/user"
+	"strings"
 
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
@@ -73,8 +74,9 @@ func CreateDiary(c *gin.Context) {
 			os.MkdirAll(dir, 0755)
 		}
 
-		imageFullPath = filepath.Join(dir + "/" + imageID.String() + ".png")
-		imageData, err := base64.StdEncoding.DecodeString(req.Image)
+		imageFullPath = filepath.Join(dir + "/" + imageID.String() + ".jpg")
+		base64ImageData := strings.Split(req.Image, ",")[1]
+		imageData, err := base64.StdEncoding.DecodeString(base64ImageData)
 		if err != nil {
 			c.JSON(http.StatusBadRequest, gin.H{"error": "Base64データのデコードに失敗しました"})
 			return
