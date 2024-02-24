@@ -4,7 +4,7 @@ WORKDIR /app
 
 COPY . .
 
-RUN go get -u github.com/cosmtrek/air
+RUN go get -u github.com/cosmtrek/air@v1.49.0
 RUN go install github.com/cosmtrek/air
 RUN go mod download
 
