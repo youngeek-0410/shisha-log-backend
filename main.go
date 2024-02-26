@@ -1,20 +1,43 @@
 package main
 
 import (
+	"log"
+	"os"
+	"shisha-log-backend/handler"
+	"shisha-log-backend/lib"
+	"shisha-log-backend/model/diary"
+
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
+	_ "github.com/go-sql-driver/mysql"
+	"github.com/joho/godotenv"
 )
 
 func main() {
-	//Ginフレームワークのデフォルトの設定を使用してルータを作成
-	router := gin.Default()
-	
-	// ルートハンドラの定義
-	router.GET("/", func(c *gin.Context) {
-		c.JSON(200, gin.H{
-			"message": "Hello, World!",
-		})
-	})
+	userDiaries := diary.NewUserDiaries()
+	userEquipments := handler.NewUserEquipments()
 
-	// サーバー起動
-	router.Run(":8080")
+	err := godotenv.Load()
+	if err != nil {
+		log.Fatal("Error loading .env file")
+	}
+
+	lib.DBOpen()
+	defer lib.DBClose()
+
+	r := gin.Default()
+
+	r.Use(cors.New(cors.Config{
+		AllowOrigins: []string{
+			os.Getenv("SHISHA_LOG_CLIENT_URL"),
+		},
+		AllowMethods: []string{"GET", "POST"},
+		AllowHeaders: []string{"Origin", "Content-Length", "Content-Type"},
+	}))
+
+	r.GET("/diary/:user_id", handler.GetUserDiaries(userDiaries))
+	r.GET("/user/:user_id/equipment", handler.UserEquipmentsGet(userEquipments))
+	r.POST("/diary", handler.CreateDiary)
+
+	r.Run(":8080")
 }
