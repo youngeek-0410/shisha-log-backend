@@ -2,7 +2,6 @@ package diary
 
 import (
 	"encoding/json"
-	"fmt"
 	"shisha-log-backend/lib"
 	"shisha-log-backend/model/flavor"
 	"time"
@@ -108,14 +107,10 @@ func (r *UserDiaries) UserDiaries(user_id string) ([]UserDiary, error) {
 		var diaryFlavors flavor.DiaryFlavors
 		diaryStrUUID := userDiaries[i].ID.String()
 
-		jsonData, err := json.Marshal(userDiaries[i])
-
 		flavors, err := diaryFlavors.DiaryFlavors(diaryStrUUID)
 		if err != nil {
 			return nil, err
 		}
-
-		fmt.Println(string(jsonData))
 
 		userDiaries[i].DiaryFlavors = flavors
 	}
