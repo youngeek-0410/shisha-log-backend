@@ -1,0 +1,22 @@
+FROM golang:1.21.4-alpine as builder
+
+WORKDIR /app
+
+COPY . .
+
+RUN go mod download
+
+RUN GOOS=linux GOARCH=amd64 go build -o api /app/main.go
+
+FROM alpine:latest
+
+WORKDIR /root
+
+COPY --from=builder /app/api .
+
+ENV PORT 8080
+ENV HOST 0.0.0.0
+
+EXPOSE 8080
+
+CMD ["./api"]
