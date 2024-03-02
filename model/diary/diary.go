@@ -71,7 +71,7 @@ type Diary struct {
 	CreatorGoodPoints *string    `gorm:"column:creator_good_points"`
 	CreatorBadPoints  *string    `gorm:"column:creator_bad_points"`
 	TasteComments     *string    `gorm:"column:taste_comments"`
-	CreateDate        time.Time  `gorm:"column:create_date"`
+	CreateDate        string     `gorm:"column:create_date"`
 	CreatedAt         *time.Time `gorm:"column:created_at"`
 	UpdatedAt         *time.Time `gorm:"column:updated_at"`
 }
