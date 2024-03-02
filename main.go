@@ -1,7 +1,6 @@
 package main
 
 import (
-	"log"
 	"os"
 	"shisha-log-backend/handler"
 	"shisha-log-backend/lib"
@@ -17,9 +16,9 @@ func main() {
 	userDiaries := diary.NewUserDiaries()
 	userEquipments := handler.NewUserEquipments()
 
-	err := godotenv.Load()
+	_, err := os.Stat("/.env")
 	if err != nil {
-		log.Fatal("Error loading .env file")
+		godotenv.Load()
 	}
 
 	lib.DBOpen()
@@ -30,6 +29,7 @@ func main() {
 	r.Use(cors.New(cors.Config{
 		AllowOrigins: []string{
 			os.Getenv("SHISHA_LOG_CLIENT_URL"),
+			os.Getenv("SHISHA_LOG_CLIENT_STG_URL"),
 		},
 		AllowMethods: []string{"GET", "POST"},
 		AllowHeaders: []string{"Origin", "Content-Length", "Content-Type"},
@@ -39,5 +39,9 @@ func main() {
 	r.GET("/user/:user_id/equipment", handler.UserEquipmentsGet(userEquipments))
 	r.POST("/diary", handler.CreateDiary)
 
-	r.Run(":8080")
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8080"
+	}
+	r.Run(":" + port)
 }
