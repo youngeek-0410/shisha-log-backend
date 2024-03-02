@@ -1,6 +1,8 @@
 package lib
 
 import (
+	"fmt"
+	"os"
 	"time"
 
 	"gorm.io/driver/mysql"
@@ -15,6 +17,25 @@ type SQLHandler struct {
 
 var dbConn *SQLHandler
 
+func GenerateDsn() string {
+	apiRevision := os.Getenv("API_REVISION")
+	var dsn string
+
+	if apiRevision == "release" {
+		dsn = os.Getenv("DSN")
+	} else {
+		user := os.Getenv("DB_USERNAME")
+		pass := os.Getenv("DB_PASSWORD")
+		host := os.Getenv("DB_HOST")
+		port := os.Getenv("DB_PORT")
+		dbName := os.Getenv("DB_DATABASE")
+
+		dsn = fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8mb4&parseTime=true&multiStatements=true", user, pass, host, port, dbName)
+	}
+
+	return dsn
+}
+
 // DBOpen は DB connectionを張る。
 func DBOpen() {
 	dbConn = NewSQLHandler()
@@ -28,18 +49,11 @@ func DBClose() {
 
 // NewSQLHandler ...
 func NewSQLHandler() *SQLHandler {
-	// user := os.Getenv("DB_USERNAME")
-	// password := os.Getenv("DB_PASSWORD")
-	// host := os.Getenv("DB_HOST")
-	// port := os.Getenv("DB_PORT")
-	// dbName := os.Getenv("DB_DATABASE")
-	// fmt.Print(user, password, host, port)
-
 	var db *gorm.DB
+	var dsn string
 	var err error
 
-	dsn := "root:@tcp(db:3306)/shisha-log?charset=utf8mb4&parseTime=True&loc=Local"
-	// dsn := user + ":" + password + "@tcp(" + host + ":" + port + ")/" + dbName + "?parseTime=true&loc=Asia%2FTokyo"
+	dsn = GenerateDsn()
 	db, err = gorm.Open(mysql.Open(dsn), &gorm.Config{})
 	if err != nil {
 		panic(err)
