@@ -2,7 +2,6 @@ package diary
 
 import (
 	"encoding/json"
-	"fmt"
 	"shisha-log-backend/lib"
 	"shisha-log-backend/model/flavor"
 	"time"
@@ -71,7 +70,7 @@ type Diary struct {
 	CreatorGoodPoints *string    `gorm:"column:creator_good_points"`
 	CreatorBadPoints  *string    `gorm:"column:creator_bad_points"`
 	TasteComments     *string    `gorm:"column:taste_comments"`
-	CreateDate        time.Time  `gorm:"column:create_date"`
+	CreateDate        string     `gorm:"column:create_date"`
 	CreatedAt         *time.Time `gorm:"column:created_at"`
 	UpdatedAt         *time.Time `gorm:"column:updated_at"`
 }
@@ -108,14 +107,10 @@ func (r *UserDiaries) UserDiaries(user_id string) ([]UserDiary, error) {
 		var diaryFlavors flavor.DiaryFlavors
 		diaryStrUUID := userDiaries[i].ID.String()
 
-		jsonData, err := json.Marshal(userDiaries[i])
-
 		flavors, err := diaryFlavors.DiaryFlavors(diaryStrUUID)
 		if err != nil {
 			return nil, err
 		}
-
-		fmt.Println(string(jsonData))
 
 		userDiaries[i].DiaryFlavors = flavors
 	}

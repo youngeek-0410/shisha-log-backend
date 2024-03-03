@@ -122,7 +122,7 @@ func CreateDiary(c *gin.Context) {
 		CreatorGoodPoints: &req.Review.CreatorGoodPoints,
 		CreatorBadPoints:  &req.Review.CreatorBadPoints,
 		TasteComments:     &req.Review.TasteComments,
-		CreateDate:        lib.StringToTime(req.CreateDate),
+		CreateDate:        req.CreateDate,
 	}
 
 	diaryFlavorItems := []flavor.PostDiaryFlavor{}
