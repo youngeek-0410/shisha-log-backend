@@ -68,13 +68,9 @@ func CreateDiary(c *gin.Context) {
 	}
 
 	if req.Image != "" {
-		// ファイルを保存するディレクトリが存在していなければ作成する
+		fileName := imageID.String() + ".jpg"
 		dir := os.Getenv("IMAGE_STORAGE_PATH") + req.UserID
-		if _, err := os.Stat(dir); os.IsNotExist(err) {
-			os.MkdirAll(dir, 0755)
-		}
-
-		imageFullPath = filepath.Join(dir + "/" + imageID.String() + ".jpg")
+		imageFullPath = filepath.Join(dir + "/" + fileName)
 		base64ImageData := strings.Split(req.Image, ",")[1]
 		imageData, err := base64.StdEncoding.DecodeString(base64ImageData)
 		if err != nil {
@@ -82,9 +78,30 @@ func CreateDiary(c *gin.Context) {
 			return
 		}
 
-		if err := os.WriteFile(imageFullPath, imageData, 0666); err != nil {
-			c.JSON(http.StatusInternalServerError, gin.H{"error": "ファイルの書き込みに失敗しました"})
-			return
+		if os.Getenv("API_REVISION") == "release" {
+			imageFile, _ := os.Create(fileName)
+			defer imageFile.Close()
+			_, err := imageFile.Write(imageData)
+
+			if err != nil {
+				c.JSON(http.StatusBadRequest, gin.H{"error": "ファイルの作成に失敗しました"})
+				return
+			}
+
+			if err = lib.UploadFile(os.Getenv("GCS_BUCKET"), imageFullPath, imageFile); err != nil {
+				c.JSON(http.StatusInternalServerError, gin.H{"error": "ファイルのアップロードに失敗しました"})
+				return
+			}
+		} else {
+			// ファイルを保存するディレクトリが存在していなければ作成する
+			if _, err := os.Stat(dir); os.IsNotExist(err) {
+				os.MkdirAll(dir, 0755)
+			}
+
+			if err := os.WriteFile(imageFullPath, imageData, 0666); err != nil {
+				c.JSON(http.StatusInternalServerError, gin.H{"error": "ファイルの書き込みに失敗しました"})
+				return
+			}
 		}
 	} else {
 		imageFullPath = ""
