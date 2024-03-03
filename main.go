@@ -1,6 +1,7 @@
 package main
 
 import (
+	"log"
 	"os"
 	"shisha-log-backend/handler"
 	"shisha-log-backend/lib"
@@ -16,9 +17,12 @@ func main() {
 	userDiaries := diary.NewUserDiaries()
 	userEquipments := handler.NewUserEquipments()
 
-	_, err := os.Stat("/.env")
-	if err != nil {
-		godotenv.Load()
+	_, err := os.Stat(".env")
+	if err == nil {
+		err := godotenv.Load(".env")
+		if err != nil {
+			log.Fatal(err)
+		}
 	}
 
 	lib.DBOpen()
