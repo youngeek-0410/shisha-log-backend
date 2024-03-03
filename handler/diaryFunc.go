@@ -12,6 +12,7 @@ import (
 	"shisha-log-backend/model/image"
 	"shisha-log-backend/model/user"
 	"strings"
+	"time"
 
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
@@ -37,7 +38,7 @@ func CreateDiary(c *gin.Context) {
 	var diaryFlavors flavor.PostDiaryFlavors
 	var userDiaries user.UserDiaries
 	var diaryImages image.DiaryImages
-	var imageFullPath string
+	var imagePath string
 
 	if err := c.ShouldBindJSON(&req); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
@@ -68,9 +69,10 @@ func CreateDiary(c *gin.Context) {
 	}
 
 	if req.Image != "" {
-		fileName := imageID.String() + ".jpg"
+		fileIdentifier := time.Now().Format("20060102-150405")
+		fileName := fileIdentifier + ".jpg"
 		dir := os.Getenv("IMAGE_STORAGE_PATH") + req.UserID
-		imageFullPath = filepath.Join(dir + "/" + fileName)
+		imagePath = filepath.Join(dir + "/" + fileName)
 		base64ImageData := strings.Split(req.Image, ",")[1]
 		imageData, err := base64.StdEncoding.DecodeString(base64ImageData)
 		if err != nil {
@@ -81,35 +83,42 @@ func CreateDiary(c *gin.Context) {
 		if os.Getenv("API_REVISION") == "release" {
 			imageFile, _ := os.Create(fileName)
 			defer imageFile.Close()
-			_, err := imageFile.Write(imageData)
 
+			_, err := imageFile.Write(imageData)
 			if err != nil {
-				c.JSON(http.StatusBadRequest, gin.H{"error": "ファイルの作成に失敗しました"})
+				c.JSON(http.StatusInternalServerError, gin.H{"error": "ファイルの作成に失敗しました"})
 				return
 			}
 
-			if err = lib.UploadFile(os.Getenv("GCS_BUCKET"), imageFullPath, imageFile); err != nil {
+			if _, err = imageFile.Seek(0, 0); err != nil {
+				c.JSON(http.StatusInternalServerError, gin.H{"error": "ファイルポインタのリセットに失敗しました"})
+				return
+			}
+
+			if err = lib.UploadFile(os.Getenv("GCS_BUCKET"), imagePath, imageFile); err != nil {
 				c.JSON(http.StatusInternalServerError, gin.H{"error": "ファイルのアップロードに失敗しました"})
 				return
 			}
+
+			os.Remove(fileName)
 		} else {
 			// ファイルを保存するディレクトリが存在していなければ作成する
 			if _, err := os.Stat(dir); os.IsNotExist(err) {
 				os.MkdirAll(dir, 0755)
 			}
 
-			if err := os.WriteFile(imageFullPath, imageData, 0666); err != nil {
+			if err := os.WriteFile(imagePath, imageData, 0666); err != nil {
 				c.JSON(http.StatusInternalServerError, gin.H{"error": "ファイルの書き込みに失敗しました"})
 				return
 			}
 		}
 	} else {
-		imageFullPath = ""
+		imagePath = ""
 	}
 
 	diaryImageItem := image.DiaryImage{
 		ID:   imageBinaryID,
-		Path: imageFullPath,
+		Path: os.Getenv("GCS_BUCKET_PATH") + imagePath,
 	}
 
 	err = diaryImages.Add(diaryImageItem)
