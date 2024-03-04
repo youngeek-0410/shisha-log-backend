@@ -20,6 +20,8 @@ tags:
     description: user関連のapi
   - name: diary
     description: Diary関連のapi
+  - name: flavor
+    description: Flavor関連のapi
 paths:
   /user/{user_id}/equipment:
     $ref: "./paths/user.{user_id}.equipment.yaml"
@@ -37,3 +39,7 @@ paths:
     $ref: "./paths/diary.yaml"
   /diary/{user_id}:
     $ref: "./paths/diary.{user_id}.yaml"
+  /flavor/brand:
+    $ref: "./paths/flavor.brand.yaml"
+  /flavor:
+    $ref: "./paths/flavor.yaml"

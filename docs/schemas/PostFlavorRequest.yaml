@@ -1,0 +1,27 @@
+type: object
+properties:
+  user_id:
+    type: string
+    format: uuid
+    description: ユーザのID
+    example: 631437-2jd8-1is9-3js8-fb22a0fhwi41
+  brand_id:
+    type: string
+    format: uuid
+    description: フレーバーブランドのID
+    example: 631437-2jd8-1is9-3js8-fb22a0fhwi41
+  name:
+    type: string
+    minLength: 1
+    maxLength: 32
+    description: フレーバーの名前
+    example: Dozaj
+  create_area:
+    type: string
+    enum: [Middle East, America]
+    description: フレーバーの生産地
+    example: Middle East
+required:
+  - user_id
+  - brand_id
+  - name
