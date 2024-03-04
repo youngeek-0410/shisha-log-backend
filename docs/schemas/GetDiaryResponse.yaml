@@ -1,0 +1,60 @@
+type: object
+properties:
+  user_diary_list:
+    type: array
+    items:
+      type: object
+      properties:
+        id:
+          type: string
+          example: wegrh424h-b752-rw4c-76af-s23i3gby3gl1
+          nullable: false
+        diary_flavor_list:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                description: フレーバーのID
+                nullable: false
+              flavor_name:
+                type: string
+                description: フレーバーの名称
+                nullable: false
+              brand_name:
+                type: string
+                description: メーカーの名称
+                nullable: false
+              amount:
+                type: number
+                description: フレーバーを入れた量（g）
+                nullable: false
+          example:
+            - id: 631437-2jd8-1is9-3js8-fb22a0fhwi41
+              flavor_name: EarlGrey
+              brand_name: Afzal
+              amount: 3.6
+            - id: test
+              flavor_name: Rose
+              brand_name: Al Fakher
+              amount: 2.4
+            - id: test2
+              flavor_name: Peach
+              brand_name: Al Fakher
+              amount: 6
+        creator_evaluation:
+          type: number
+          description: 製作者の評価値
+          example: 5.0
+          nullable: false
+        taste_evaluation:
+          type: number
+          description: 吸った味の評価値
+          example: 9.5
+          nullable: false
+        create_date:
+          type: string
+          description: 作成された日付
+          example: "2023-12-01"
+          nullable: false

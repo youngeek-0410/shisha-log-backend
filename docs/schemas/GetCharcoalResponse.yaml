@@ -1,0 +1,22 @@
+type: object
+properties:
+  user_charcoal_list:
+    type: array
+    items:
+      type: object
+      properties:
+        id:
+          type: string
+          description: チャコールのID
+          example: 631437-2jd8-1is9-3js8-fb22a0fhwi41
+          nullable: false
+        charcoal_name:
+          type: string
+          description: チャコールの名称
+          example: Coconuts flat cube
+          nullable: false
+        brand_name:
+          type: string
+          description: メーカーの名称
+          example: KINGCO
+          nullable: false

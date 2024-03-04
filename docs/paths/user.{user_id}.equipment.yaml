@@ -1,0 +1,26 @@
+get:
+  operationId: GetEquipmentByUserId
+  tags:
+    - user
+  summary: Get Equipment list api
+  description: user_idの持っている機材（必要な情報）一覧を取得するapi
+  parameters:
+    - name: user_id
+      in: path
+      description: ユーザーID
+      required: true
+      schema:
+        type: string
+        example: 248c8027-b752-db4c-76c1-fb22a05e9591
+        nullable: false
+  responses:
+    "200":
+      description: successful operation
+      content:
+        application/json:
+          schema:
+            $ref: "../schemas/GetEquipmentResponse.yaml"
+    "400":
+      description: Invalid ID supplied
+    "404":
+      description: Flavor not found

@@ -1,0 +1,22 @@
+type: object
+properties:
+  user_bowl_list:
+    type: array
+    items:
+      type: object
+      properties:
+        id:
+          type: string
+          description: ボウルのID
+          example: 631437-2jd8-1is9-3js8-fb22a0fhwi41
+          nullable: false
+        bowl_name:
+          type: string
+          description: ボウルの名称
+          example: 80feet ESPANA
+          nullable: false
+        brand_name:
+          type: string
+          description: メーカーの名称
+          example: Hookah John
+          nullable: false
