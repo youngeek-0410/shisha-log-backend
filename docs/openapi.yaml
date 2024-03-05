@@ -24,7 +24,7 @@ tags:
     description: Flavor関連のapi
 paths:
   /user/{user_id}/equipment:
-    $ref: paths/user.{user_id}.equipment.yaml
+    $ref: "./paths/user.{user_id}.equipment.yaml"
   /user/{user_id}/flavor:
     $ref: "./paths/user.{user_id}.flavor.yaml"
   /user/{user_id}/bottle:
