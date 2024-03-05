@@ -17,15 +17,15 @@ on:
             - closed
         paths:
             - docs/openapi.yaml
-            - docs/paths/**/*.yaml
-            - docs/schemas/**/*.yaml
+            - docs/paths/*.yaml
+            - docs/schemas/*.yaml
             - .github/workflows/deploy-openapi-docs-to-github-pages.yaml
 
 jobs:
     deploy-to-github-pages:
         runs-on: ubuntu-latest
         steps:
-            - uses: actions/checkout@v2
+            - uses: actions/checkout@v4
 
             - name: Install swagger-cli
               run: |
