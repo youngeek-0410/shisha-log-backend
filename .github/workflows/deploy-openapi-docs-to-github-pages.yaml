@@ -33,7 +33,7 @@ jobs:
 
             - name: Validate docs/openapi.yaml
               run: |
-                swagger-cli validate -d docs/**/*.yaml --type yaml
+                swagger-cli validate -d docs/openapi.yaml --type yaml
 
             - name: Generate Swagger UI
               uses: Legion2/swagger-ui-action@v1
