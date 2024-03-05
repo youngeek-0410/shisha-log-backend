@@ -40,7 +40,7 @@ jobs:
                 swagger-cli validate -d docs/openapi.yaml -t yaml
 
             - name: Generate Swagger UI
-              uses: Legion2/swagger-ui-action@v2
+              uses: Legion2/swagger-ui-action@v1.2.0
               with:
                 output: swagger-ui
                 spec-file: docs/openapi.yaml
