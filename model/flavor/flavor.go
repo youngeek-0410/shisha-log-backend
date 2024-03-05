@@ -7,14 +7,14 @@ import (
 	"github.com/google/uuid"
 )
 
-type UserFlavor struct {
+type GetUserFlavorResponseItem struct {
 	FlavorID   uuid.UUID `json:"id"`
 	FlavorName string    `gorm:"column:name" json:"flavor_name"`
 	BrandName  string    `gorm:"column:name" json:"brand_name"`
 }
 
-type UserFlavors struct {
-	Items []UserFlavor
+type GetUserFlavorResponse struct {
+	Items []GetUserFlavorResponseItem
 }
 
 type DiaryFlavor struct {
@@ -47,24 +47,24 @@ type FlavorBrand struct {
 	CreatedAt *time.Time
 }
 
-func NewUserFlavors() *UserFlavors {
-	return &UserFlavors{}
+func NewUserFlavorResponse() *GetUserFlavorResponse {
+	return &GetUserFlavorResponse{}
 }
 
 func NewDiaryFlavors() *DiaryFlavors {
 	return &DiaryFlavors{}
 }
 
-func (r *UserFlavors) UserFlavors(user_id string) ([]UserFlavor, error) {
+func (r *GetUserFlavorResponse) GetUserFlavorResponse(user_id string) ([]GetUserFlavorResponseItem, error) {
 	db := lib.GetDBConn().DB
-	var userFlavors []UserFlavor
+	var GetUserFlavorResponse []GetUserFlavorResponseItem
 	binaryUUID := lib.ParseUUIDStrToBin(user_id)
 
-	if err := db.Table("user_flavors").Select("user_flavors.flavor_id, flavors.name, flavor_brands.name").Joins("inner join flavors on user_flavors.flavor_id = flavors.id").Joins("inner join flavor_brands on flavors.brand_id = flavor_brands.id").Where("user_flavors.user_id = ?", binaryUUID).Find(&userFlavors).Error; err != nil {
+	if err := db.Table("user_flavors").Select("user_flavors.flavor_id, flavors.name, flavor_brands.name").Joins("inner join flavors on user_flavors.flavor_id = flavors.id").Joins("inner join flavor_brands on flavors.brand_id = flavor_brands.id").Where("user_flavors.user_id = ?", binaryUUID).Find(&GetUserFlavorResponse).Error; err != nil {
 		return nil, err
 	}
 
-	return userFlavors, nil
+	return GetUserFlavorResponse, nil
 }
 
 func (r *DiaryFlavors) DiaryFlavors(diary_id string) ([]DiaryFlavor, error) {

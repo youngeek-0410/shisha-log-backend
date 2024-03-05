@@ -8,9 +8,9 @@ import (
 	"github.com/google/uuid"
 )
 
-func UserFlavorsGet(userFlavors *flavor.UserFlavors) gin.HandlerFunc {
+func UserFlavorResponseGet(GetUserFlavorResponse *flavor.GetUserFlavorResponse) gin.HandlerFunc {
 	return func(c *gin.Context) {
-		result, err := userFlavors.UserFlavors(c.Param("user_id"))
+		result, err := GetUserFlavorResponse.GetUserFlavorResponse(c.Param("user_id"))
 		if err != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 			return
