@@ -47,6 +47,28 @@ type FlavorBrand struct {
 	CreatedAt *time.Time
 }
 
+type Flavor struct {
+	ID         []byte  `gorm:"id"`
+	BrandID    []byte  `gorm:"brand_id"`
+	Name       string  `gorm:"name"`
+	CreateArea *string `gorm:"name"`
+	CreatedAt  *time.Time
+}
+
+type UserFlavor struct {
+	ID        []byte
+	FlavorID  []byte
+	UserID    []byte
+	CreatedAt *time.Time
+}
+
+type PostFlavorRequest struct {
+	UserID     string  `json:"user_id"`
+	BrandID    string  `json:"brand_id"`
+	Name       string  `json:"name"`
+	CreateArea *string `json:"create_area"`
+}
+
 func NewUserFlavorResponse() *GetUserFlavorResponse {
 	return &GetUserFlavorResponse{}
 }
@@ -91,6 +113,22 @@ func (r *PostDiaryFlavors) Add(d []PostDiaryFlavor) error {
 func (r *FlavorBrand) Add(flavorBrand FlavorBrand) error {
 	db := lib.GetDBConn().DB
 	if err := db.Create(&flavorBrand).Error; err != nil {
+		return err
+	}
+	return nil
+}
+
+func (r *Flavor) Add(flavor Flavor) error {
+	db := lib.GetDBConn().DB
+	if err := db.Create(&flavor).Error; err != nil {
+		return err
+	}
+	return nil
+}
+
+func (r *UserFlavor) Add(userFlavor UserFlavor) error {
+	db := lib.GetDBConn().DB
+	if err := db.Create(&userFlavor).Error; err != nil {
 		return err
 	}
 	return nil

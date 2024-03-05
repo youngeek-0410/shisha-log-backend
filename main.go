@@ -42,9 +42,13 @@ func main() {
 	}))
 
 	r.GET("/diary/:user_id", handler.GetUserDiaries(userDiaries))
-	r.GET("/user/:user_id/equipment", handler.UserEquipmentsGet(userEquipments))
 	r.POST("/diary", handler.CreateDiary)
-	r.POST("/flavor/brand", handler.CreateFlavorBrand(flavorBrand))
+	r.GET("/user/:user_id/equipment", handler.UserEquipmentsGet(userEquipments))
+	flavor := r.Group("/flavor")
+	{
+		flavor.POST("", handler.CreateFlavor())
+		flavor.POST("/brand", handler.CreateFlavorBrand(flavorBrand))
+	}
 
 	port := os.Getenv("PORT")
 	if port == "" {
