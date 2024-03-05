@@ -37,7 +37,7 @@ jobs:
             
             - name: Bundle docs
               run: |
-                swagger-cli bundle -o docs/openapi.yaml --type yaml
+                swagger-cli bundle -o docs/openapi.yaml -t yaml docs/openapi.yaml
 
             - name: Generate Swagger UI
               uses: Legion2/swagger-ui-action@v1
