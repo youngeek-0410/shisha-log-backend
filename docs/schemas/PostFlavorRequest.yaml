@@ -15,7 +15,7 @@ properties:
     type: string
     minLength: 1
     maxLength: 32
-    example: Dozaj
+    example: ライチ
   create_area:
     description: フレーバーの生産地
     type: string
