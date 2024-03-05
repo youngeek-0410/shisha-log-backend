@@ -1,0 +1,17 @@
+post:
+  operationId: PostFlavor
+  tags:
+    - flavor
+  summary: Post flavor api
+  requestBody:
+    description: Flavorを登録するapi
+    content:
+      application/json:
+        schema:
+          $ref: "../schemas/PostFlavorRequest.yaml"
+    required: true
+  responses:
+    "200":
+      description: Successful operation
+    "400":
+      description: Invalid request
