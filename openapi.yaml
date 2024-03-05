@@ -635,10 +635,10 @@ paths:
               type: object
               properties:
                 name:
+                  description: フレーバーブランドの名前
                   type: string
                   minLength: 1
                   maxLength: 32
-                  description: フレーバーブランドの名前
                   example: Dozaj
               required:
                 - name
@@ -662,27 +662,27 @@ paths:
               type: object
               properties:
                 user_id:
+                  description: ユーザのID
                   type: string
                   format: uuid
-                  description: ユーザのID
                   example: 631437-2jd8-1is9-3js8-fb22a0fhwi41
                 brand_id:
+                  description: フレーバーブランドのID
                   type: string
                   format: uuid
-                  description: フレーバーブランドのID
                   example: 631437-2jd8-1is9-3js8-fb22a0fhwi41
                 name:
+                  description: フレーバーの名前
                   type: string
                   minLength: 1
                   maxLength: 32
-                  description: フレーバーの名前
                   example: Dozaj
                 create_area:
+                  description: フレーバーの生産地
                   type: string
                   enum:
                     - Middle East
                     - America
-                  description: フレーバーの生産地
                   example: Middle East
               required:
                 - user_id
