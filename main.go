@@ -6,6 +6,7 @@ import (
 	"shisha-log-backend/handler"
 	"shisha-log-backend/lib"
 	"shisha-log-backend/model/diary"
+	"shisha-log-backend/model/flavor"
 
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
@@ -16,6 +17,7 @@ import (
 func main() {
 	userDiaries := diary.NewUserDiaries()
 	userEquipments := handler.NewUserEquipments()
+	flavorBrand := &flavor.FlavorBrand{}
 
 	_, err := os.Stat(".env")
 	if err == nil {
@@ -42,6 +44,7 @@ func main() {
 	r.GET("/diary/:user_id", handler.GetUserDiaries(userDiaries))
 	r.GET("/user/:user_id/equipment", handler.UserEquipmentsGet(userEquipments))
 	r.POST("/diary", handler.CreateDiary)
+	r.POST("/flavor/brand", handler.CreateFlavorBrand(flavorBrand))
 
 	port := os.Getenv("PORT")
 	if port == "" {
