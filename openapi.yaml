@@ -665,18 +665,18 @@ paths:
                   description: ユーザのID
                   type: string
                   format: uuid
-                  example: 631437-2jd8-1is9-3js8-fb22a0fhwi41
+                  example: 11eed26a-1aac-25d2-9ad7-0242ac1b0002
                 brand_id:
                   description: フレーバーブランドのID
                   type: string
                   format: uuid
-                  example: 631437-2jd8-1is9-3js8-fb22a0fhwi41
+                  example: 11eed26a-1aac-25d2-9ad7-0242ac1b0002
                 name:
                   description: フレーバーの名前
                   type: string
                   minLength: 1
                   maxLength: 32
-                  example: Dozaj
+                  example: ライチ
                 create_area:
                   description: フレーバーの生産地
                   type: string
