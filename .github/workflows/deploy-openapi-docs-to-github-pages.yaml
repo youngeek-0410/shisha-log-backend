@@ -30,14 +30,14 @@ jobs:
             - name: Install swagger-cli
               run: |
                 npm install -g swagger-cli
-
-            - name: Validate docs/openapi.yaml
-              run: |
-                swagger-cli validate -d docs/openapi.yaml --type yaml
-            
+ 
             - name: Bundle docs
               run: |
                 swagger-cli bundle -o docs/openapi.yaml -t yaml docs/openapi.yaml
+
+            - name: Validate docs/openapi.yaml
+              run: |
+                swagger-cli validate -d docs/openapi.yaml -t yaml
 
             - name: Generate Swagger UI
               uses: Legion2/swagger-ui-action@v1
