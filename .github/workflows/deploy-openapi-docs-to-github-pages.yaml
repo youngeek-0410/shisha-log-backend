@@ -34,12 +34,17 @@ jobs:
             - name: Validate docs/openapi.yaml
               run: |
                 swagger-cli validate -d docs/openapi.yaml --type yaml
+            
+            - name: Bundle docs
+              run: |
+                swagger-cli bundle -o docs/openapi.yaml --type yaml
 
             - name: Generate Swagger UI
               uses: Legion2/swagger-ui-action@v1
               with:
                 output: swagger-ui
-                spec-file: docs/**/*.yaml
+                spec-file: docs/openapi.yaml
+
 
             - name: Deploy to GitHub Pages
               uses: peaceiris/actions-gh-pages@v3
