@@ -1,19 +1,15 @@
 package main
 
 import (
-	"database/sql"
 	"flag"
 	"fmt"
+	"log"
 	"os"
 	"shisha-log-backend/lib"
-	"time"
 
-	_ "github.com/go-sql-driver/mysql"
 	"github.com/golang-migrate/migrate/v4"
-	"github.com/golang-migrate/migrate/v4/database/mysql"
+	_ "github.com/golang-migrate/migrate/v4/database/postgres"
 	_ "github.com/golang-migrate/migrate/v4/source/file"
-	"github.com/joho/godotenv"
-	"github.com/pkg/errors"
 )
 
 var migrationFilePath = "file://./migrations/"
@@ -22,31 +18,20 @@ func main() {
 	fmt.Println("start migration")
 	flag.Parse()
 	command := flag.Arg(0)
-	migrationFileName := flag.Arg(1)
 
 	if command == "" {
 		showUsage()
 		os.Exit(1)
 	}
 
-	if os.Getenv("USE_HEROKU") != "1" {
-		err := godotenv.Load()
-		if err != nil {
-			fmt.Println(errors.Wrap(err, "load error .env"))
-		}
-	}
-
-	m := newMigrate()
-	version, dirty, _ := m.Version()
-	force := flag.Bool("f", false, "force execute fixed sql")
-	if dirty && *force {
-		fmt.Println("force=true: force execute current version sql")
-		m.Force(int(version))
+	m, err := migrate.New(migrationFilePath, lib.GenerateDsn())
+	if err != nil {
+		log.Fatal(err)
 	}
 
 	switch command {
-	case "new":
-		newMigration(migrationFileName)
+	case "migrate":
+		migration(m)
 	case "up":
 		up(m)
 	case "down":
@@ -62,40 +47,13 @@ func main() {
 	}
 }
 
-func newMigrate() *migrate.Migrate {
-	dsn := lib.GenerateDsn()
-	db, openErr := sql.Open("mysql", dsn)
-	if openErr != nil {
-		fmt.Println(errors.Wrap(openErr, "error occurred. sql.Open()"))
-		os.Exit(1)
-	}
-
-	driver, instanceErr := mysql.WithInstance(db, &mysql.Config{})
-	if instanceErr != nil {
-		fmt.Println(errors.Wrap(instanceErr, "error occurred. mysql.WithInstance()"))
-		os.Exit(1)
-	}
-
-	m, err := migrate.NewWithDatabaseInstance(
-		migrationFilePath,
-		"mysql",
-		driver,
-	)
-
-	if err != nil {
-		fmt.Println(errors.Wrap(err, "error occurred. migrate.NewWithDatabaseInstance()"))
-		os.Exit(1)
-	}
-	return m
-}
-
 func showUsage() {
 	fmt.Println(`
 -------------------------------------
 Usage:
   go run migration/main.go <command>
 Commands:
-  new FILENAME  Create new up & down migration files
+  migrate   Apply all up migrations
   up        Apply up migrations
   down      Apply down migrations
   drop      Drop everything
@@ -103,24 +61,7 @@ Commands:
 -------------------------------------`)
 }
 
-func newMigration(name string) {
-	if name == "" {
-		fmt.Println("\nerror: migration file name must be supplied as an argument")
-		os.Exit(1)
-	}
-	base := fmt.Sprintf("./migrations/%s_%s", time.Now().Format("20060102030405"), name)
-	ext := ".sql"
-	createFile(base + ".up" + ext)
-	createFile(base + ".down" + ext)
-}
-
-func createFile(fname string) {
-	if _, err := os.Create(fname); err != nil {
-		panic(err)
-	}
-}
-
-func up(m *migrate.Migrate) {
+func migration(m *migrate.Migrate) {
 	fmt.Println("Before:")
 	showVersionInfo(m.Version())
 	err := m.Up()
@@ -133,6 +74,18 @@ func up(m *migrate.Migrate) {
 		fmt.Println("\nUpdated:")
 		version, dirty, err := m.Version()
 		showVersionInfo(version, dirty, err)
+	}
+}
+
+func up(m *migrate.Migrate) {
+	fmt.Println("Before:")
+	showVersionInfo(m.Version())
+	err := m.Steps(1)
+	if err != nil {
+		panic(err)
+	} else {
+		fmt.Println("\nUpdated:")
+		showVersionInfo(m.Version())
 	}
 }
 

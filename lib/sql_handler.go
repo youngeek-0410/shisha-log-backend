@@ -5,7 +5,7 @@ import (
 	"os"
 	"time"
 
-	"gorm.io/driver/mysql"
+	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
 
@@ -30,7 +30,7 @@ func GenerateDsn() string {
 		port := os.Getenv("DB_PORT")
 		dbName := os.Getenv("DB_DATABASE")
 
-		dsn = fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8mb4&parseTime=true&multiStatements=true", user, pass, host, port, dbName)
+		dsn = fmt.Sprintf("postgres://%s:%s@%s:%s/%s?sslmode=disable", user, pass, host, port, dbName)
 	}
 
 	return dsn
@@ -53,7 +53,7 @@ func NewSQLHandler() *SQLHandler {
 	var err error
 
 	dsn := GenerateDsn()
-	db, err = gorm.Open(mysql.Open(dsn), &gorm.Config{})
+	db, err = gorm.Open(postgres.Open(dsn), &gorm.Config{})
 	if err != nil {
 		panic(err)
 	}
