@@ -1,4 +1,4 @@
-CREATE TABLE diaries (
+CREATE TABLE IF NOT EXISTS diaries (
     id VARCHAR(36) NOT NULL DEFAULT gen_random_uuid(),
     diary_equipments_id VARCHAR(36) NOT NULL,
     serve_text VARCHAR(255),
@@ -16,7 +16,7 @@ CREATE TABLE diaries (
     PRIMARY KEY (id)
 );
 
-CREATE TABLE diary_flavors (
+CREATE TABLE IF NOT EXISTS diary_flavors (
     id VARCHAR(36) NOT NULL DEFAULT gen_random_uuid(),
     user_flavor_id VARCHAR(36) NOT NULL,
     diary_id VARCHAR(36) NOT NULL,
@@ -26,7 +26,7 @@ CREATE TABLE diary_flavors (
     PRIMARY KEY (id)
 );
 
-CREATE TABLE diary_equipments (
+CREATE TABLE IF NOT EXISTS diary_equipments (
     id VARCHAR(36) NOT NULL DEFAULT gen_random_uuid(),
     user_bottle_id VARCHAR(36) NOT NULL,
     user_bowl_id VARCHAR(36) NOT NULL,
@@ -38,7 +38,7 @@ CREATE TABLE diary_equipments (
     PRIMARY KEY (id)
 );
 
-CREATE TABLE diary_images (
+CREATE TABLE IF NOT EXISTS diary_images (
     id VARCHAR(36) NOT NULL DEFAULT gen_random_uuid(),
     path VARCHAR(255),
     created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
@@ -46,7 +46,7 @@ CREATE TABLE diary_images (
     PRIMARY KEY (id)
 );
 
-CREATE TABLE user_diaries (
+CREATE TABLE IF NOT EXISTS user_diaries (
     id VARCHAR(36) NOT NULL DEFAULT gen_random_uuid(),
     user_id VARCHAR(36) NOT NULL,
     diary_id VARCHAR(36) NOT NULL,
@@ -55,7 +55,7 @@ CREATE TABLE user_diaries (
     PRIMARY KEY (id)
 );
 
-CREATE TABLE flavors (
+CREATE TABLE IF NOT EXISTS flavors (
     id VARCHAR(36) NOT NULL DEFAULT gen_random_uuid(),
     brand_id VARCHAR(36) NOT NULL,
     name VARCHAR(255) NOT NULL,
@@ -64,29 +64,14 @@ CREATE TABLE flavors (
     PRIMARY KEY (id)
 );
 
-CREATE TABLE flavor_brands (
+CREATE TABLE IF NOT EXISTS flavor_brands (
     id VARCHAR(36) NOT NULL DEFAULT gen_random_uuid(),
     name VARCHAR(255) NOT NULL,
     created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (id)
 );
 
-CREATE TABLE bottles (
-    id VARCHAR(36) NOT NULL DEFAULT gen_random_uuid(),
-    brand_id VARCHAR(36) NOT NULL,
-    name VARCHAR(255) NOT NULL,
-    created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
-    PRIMARY KEY (id)
-);
-
-CREATE TABLE bottle_brands (
-    id VARCHAR(36) NOT NULL DEFAULT gen_random_uuid(),
-    name VARCHAR(255) NOT NULL,
-    created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
-    PRIMARY KEY (id)
-);
-
-CREATE TABLE bowls (
+CREATE TABLE IF NOT EXISTS bottles (
     id VARCHAR(36) NOT NULL DEFAULT gen_random_uuid(),
     brand_id VARCHAR(36) NOT NULL,
     name VARCHAR(255) NOT NULL,
@@ -94,29 +79,14 @@ CREATE TABLE bowls (
     PRIMARY KEY (id)
 );
 
-CREATE TABLE bowl_brands (
+CREATE TABLE IF NOT EXISTS bottle_brands (
     id VARCHAR(36) NOT NULL DEFAULT gen_random_uuid(),
     name VARCHAR(255) NOT NULL,
     created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (id)
 );
 
-CREATE TABLE heat_managements (
-    id VARCHAR(36) NOT NULL DEFAULT gen_random_uuid(),
-    brand_id VARCHAR(36) NOT NULL,
-    name VARCHAR(255) NOT NULL,
-    created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
-    PRIMARY KEY (id)
-);
-
-CREATE TABLE heat_management_brands (
-    id VARCHAR(36) NOT NULL DEFAULT gen_random_uuid(),
-    name VARCHAR(255) NOT NULL,
-    created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
-    PRIMARY KEY (id)
-);
-
-CREATE TABLE charcoals (
+CREATE TABLE IF NOT EXISTS bowls (
     id VARCHAR(36) NOT NULL DEFAULT gen_random_uuid(),
     brand_id VARCHAR(36) NOT NULL,
     name VARCHAR(255) NOT NULL,
@@ -124,21 +94,51 @@ CREATE TABLE charcoals (
     PRIMARY KEY (id)
 );
 
-CREATE TABLE charcoal_brands (
+CREATE TABLE IF NOT EXISTS bowl_brands (
     id VARCHAR(36) NOT NULL DEFAULT gen_random_uuid(),
     name VARCHAR(255) NOT NULL,
     created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (id)
 );
 
-CREATE TABLE users (
+CREATE TABLE IF NOT EXISTS heat_managements (
+    id VARCHAR(36) NOT NULL DEFAULT gen_random_uuid(),
+    brand_id VARCHAR(36) NOT NULL,
+    name VARCHAR(255) NOT NULL,
+    created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (id)
+);
+
+CREATE TABLE IF NOT EXISTS heat_management_brands (
     id VARCHAR(36) NOT NULL DEFAULT gen_random_uuid(),
     name VARCHAR(255) NOT NULL,
     created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (id)
 );
 
-CREATE TABLE user_flavors (
+CREATE TABLE IF NOT EXISTS charcoals (
+    id VARCHAR(36) NOT NULL DEFAULT gen_random_uuid(),
+    brand_id VARCHAR(36) NOT NULL,
+    name VARCHAR(255) NOT NULL,
+    created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (id)
+);
+
+CREATE TABLE IF NOT EXISTS charcoal_brands (
+    id VARCHAR(36) NOT NULL DEFAULT gen_random_uuid(),
+    name VARCHAR(255) NOT NULL,
+    created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (id)
+);
+
+CREATE TABLE IF NOT EXISTS users (
+    id VARCHAR(36) NOT NULL DEFAULT gen_random_uuid(),
+    name VARCHAR(255) NOT NULL,
+    created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (id)
+);
+
+CREATE TABLE IF NOT EXISTS user_flavors (
     id VARCHAR(36) NOT NULL DEFAULT gen_random_uuid(),
     flavor_id VARCHAR(36) NOT NULL,
     user_id VARCHAR(36) NOT NULL,
@@ -146,7 +146,7 @@ CREATE TABLE user_flavors (
     PRIMARY KEY (id, flavor_id, user_id)
 );
 
-CREATE TABLE user_bottles (
+CREATE TABLE IF NOT EXISTS user_bottles (
     id VARCHAR(36) NOT NULL DEFAULT gen_random_uuid(),
     bottle_id VARCHAR(36) NOT NULL,
     user_id VARCHAR(36) NOT NULL,
@@ -154,7 +154,7 @@ CREATE TABLE user_bottles (
     PRIMARY KEY (id)
 );
 
-CREATE TABLE user_bowls (
+CREATE TABLE IF NOT EXISTS user_bowls (
     id VARCHAR(36) NOT NULL DEFAULT gen_random_uuid(),
     bowl_id VARCHAR(36) NOT NULL,
     user_id VARCHAR(36) NOT NULL,
@@ -162,7 +162,7 @@ CREATE TABLE user_bowls (
     PRIMARY KEY (id)
 );
 
-CREATE TABLE user_heat_managements (
+CREATE TABLE IF NOT EXISTS user_heat_managements (
     id VARCHAR(36) NOT NULL DEFAULT gen_random_uuid(),
     heat_management_id VARCHAR(36) NOT NULL,
     user_id VARCHAR(36) NOT NULL,
@@ -170,7 +170,7 @@ CREATE TABLE user_heat_managements (
     PRIMARY KEY (id)
 );
 
-CREATE TABLE user_charcoals (
+CREATE TABLE IF NOT EXISTS user_charcoals (
     id VARCHAR(36) NOT NULL DEFAULT gen_random_uuid(),
     charcoal_id VARCHAR(36) NOT NULL,
     user_id VARCHAR(36) NOT NULL,
