@@ -1,6 +1,7 @@
 package lib
 
 import (
+	"fmt"
 	"os"
 	"time"
 
@@ -23,14 +24,13 @@ func GenerateDsn() string {
 	if apiRevision == "release" {
 		dsn = os.Getenv("DSN")
 	} else {
-		// user := os.Getenv("DB_USERNAME")
-		// pass := os.Getenv("DB_PASSWORD")
-		// host := os.Getenv("DB_HOST")
-		// port := os.Getenv("DB_PORT")
-		// dbName := os.Getenv("DB_DATABASE")
+		user := os.Getenv("DB_USERNAME")
+		pass := os.Getenv("DB_PASSWORD")
+		host := os.Getenv("DB_HOST")
+		port := os.Getenv("DB_PORT")
+		dbName := os.Getenv("DB_DATABASE")
 
-		// dsn = fmt.Sprintf("postgres://%s:%s@%s:%s/%s?sslmode=disable", user, pass, host, port, dbName)
-		dsn = "postgres://postgres:postgres@db:5432/shisha?sslmode=disable"
+		dsn = fmt.Sprintf("postgres://%s:%s@%s:%s/%s?sslmode=disable", user, pass, host, port, dbName)
 	}
 
 	return dsn
