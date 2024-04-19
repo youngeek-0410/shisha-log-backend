@@ -3,14 +3,12 @@ package flavor
 import (
 	"shisha-log-backend/lib"
 	"time"
-
-	"github.com/google/uuid"
 )
 
 type GetUserFlavorResponseItem struct {
-	FlavorID   uuid.UUID `json:"id"`
-	FlavorName string    `gorm:"column:name" json:"flavor_name"`
-	BrandName  string    `gorm:"column:name" json:"brand_name"`
+	FlavorID   string `json:"id"`
+	FlavorName string `gorm:"column:name" json:"flavor_name"`
+	BrandName  string `gorm:"column:name" json:"brand_name"`
 }
 
 type GetUserFlavorResponse struct {
@@ -18,10 +16,10 @@ type GetUserFlavorResponse struct {
 }
 
 type DiaryFlavor struct {
-	ID         uuid.UUID `json:"id"`
-	FlavorName string    `gorm:"column:name" json:"flavor_name"`
-	BrandName  string    `gorm:"column:name" json:"brand_name"`
-	Amount     float64   `json:"amount"`
+	ID         string  `json:"id"`
+	FlavorName string  `gorm:"column:name" json:"flavor_name"`
+	BrandName  string  `gorm:"column:name" json:"brand_name"`
+	Amount     float64 `json:"amount"`
 }
 
 type DiaryFlavors struct {
@@ -92,9 +90,8 @@ func (r *GetUserFlavorResponse) GetUserFlavorResponse(user_id string) ([]GetUser
 func (r *DiaryFlavors) DiaryFlavors(diary_id string) ([]DiaryFlavor, error) {
 	db := lib.GetDBConn().DB
 	var diaryFlavors []DiaryFlavor
-	diaryUUID := lib.ParseUUIDStrToBin(diary_id)
 
-	if err := db.Table("diary_flavors").Select("flavors.id, flavors.name, flavor_brands.name, diary_flavors.amount").Joins("inner join flavors on diary_flavors.user_flavor_id = flavors.id").Joins("inner join flavor_brands on flavors.brand_id = flavor_brands.id").Where("diary_id = ?", diaryUUID).Find(&diaryFlavors).Error; err != nil {
+	if err := db.Table("diary_flavors").Select("flavors.id, flavors.name, flavor_brands.name, diary_flavors.amount").Joins("inner join flavors on diary_flavors.user_flavor_id = flavors.id").Joins("inner join flavor_brands on flavors.brand_id = flavor_brands.id").Where("diary_id = ?", diary_id).Find(&diaryFlavors).Error; err != nil {
 		return nil, err
 	}
 
