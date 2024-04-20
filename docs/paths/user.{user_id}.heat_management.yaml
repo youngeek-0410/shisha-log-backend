@@ -1,0 +1,26 @@
+get:
+  operationId: GetHeatManagementByUserId
+  tags:
+    - user
+  summary: Get Heat management list api
+  description: user_idの持っているヒートマネジメントを取得するapi
+  parameters:
+    - name: user_id
+      in: path
+      description: ユーザーID
+      required: true
+      schema:
+        type: string
+        example: 248c8027-b752-db4c-76c1-fb22a05e9591
+        nullable: false
+  responses:
+    "200":
+      description: successful operation
+      content:
+        application/json:
+          schema:
+            $ref: "../schemas/GetHeatManagementResponse.yaml"
+    "400":
+      description: Invalid ID supplied
+    "404":
+      description: Heat management not found

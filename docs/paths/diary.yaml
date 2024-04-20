@@ -1,0 +1,17 @@
+post:
+  operationId: PostDiary
+  tags:
+    - diary
+  summary: Post diary api
+  requestBody:
+    description: Formを送信するapi
+    content:
+      application/json:
+        schema:
+          $ref: "../schemas/PostDiaryRequest.yaml"
+    required: true
+  responses:
+    "200":
+      description: Successful operation
+    "400":
+      description: Invalid request

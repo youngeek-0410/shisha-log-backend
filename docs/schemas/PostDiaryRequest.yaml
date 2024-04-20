@@ -1,0 +1,109 @@
+type: object
+required:
+  - receiver_name
+properties:
+  user_id:
+    type: string
+    description: ユーザーID
+    example: 248c8027-b752-db4c-76c1-fb22a05e9591
+    nullable: false
+  equipments:
+    type: object
+    description: 機材の情報
+    properties:
+      bowl_id:
+        type: string
+        description: ボウルのID
+        example: 987513-2jd8-1is9-3js8-fb22a0fhwi41
+        nullable: false
+      bottle_id:
+        type: string
+        description: ボトルのID
+        example: 529513-2jd8-1is9-3js8-fb22a0fhwi41
+        nullable: false
+      heat_management_id:
+        type: string
+        description: ヒートマネジメントのID
+        example: 235097-2jd8-1is9-3js8-fb22a0fhwi41
+        nullable: false
+      charcoal_id:
+        type: string
+        description: チャコールのID
+        example: 350971-2jd8-1is9-3js8-fb22a0fhwi41
+        nullable: false
+      climate:
+        type: object
+        description: 気温の情報
+        properties:
+          temperature:
+            type: number
+            description: 気温
+            example: 23.4
+          humidity:
+            type: number
+            description: 湿度
+            example: 53
+  diary_flavor_list:
+    type: object
+    properties:
+      id:
+        type: string
+        description: フレーバーのID
+        nullable: false
+      amount:
+        type: number
+        description: フレーバーを入れた量（g）
+        nullable: false
+    example:
+      - id: 631437-2jd8-1is9-3js8-fb22a0fhwi41
+        amount: 3.6
+      - id: test
+        amount: 2.4
+      - id: test2
+        amount: 6
+  image:
+    type: string
+    description: エンコードした画像のデータ
+    example: ここにbase64でエンコードした画像を送っちゃうわよ〜〜〜〜〜ん
+  serve_text:
+    type: string
+    description: フレーバーをどういう風に盛るか書く時のテキスト
+    example: "アールグレイとピーチとローズ全部セパレートですわ！"
+  sucking_text:
+    type: string
+    description: 吸い出し時のテキスト
+    example: ""
+  review:
+    type: object
+    description: 評価の情報
+    properties:
+      creator_evaluation:
+        type: number
+        description: 製作者の評価値
+        example: 5.0
+        nullable: false
+      taste_evaluation:
+        type: number
+        description: 吸った味の評価値
+        example: 9.5
+        nullable: false
+      creator_good_points:
+        type: string
+        description: 製作者の感想（よかったこと）
+        example: これはよかったなあああああああああああ
+        nullable: true
+      creator_bad_points:
+        type: string
+        description: 製作者の感想（よかったこと）
+        example: ちょっとアールグレイが強く出過ぎてるかな. Afzalのアールグレイ, Al Fakherのローズは結構味が強く出るフレーバーだから, 盛る時にそのままセパレートで入れるよりかは下引きで入れておいて, その上にピーチを入れたほうがピーチティーの感覚に近くなって美味しくなると思う.
+        nullable: true
+      taste_comments:
+        type: string
+        description: 味の感想
+        example: これはいいシーシャだと思います.
+        nullable: true
+  create_date:
+    type: string
+    description: 作成された日付
+    example: "2023-12-01"
+    nullable: false

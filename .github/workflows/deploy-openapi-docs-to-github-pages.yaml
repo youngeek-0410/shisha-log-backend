@@ -6,6 +6,8 @@ on:
             - develop
         paths:
             - docs/openapi.yaml
+            - docs/paths/**/*.yaml
+            - docs/schemas/**/*.yaml
             - .github/workflows/deploy-openapi-docs-to-github-pages.yaml
     pull_request:
         branches:
@@ -15,27 +17,34 @@ on:
             - closed
         paths:
             - docs/openapi.yaml
+            - docs/paths/*.yaml
+            - docs/schemas/*.yaml
             - .github/workflows/deploy-openapi-docs-to-github-pages.yaml
 
 jobs:
     deploy-to-github-pages:
         runs-on: ubuntu-latest
         steps:
-            - uses: actions/checkout@v2
+            - uses: actions/checkout@v4
 
             - name: Install swagger-cli
               run: |
                 npm install -g swagger-cli
+ 
+            - name: Bundle docs
+              run: |
+                swagger-cli bundle -o docs/openapi.yaml -t yaml docs/openapi.yaml
 
             - name: Validate docs/openapi.yaml
               run: |
-                swagger-cli validate -d docs/openapi.yaml --type yaml
+                swagger-cli validate -d docs/openapi.yaml -t yaml
 
             - name: Generate Swagger UI
-              uses: Legion2/swagger-ui-action@v1
+              uses: Legion2/swagger-ui-action@v1.2.0
               with:
                 output: swagger-ui
                 spec-file: docs/openapi.yaml
+
 
             - name: Deploy to GitHub Pages
               uses: peaceiris/actions-gh-pages@v3

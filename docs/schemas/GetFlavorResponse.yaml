@@ -1,0 +1,22 @@
+type: object
+properties:
+  user_flavor_list:
+    type: array
+    items:
+      type: object
+      properties:
+        id:
+          type: string
+          description: フレーバーのID
+          example: 631437-2jd8-1is9-3js8-fb22a0fhwi41
+          nullable: false
+        flavor_name:
+          type: string
+          description: フレーバーの名称
+          example: EarlGrey
+          nullable: false
+        brand_name:
+          type: string
+          description: メーカーの名称
+          example: Afzal
+          nullable: false

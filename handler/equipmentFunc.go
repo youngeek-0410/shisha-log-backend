@@ -12,7 +12,7 @@ import (
 )
 
 type UserEquipments struct {
-	Flavors         []flavor.UserFlavor                 `json:"user_flavor_list"`
+	Flavors         []flavor.GetUserFlavorResponseItem  `json:"user_flavor_list"`
 	Bottles         []bottle.UserBottle                 `json:"user_bottle_list"`
 	Bowls           []bowl.UserBowl                     `json:"user_bowl_list"`
 	Charcoals       []charcoal.UserCharcoal             `json:"user_charcoal_list"`
@@ -24,7 +24,7 @@ func NewUserEquipments() *UserEquipments {
 }
 
 func UserEquipmentsGet(UserEquipment *UserEquipments) gin.HandlerFunc {
-	userFlavors := flavor.NewUserFlavors()
+	userFlavorResponse := flavor.NewUserFlavorResponse()
 	userBottles := bottle.NewUserBottles()
 	userBowls := bowl.NewUserBowls()
 	userCharcoals := charcoal.NewUserCharcoals()
@@ -33,7 +33,7 @@ func UserEquipmentsGet(UserEquipment *UserEquipments) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		var result UserEquipments
 
-		flavors, flavorErr := userFlavors.UserFlavors(c.Param("user_id"))
+		flavors, flavorErr := userFlavorResponse.GetUserFlavorResponse(c.Param("user_id"))
 		if flavorErr != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": flavorErr.Error()})
 			return

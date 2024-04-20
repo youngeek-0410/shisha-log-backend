@@ -1,0 +1,22 @@
+type: object
+properties:
+  user_bottle_list:
+    type: array
+    items:
+      type: object
+      properties:
+        id:
+          type: string
+          description: ボトルのID
+          example: 631437-2jd8-1is9-3js8-fb22a0fhwi41
+          nullable: false
+        bottle_name:
+          type: string
+          description: ボトルの名称
+          example: Ultimate one pro
+          nullable: false
+        brand_name:
+          type: string
+          description: メーカーの名称
+          example: Stimulation
+          nullable: false

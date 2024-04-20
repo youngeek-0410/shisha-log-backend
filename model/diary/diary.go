@@ -5,12 +5,10 @@ import (
 	"shisha-log-backend/lib"
 	"shisha-log-backend/model/flavor"
 	"time"
-
-	"github.com/google/uuid"
 )
 
 type UserDiary struct {
-	ID                uuid.UUID            `gorm:"column:id" json:"id"`
+	ID                string               `gorm:"column:id" json:"id"`
 	DiaryFlavors      []flavor.DiaryFlavor `gorm:"foreignKey:ID" json:"diary_flavor_list"`
 	CreateDate        time.Time            `gorm:"column:create_date" json:"create_date"`
 	CreatorEvaluation float64              `gorm:"column:creator_evaluation" json:"creator_evaluation"`
@@ -59,8 +57,8 @@ type DiaryReview struct {
 }
 
 type Diary struct {
-	ID                []byte     `gorm:"column:id"`
-	DiaryEquipmentsID []byte     `gorm:"column:diary_equipments_id"`
+	ID                string     `gorm:"column:id"`
+	DiaryEquipmentsID string     `gorm:"column:diary_equipments_id"`
 	ServeText         *string    `gorm:"column:serve_text"`
 	SuckingText       *string    `gorm:"column:sucking_text"`
 	Temperature       *float64   `gorm:"column:temperature"`
@@ -97,17 +95,15 @@ func (ud UserDiary) MarshalJSON() ([]byte, error) {
 func (r *UserDiaries) UserDiaries(user_id string) ([]UserDiary, error) {
 	db := lib.GetDBConn().DB
 	var userDiaries []UserDiary
-	userUUID := lib.ParseUUIDStrToBin(user_id)
 
-	if err := db.Table("diaries").Select("diaries.id, diaries.create_date, diaries.creator_evaluation, diaries.taste_evaluation").Joins("inner join user_diaries on user_diaries.diary_id = diaries.id").Where("user_diaries.user_id = ?", userUUID).Find(&userDiaries).Error; err != nil {
+	if err := db.Table("diaries").Select("diaries.id, diaries.create_date, diaries.creator_evaluation, diaries.taste_evaluation").Joins("inner join user_diaries on user_diaries.diary_id = diaries.id").Where("user_diaries.user_id = ?", user_id).Find(&userDiaries).Error; err != nil {
 		return nil, err
 	}
 
 	for i := range userDiaries {
 		var diaryFlavors flavor.DiaryFlavors
-		diaryStrUUID := userDiaries[i].ID.String()
 
-		flavors, err := diaryFlavors.DiaryFlavors(diaryStrUUID)
+		flavors, err := diaryFlavors.DiaryFlavors(userDiaries[i].ID)
 		if err != nil {
 			return nil, err
 		}

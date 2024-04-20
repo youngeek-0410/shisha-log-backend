@@ -1,0 +1,22 @@
+type: object
+properties:
+  user_heat_management_list:
+    type: array
+    items:
+      type: object
+      properties:
+        id:
+          type: string
+          description: ヒートマネジメントのID
+          example: 631437-2jd8-1is9-3js8-fb22a0fhwi41
+          nullable: false
+        heat_management_name:
+          type: string
+          description: ヒートマネジメントの名称
+          example: Turkish Lid
+          nullable: false
+        brand_name:
+          type: string
+          description: メーカーの名称
+          example: YIMI Hookah
+          nullable: false
