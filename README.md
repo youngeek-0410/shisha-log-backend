@@ -13,5 +13,7 @@
 ## マイグレーション
 
 `docker-compose exec -it api-server sh`
+
 `cd migration/`
+
 `go run main.go down`
