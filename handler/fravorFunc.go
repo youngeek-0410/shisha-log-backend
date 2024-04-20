@@ -3,7 +3,6 @@ package handler
 import (
 	"fmt"
 	"net/http"
-	"shisha-log-backend/lib"
 	"shisha-log-backend/model/flavor"
 
 	"github.com/gin-gonic/gin"
@@ -40,11 +39,7 @@ func CreateFlavorBrand(flavorBrand *flavor.FlavorBrand) gin.HandlerFunc {
 			return
 		}
 
-		brandID, err := uuid.New().MarshalBinary()
-		if err != nil {
-			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
-			return
-		}
+		brandID := uuid.New().String()
 
 		flavorBrandItem := flavor.FlavorBrand{
 			ID:        brandID,
@@ -52,8 +47,7 @@ func CreateFlavorBrand(flavorBrand *flavor.FlavorBrand) gin.HandlerFunc {
 			CreatedAt: req.CreatedAt,
 		}
 
-		err = flavorBrand.Add(flavorBrandItem)
-		if err != nil {
+		if err := flavorBrand.Add(flavorBrandItem); err != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 			return
 		}
@@ -72,23 +66,13 @@ func CreateFlavor() gin.HandlerFunc {
 			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 			return
 		}
-		fmt.Printf("req: %+v\n", req)
 
-		flavorID, err := uuid.New().MarshalBinary()
-		if err != nil {
-			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
-			return
-		}
-
-		userFlavorID, err := uuid.New().MarshalBinary()
-		if err != nil {
-			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
-			return
-		}
+		flavorID := uuid.New().String()
+		userFlavorID := uuid.New().String()
 
 		flavorItem := flavor.Flavor{
 			ID:         flavorID,
-			BrandID:    lib.ParseUUIDStrToBin(req.BrandID),
+			BrandID:    req.BrandID,
 			Name:       req.Name,
 			CreateArea: req.CreateArea,
 		}
@@ -96,17 +80,15 @@ func CreateFlavor() gin.HandlerFunc {
 		userFlavorItem := flavor.UserFlavor{
 			ID:       userFlavorID,
 			FlavorID: flavorID,
-			UserID:   lib.ParseUUIDStrToBin(req.UserID),
+			UserID:   req.UserID,
 		}
 
-		err = flavorInstance.Add(flavorItem)
-		if err != nil {
+		if err := flavorInstance.Add(flavorItem); err != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 			return
 		}
 
-		err = userFlavorInstance.Add(userFlavorItem)
-		if err != nil {
+		if err := userFlavorInstance.Add(userFlavorItem); err != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 			return
 		}

@@ -45,28 +45,10 @@ func CreateDiary(c *gin.Context) {
 		return
 	}
 
-	diaryID, err := uuid.New().MarshalBinary()
-	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
-		return
-	}
-	diaryEquipmentsID, err := uuid.New().MarshalBinary()
-	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
-		return
-	}
-	userDiariesID, err := uuid.New().MarshalBinary()
-	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
-		return
-	}
-
-	imageID := uuid.New()
-	imageBinaryID, err := imageID.MarshalBinary()
-	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
-		return
-	}
+	diaryID := uuid.New().String()
+	diaryEquipmentsID := uuid.New().String()
+	userDiariesID := uuid.New().String()
+	imageID := uuid.New().String()
 
 	if req.Image != "" {
 		fileIdentifier := time.Now().Format("20060102-150405")
@@ -84,7 +66,7 @@ func CreateDiary(c *gin.Context) {
 			imageFile, _ := os.Create(fileName)
 			defer imageFile.Close()
 
-			_, err := imageFile.Write(imageData)
+			_, err = imageFile.Write(imageData)
 			if err != nil {
 				c.JSON(http.StatusInternalServerError, gin.H{"error": "ファイルの作成に失敗しました"})
 				return
@@ -117,23 +99,22 @@ func CreateDiary(c *gin.Context) {
 	}
 
 	diaryImageItem := image.DiaryImage{
-		ID:   imageBinaryID,
+		ID:   imageID,
 		Path: os.Getenv("GCS_BUCKET_PATH") + imagePath,
 	}
 
-	err = diaryImages.Add(diaryImageItem)
-	if err != nil {
+	if err := diaryImages.Add(diaryImageItem); err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
 
 	diaryEquipmentsItem := equipment.DiaryEquipment{
 		ID:                   diaryEquipmentsID,
-		UserBowlID:           lib.ParseUUIDStrToBin(req.Equipments.BowlID),
-		UserBottleID:         lib.ParseUUIDStrToBin(req.Equipments.BottleID),
-		UserHeatManagementID: lib.ParseUUIDStrToBin(req.Equipments.HeatManagementID),
-		UserCharcoalID:       lib.ParseUUIDStrToBin(req.Equipments.CharcoalID),
-		DiaryImageID:         imageBinaryID,
+		UserBowlID:           req.Equipments.BowlID,
+		UserBottleID:         req.Equipments.BottleID,
+		UserHeatManagementID: req.Equipments.HeatManagementID,
+		UserCharcoalID:       req.Equipments.CharcoalID,
+		DiaryImageID:         imageID,
 	}
 
 	diaryItem := diary.Diary{
@@ -153,15 +134,11 @@ func CreateDiary(c *gin.Context) {
 
 	diaryFlavorItems := []flavor.PostDiaryFlavor{}
 	for _, diaryFlavor := range req.DiaryFlavorList {
-		diaryFlavorID, err := uuid.New().MarshalBinary()
-		if err != nil {
-			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
-			return
-		}
+		diaryFlavorID := uuid.New().String()
 
 		d := flavor.PostDiaryFlavor{
 			ID:           diaryFlavorID,
-			UserFlavorID: lib.ParseUUIDStrToBin(diaryFlavor.ID),
+			UserFlavorID: diaryFlavor.ID,
 			DiaryID:      diaryID,
 			Amount:       diaryFlavor.Amount,
 		}
@@ -170,27 +147,26 @@ func CreateDiary(c *gin.Context) {
 
 	userDiariesItem := user.UserDiary{
 		ID:      userDiariesID,
-		UserID:  lib.ParseUUIDStrToBin(req.UserID),
+		UserID:  req.UserID,
 		DiaryID: diaryID,
 	}
 
-	err = diaryEquipments.Add(diaryEquipmentsItem)
-	if err != nil {
+	if err := diaryEquipments.Add(diaryEquipmentsItem); err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
-	err = diaries.Add(diaryItem)
-	if err != nil {
+
+	if err := diaries.Add(diaryItem); err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
-	err = diaryFlavors.Add(diaryFlavorItems)
-	if err != nil {
+
+	if err := diaryFlavors.Add(diaryFlavorItems); err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
-	err = userDiaries.Add(userDiariesItem)
-	if err != nil {
+
+	if err := userDiaries.Add(userDiariesItem); err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}

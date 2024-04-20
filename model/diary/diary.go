@@ -57,8 +57,8 @@ type DiaryReview struct {
 }
 
 type Diary struct {
-	ID                []byte     `gorm:"column:id"`
-	DiaryEquipmentsID []byte     `gorm:"column:diary_equipments_id"`
+	ID                string     `gorm:"column:id"`
+	DiaryEquipmentsID string     `gorm:"column:diary_equipments_id"`
 	ServeText         *string    `gorm:"column:serve_text"`
 	SuckingText       *string    `gorm:"column:sucking_text"`
 	Temperature       *float64   `gorm:"column:temperature"`
