@@ -6,9 +6,9 @@ import (
 )
 
 type UserDiary struct {
-	ID        []byte
-	UserID    []byte
-	DiaryID   []byte
+	ID        string
+	UserID    string
+	DiaryID   string
 	CreatedAt *time.Time
 }
 

@@ -1,11 +1,10 @@
 package lib
 
 import (
-	"fmt"
 	"os"
 	"time"
 
-	"gorm.io/driver/mysql"
+	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
 
@@ -18,20 +17,7 @@ type SQLHandler struct {
 var dbConn *SQLHandler
 
 func GenerateDsn() string {
-	apiRevision := os.Getenv("API_REVISION")
-	var dsn string
-
-	if apiRevision == "release" {
-		dsn = os.Getenv("DSN")
-	} else {
-		user := os.Getenv("DB_USERNAME")
-		pass := os.Getenv("DB_PASSWORD")
-		host := os.Getenv("DB_HOST")
-		port := os.Getenv("DB_PORT")
-		dbName := os.Getenv("DB_DATABASE")
-
-		dsn = fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8mb4&parseTime=true&multiStatements=true", user, pass, host, port, dbName)
-	}
+	dsn := os.Getenv("DSN")
 
 	return dsn
 }
@@ -53,7 +39,7 @@ func NewSQLHandler() *SQLHandler {
 	var err error
 
 	dsn := GenerateDsn()
-	db, err = gorm.Open(mysql.Open(dsn), &gorm.Config{})
+	db, err = gorm.Open(postgres.Open(dsn), &gorm.Config{})
 	if err != nil {
 		panic(err)
 	}
