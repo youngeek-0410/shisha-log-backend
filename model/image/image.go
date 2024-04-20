@@ -6,7 +6,7 @@ import (
 )
 
 type DiaryImage struct {
-	ID        []byte     `gorm:"column:id"`
+	ID        string     `gorm:"column:id"`
 	Path      string     `gorm:"column:path"`
 	CreatedAt *time.Time `gorm:"column:created_at"`
 	UpdatedAt *time.Time `gorm:"column:updated_at"`

@@ -27,9 +27,9 @@ type DiaryFlavors struct {
 }
 
 type PostDiaryFlavor struct {
-	ID           []byte     `gorm:"column:id"`
-	UserFlavorID []byte     `gorm:"column:user_flavor_id"`
-	DiaryID      []byte     `gorm:"column:diary_id"`
+	ID           string     `gorm:"column:id"`
+	UserFlavorID string     `gorm:"column:user_flavor_id"`
+	DiaryID      string     `gorm:"column:diary_id"`
 	Amount       float64    `gorm:"column:amount"`
 	CreatedAt    *time.Time `gorm:"column:created_at"`
 	UpdatedAt    *time.Time `gorm:"column:updated_at"`
@@ -40,23 +40,23 @@ type PostDiaryFlavors struct {
 }
 
 type FlavorBrand struct {
-	ID        []byte
+	ID        string
 	Name      string
 	CreatedAt *time.Time
 }
 
 type Flavor struct {
-	ID         []byte  `gorm:"id"`
-	BrandID    []byte  `gorm:"brand_id"`
+	ID         string  `gorm:"id"`
+	BrandID    string  `gorm:"brand_id"`
 	Name       string  `gorm:"name"`
 	CreateArea *string `gorm:"name"`
 	CreatedAt  *time.Time
 }
 
 type UserFlavor struct {
-	ID        []byte
-	FlavorID  []byte
-	UserID    []byte
+	ID        string
+	FlavorID  string
+	UserID    string
 	CreatedAt *time.Time
 }
 
@@ -78,9 +78,8 @@ func NewDiaryFlavors() *DiaryFlavors {
 func (r *GetUserFlavorResponse) GetUserFlavorResponse(user_id string) ([]GetUserFlavorResponseItem, error) {
 	db := lib.GetDBConn().DB
 	var GetUserFlavorResponse []GetUserFlavorResponseItem
-	binaryUUID := lib.ParseUUIDStrToBin(user_id)
 
-	if err := db.Table("user_flavors").Select("user_flavors.flavor_id, flavors.name, flavor_brands.name").Joins("inner join flavors on user_flavors.flavor_id = flavors.id").Joins("inner join flavor_brands on flavors.brand_id = flavor_brands.id").Where("user_flavors.user_id = ?", binaryUUID).Find(&GetUserFlavorResponse).Error; err != nil {
+	if err := db.Table("user_flavors").Select("user_flavors.flavor_id, flavors.name, flavor_brands.name").Joins("inner join flavors on user_flavors.flavor_id = flavors.id").Joins("inner join flavor_brands on flavors.brand_id = flavor_brands.id").Where("user_flavors.user_id = ?", user_id).Find(&GetUserFlavorResponse).Error; err != nil {
 		return nil, err
 	}
 

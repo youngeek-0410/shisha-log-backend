@@ -7,11 +7,22 @@ import (
 	"shisha-log-backend/lib"
 	"shisha-log-backend/model/diary"
 	"shisha-log-backend/model/flavor"
+	"time"
 
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
 )
+
+const location = "Asia/Tokyo"
+
+func init() {
+	loc, err := time.LoadLocation(location)
+	if err != nil {
+		loc = time.FixedZone(location, 9*60*60)
+	}
+	time.Local = loc
+}
 
 func main() {
 	userDiaries := diary.NewUserDiaries()
